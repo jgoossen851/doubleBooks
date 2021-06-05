@@ -23,7 +23,7 @@ MKDIR_P ?= @mkdir -p
 
 
 # Name of the executable file
-TARGET_EXEC ?= executable
+TARGET_EXEC ?= budget
 
 # Overwrite the Make defaults for CC and CFLAGS flags
 CC = $(CXX) # Use the default C++ compiler
