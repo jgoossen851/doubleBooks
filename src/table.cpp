@@ -26,9 +26,9 @@ Table::Table(Database db) {
 	
 void Table::print(){
 	printf("\n");
-	printf("%s%s", ansi::BOLD, ansi::UNDERLINE);
+	printf("%s", (ansi::CLEAR + ansi::BOLD + ansi::UNDERLINE + ansi::OVERLINE).c_str());
 	printHeader_();
-	printf("%s\n", ansi::RESET);
+	printf("%s\n", ansi::RESET.c_str());
 	printData_();
 }
 	
