@@ -1,6 +1,6 @@
 Format:	1A						
 							
-	2021 Transactions List						
+	Transactions List						
 							
 1A Format:							
 Document	Must have “1A” in the second cell (row 1, column 2)						
@@ -11,8 +11,13 @@ Transactions	Must have integer ID to be processed
 							
 ID	Entry Title	Entry Number	Entry Date	Category	Transaction Amount	Memo	Statement
 ######	###########################	####	########	#########################	########	###########################################################################	#
-1	Income Taxes	2101	01/01/21	Taxes	122.56	Sample note on the taxes paid	
+1	Income Taxes	2101	01/01/21	Taxes	122.56	Sample note on the taxes paid	0
 2	Gadget	2101	01/10/21	Household	12.36	Some household gadget that was not needed, and probably serves no purpose whatsoever	1
-3	Car Insurance	2102	02/05/21	Insurance	53.21		
+3	Car Insurance	2102	02/05/21	Insurance	53.21		0
 4	Thingy	2102	02/15/21	Household	8.25	A small thing	1
-5	Paycheck	2102	02/28/21	Wages & Salary	2568.25		
+5	Paycheck	2102	02/28/21	Wages & Salary	2568.25		0
+6	Other Taxes	2102	02/28/21	Taxes	223.67	"I don't know why there are so many taxes.
+Probably to see how multi-line memos work, and how they should be processed.
+Follow this format."	0
+11	Transaction with odd ID	2102	03/01/21	Miscellaneous	0.01	This transaction has an ID that does not sequencially follow the previous. That is OK.	1
+8	Previous Transaction	2102	03/01/21	Miscellaneous	-2.15	This transaction has an ID that is before the previous. That is OK as long as all Ids are unique.	0
