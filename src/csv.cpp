@@ -50,6 +50,7 @@ Database Csv::load(){
 			for (unsigned int ii = 0; ii < widths.size(); ii++) {
 				data.column_width.push_back(widths.at(ii).size());
 			}
+			data.column_width.resize(data.number_of_columns);
 			process_widths = false;
 			process_data = true;
 		} else if (process_data && isInteger_(first_element)){
@@ -92,6 +93,7 @@ std::vector<std::string> Csv::delimitString_(std::string str,
 	#if DEBUG_MODE
 		std::cout << std::endl;
 	#endif
+	if (max_entries != (unsigned int)-1) parsedString.resize(max_entries);
 	
 	return parsedString;
 }
