@@ -17,7 +17,7 @@ Table::Table(	unsigned int columns,
 	data_ = data;
 }
 	
-Table::Table(Database db) {
+Table::Table(StringDatabase db) {
 	columns_ = db.number_of_columns;
 	widths_ = db.column_width;
 	header_ = db.header;

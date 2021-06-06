@@ -13,11 +13,11 @@ Csv::Csv(const char * filename)
 			: filename_(filename) 
 			{}
 
-Database Csv::load(){
+StringDatabase Csv::load(){
 
 	std::ifstream file(filename_);
 	std::string line;
-	Database data;
+	StringDatabase data;
   
 	#if DEBUG_MODE
 		std::cout << ansi::UNDERLINE << "Contents of "

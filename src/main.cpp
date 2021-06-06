@@ -6,7 +6,7 @@ int main() {
 	Csv transactionsList("./data/TransactionsList.csv");
 	
 	// Load database
-	Database data = transactionsList.load();
+	StringDatabase data = transactionsList.load();
 	
 	// Print Table
 	Table table(data);

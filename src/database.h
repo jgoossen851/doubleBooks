@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-struct Database{
+struct StringDatabase{
     std::vector<std::string>::size_type 	number_of_columns;
 	std::vector<std::string> 				header;
 	std::vector<unsigned int> 				column_width; // in characters

@@ -12,7 +12,7 @@ class Table{
 			std::vector<unsigned int> widths,
 			std::vector<std::string> header,
 			std::vector<std::vector<std::string>> data );
-	Table(	Database db);
+	Table(	StringDatabase db);
 	
 	void print();
 	
