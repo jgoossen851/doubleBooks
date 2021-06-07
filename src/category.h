@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include "element.h"
+
 // Placeholder: implement as file with IDs and Categories.
 enum CategoryList{
 	Savings,
@@ -13,20 +15,24 @@ enum CategoryList{
 	Miscellaneous
 };
 
-class Category{
+
+class Category : public Element {
+	CategoryList cat;
+	
   public:
 	Category(){};
 	
-	CategoryList cat;
-	
-	Category setFromStr(std::string str){
+	std::string str(const unsigned int &max_characters = 12) const override {
+		return std::string(max_characters, '*');
+	}
+	void setFromStr(std::string str) override {
 		// cat = (CategoryList)std::stoi(str, nullptr); // Placeholder
 		cat = (CategoryList)str.size(); // Placeholder
-		return *this;
+		return;
 	}
-	
-	bool operator<(const Category &rhs) const {
-		return this->cat < rhs.cat;
+	const void* value_ptr(void) const override {return &cat;}
+	bool operator<(const Element &rhs) const override {
+		return this->cat < *static_cast<const CategoryList*>(rhs.value_ptr());
 	}
 };
 
