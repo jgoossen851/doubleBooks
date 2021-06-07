@@ -13,7 +13,7 @@ Csv::Csv(const char * filename)
 			: filename_(filename) 
 			{}
 
-Database<A1> Csv::load(){
+StringDatabase Csv::load(){
 
 	std::ifstream file(filename_);
 	std::string line;
@@ -59,16 +59,16 @@ Database<A1> Csv::load(){
 		}
 	}
 	
-	return Database<A1>(data);
+	return data;
 }
 
 bool Csv::isInteger_(std::string str) {
-	if (str.empty()) return 0;
 	
-	char* ptr;
-	constexpr int base = 10;
-	strtol(str.c_str(), &ptr, base);
-	return *ptr == 0;
+	// Iterate throught the string until a non-digit is encountered
+	std::string::const_iterator it = str.begin();
+	while (it != str.end() && std::isdigit(*it)) ++it;
+	
+	return !str.empty() && it == str.end();
 }
 
 std::vector<std::string> Csv::delimitString_(std::string str,

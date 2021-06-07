@@ -7,10 +7,12 @@
 #include "database.h"
 
 class Csv {
+	const char * filename_;
+	
   public:
 	Csv(const char * filename);
 	
-	Database<A1> load(void);
+	StringDatabase load(void);
 	
   private:
 	/// Function to split a string into a vector of strings delimited by a character
@@ -18,8 +20,6 @@ class Csv {
 											std::vector<std::string>::size_type max_entries = (unsigned int)-1);
 	/// Function to determine if a string is an integer
 	bool isInteger_(std::string str);
-	
-	const char * filename_;
 };
 
 #endif
