@@ -10,7 +10,7 @@ class Csv {
   public:
 	Csv(const char * filename);
 	
-	StringDatabase load(void);
+	Database<A1> load(void);
 	
   private:
 	/// Function to split a string into a vector of strings delimited by a character

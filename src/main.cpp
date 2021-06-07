@@ -10,7 +10,7 @@ int main() {
 	Csv transactionsList("./data/TransactionsList.csv");
 	
 	// Load database
-	StringDatabase data = transactionsList.load();
+	Database<A1> data = transactionsList.load();
 	
 	// Print Table
 	Table table(data);

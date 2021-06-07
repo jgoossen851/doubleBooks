@@ -17,6 +17,15 @@ Table::Table(	unsigned int columns,
 	data_ = data;
 }
 	
+Table::Table(Database<A1> db) {
+	columns_ = db.number_of_columns;
+	widths_ = db.column_width;
+	header_ = db.header;
+	for (unsigned int ii = 0; ii < db.body.size(); ii++) {
+		data_.push_back(Format<A1>::format_transaction(db.body.at(ii)));
+	}
+}
+
 Table::Table(StringDatabase db) {
 	columns_ = db.number_of_columns;
 	widths_ = db.column_width;

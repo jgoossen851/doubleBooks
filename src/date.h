@@ -8,6 +8,10 @@ class Date{
 	bool operator<(const Date &rhs) const{
 		return this->date_str < rhs.date_str;
 	};
+	Date setFromStr(std::string str){
+		date_str = str;
+		return *this;
+	}
 };
 
 #endif

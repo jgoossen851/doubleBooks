@@ -65,3 +65,13 @@ std::string Currency::format_negative_string(std::string positiveString) const {
 bool Currency::operator<(const Currency &rhs) const {
 	return this->cents < rhs.cents;
 }
+
+Currency Currency::setFromStr(std::string str) {
+	float dollars = std::stof(str, nullptr);
+	cents = round(dollars*100);
+	float residual = cents - dollars*100;
+	assert(abs(residual) < 0.001);
+	return *this;
+}
+
+

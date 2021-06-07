@@ -13,7 +13,7 @@ Csv::Csv(const char * filename)
 			: filename_(filename) 
 			{}
 
-StringDatabase Csv::load(){
+Database<A1> Csv::load(){
 
 	std::ifstream file(filename_);
 	std::string line;
@@ -59,7 +59,7 @@ StringDatabase Csv::load(){
 		}
 	}
 	
-	return data;
+	return Database<A1>(data);
 }
 
 bool Csv::isInteger_(std::string str) {

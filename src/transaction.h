@@ -11,7 +11,7 @@
 class Transaction{
   public:
 	Transaction()
-		: transaction_amount(Currency(RED_COLOR))
+		: transaction_amount(Currency(NEGATIVE_SIGN))
 		{};
   
 	unsigned int 	id;
