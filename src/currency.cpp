@@ -6,11 +6,7 @@
 
 #include "ansi.h"
 
-float Currency::dollars(void) const {
-	return (float)cents/100;
-}
-
-std::string Currency::display(const int &max_characters) const {
+std::string Currency::str(const unsigned int &max_characters) const {
 	if (cents < 0) {
 		// Format negative number
 		int characters = max_characters;
@@ -62,16 +58,16 @@ std::string Currency::format_negative_string(std::string positiveString) const {
 	return negativeString;
 }
 
-bool Currency::operator<(const Currency &rhs) const {
-	return this->cents < rhs.cents;
+bool Currency::operator<(const Element &rhs) const {
+	return this->cents < *static_cast<const int*>(rhs.value_ptr());
 }
 
-Currency Currency::setFromStr(std::string str) {
+void Currency::setFromStr(std::string str) {
 	float dollars = std::stof(str, nullptr);
 	cents = round(dollars*100);
 	float residual = cents - dollars*100;
 	assert(abs(residual) < 0.001);
-	return *this;
+	return;
 }
 
 

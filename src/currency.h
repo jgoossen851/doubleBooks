@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include "element.h"
+
 /// Allowable formats for negative currencies
 enum NegativeFormat{
 	NEGATIVE_SIGN, 	/// Value printed to the right of a negative sign
@@ -10,22 +12,22 @@ enum NegativeFormat{
 	RED_COLOR 		/// Value printed in red
 };
 
-class Currency{
+class Currency : public Element {
+	/// Internal Storage of the currency value, in cents
+	int cents;
+	
   public:
 	Currency(NegativeFormat negativeFormat = NEGATIVE_SIGN)
 		: negativeFormat_(negativeFormat)
 		{}
-
-	/// Internal Storage of the currency value, in cents
-	int cents;
-	/// Getter function for the currency value in dollars
-	float dollars(void) const;
-	/// Display the formatted dollar amount
-	std::string display(const int &max_characters = 10) const;
+		
+	// Function Overrides
+	/// Format the dollar amount as a string
+	std::string str(const unsigned int &max_characters = 10) const;	
+	void setFromStr(std::string str) override;
+	const void* value_ptr(void) const override {return &cents;}
 	/// Comparison operator for two Currency objects
-	bool operator<(const Currency &rhs) const;
-	
-	Currency setFromStr(std::string str);
+	bool operator<(const Element &rhs) const override;
 	
   private:	
 	std::string display_magnitude(const int &max_characters) const;

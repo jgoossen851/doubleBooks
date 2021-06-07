@@ -57,9 +57,9 @@ std::vector<std::string> Format<A1>::format_transaction(const Transaction &trans
 	trans_str.push_back(std::to_string(trans.id));
 	trans_str.push_back(trans.entry_title);
 	trans_str.push_back(std::to_string(trans.entry_number));
-	trans_str.push_back(trans.entry_date.date_str);
+	trans_str.push_back(trans.entry_date.str());
 	trans_str.push_back(std::to_string(trans.category.cat));
-	trans_str.push_back(trans.transaction_amount.display());
+	trans_str.push_back(trans.transaction_amount.str());
 	trans_str.push_back(trans.memo);
 	trans_str.push_back(std::to_string(trans.statement));
 	
