@@ -1,0 +1,50 @@
+ID	Description	Transaction Type	Display Order	Budgeted
+6	Clothing	0	22	0
+8	Restaurants/Social	0	31	1
+9	Tuition	0	71	0
+10	Entertainment	0	60	0
+11	Fees	0	51	1
+12	Gifts	0	56	0
+13	Groceries	0	30	1
+14	Medical Professionals	0	55	0
+15	Hobbies	0	61	0
+16	Home Repairs or Mn Fee	0	12	1
+17	Household	0	20	0
+18	Insurance	0	9	1
+19	Loan	0	70	0
+20	Miscellaneous	0	57	1
+21	Rent/Mortgage	0	10	1
+24	Phone	0	21	1
+25	Subscriptions/Memberships	0	54	1
+26	Taxes	0	8	1
+27	Travel	0	63	0
+28	Utilities	0	11	1
+29	Income/Interest	1	102	1
+31	Not an Expense	1	103	1
+32	Other Income	1	101	1
+33	Wages & Salary	1	100	1
+34	Tithe	0	1	1
+35	Gas	0	40	1
+36	Car Upkeep/Repairs/Oil	0	41	0
+37	School Supplies	0	52	0
+38	Textbooks	0	53	0
+42	Savings	0	6	1
+45	Missions	0	2	1
+46	Car Replacement	0	42	0
+47	Laundry	0	23	1
+48	Medications	0	25	0
+49	Blow Money	0	58	1
+50	Vacation	0	62	0
+51	Hair Care	0	50	1
+52	Giving	0	4	0
+53	License/Registration	0	44	0
+54	Shoes	0	24	0
+55	RO - Underspent Ripple Out	2	99	1
+56	RI - Ripple In	3	98	1
+57	Allocations	2	7	1
+58	Mission Fund	0	3	0
+59	Emergency Fund	0	5	0
+60	Zero Net Transfer	0	97	1
+61	Meetings	0	32	1
+62	Cash Back	0	96	0
+63	Car Insurance	0	43	1
