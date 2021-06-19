@@ -1,21 +1,9 @@
 #include "database.h"
 
 #include <cassert>
+// #include <iostream>
 
-template<FormatVersion VER>
-unsigned int Format<VER>::columns(void) {
-	switch (VER) {
-		case A1 :
-			return 8;
-			break;
-		default :
-			return 0;
-			break;
-	};
-}
-// Template Instantiation
-template unsigned int Format<A1>::columns(void);
-
+#include "strings.h"
 
 template<FormatVersion VER>
 Database<VER>::Database(const StringDatabase &strDb)
@@ -28,50 +16,37 @@ Database<VER>::Database(const StringDatabase &strDb)
 // Template Instantiation
 template Database<A1>::Database(const StringDatabase&);
 
+
 template<FormatVersion VER>
 bool Database<VER>::formatData_(const std::vector<std::vector<std::string>> &data_str){
   for (unsigned int ii = 0; ii < data_str.size(); ii++) {
-    Record new_record(data_str.at(ii));
-    body.push_back(new_record);
+
+    std::vector<std::string> currentEntry = data_str.at(ii);
+
+    // Create a new transaction if the Parent is self-referring or empty
+    if (currentEntry.at(DB_ID) == currentEntry.at(DB_PARENT) || currentEntry.at(DB_PARENT) == "") {
+      // std::cout << "Make a new transaction." << std::endl;
+      Transaction new_transaction(currentEntry);
+      body.push_back(new_transaction);
+
+    } else {
+      // std::cout << "Adding to an existing transaction" << std::endl;
+      unsigned int parentID = Strings::toInteger(currentEntry.at(1));
+      // Iterate through the body to find the parent
+      auto bodyIterator = body.rbegin(); // Set iterator at the reverse beginning (at the back)
+      while (bodyIterator != body.rend()) {
+        if (bodyIterator->getId() == parentID) {
+          // std::cout << "Found the parent!" << std::endl;
+          bodyIterator->addRecord(currentEntry);
+          break;
+        }
+        bodyIterator++; // Iterate toward the reverse end
+      }
+    }
+    // std::cout << "Finished Formatting Record" << std::endl;
   }
+  // std::cout << "Finished Formatting Data" << std::endl;
   return true;
 }
 // Template Instantiation
 template bool Database<A1>::formatData_(const std::vector<std::vector<std::string>> &);
-
-// /// Template specializations for different formats
-// template<>
-// Transaction Format<A1>::parse_transaction(const std::vector<std::string> &trans_str) {
-// 	assert(trans_str.size() == columns());
-	
-// 	Transaction trans;
-	
-// 	trans.id = std::stoul(trans_str.at(0), nullptr);
-// 	trans.entry_title = trans_str.at(1);
-// 	trans.entry_number = std::stoul(trans_str.at(2), nullptr);
-// 	trans.entry_date.setFromStr(trans_str.at(3));
-// 	trans.category.setFromStr(trans_str.at(4));
-// 	trans.transaction_amount.setFromStr(trans_str.at(5));
-// 	trans.memo = trans_str.at(6);
-// 	trans.statement = std::stoi(trans_str.at(7), nullptr);	
-	
-// 	return trans;
-// }
-
-// /// Template specializations for different formats
-// template<>
-// std::vector<std::string> Format<A1>::format_transaction(const Transaction &trans) {
-	
-// 	std::vector<std::string> trans_str;
-	
-// 	trans_str.push_back(std::to_string(trans.id));
-// 	trans_str.push_back(trans.entry_title);
-// 	trans_str.push_back(std::to_string(trans.entry_number));
-// 	trans_str.push_back(trans.entry_date.str());
-// 	trans_str.push_back(trans.category.str());
-// 	trans_str.push_back(trans.transaction_amount.str());
-// 	trans_str.push_back(trans.memo);
-// 	trans_str.push_back(std::to_string(trans.statement));
-	
-// 	return trans_str;
-// }

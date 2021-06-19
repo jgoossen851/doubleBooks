@@ -27,10 +27,10 @@ Table::Table(Database<A1> db) {
 }
 
 Table::Table(StringDatabase db) {
-	columns_ = db.number_of_columns;
-	widths_ = db.column_width;
-	header_ = db.header;
-	data_ = db.body;
+  columns_ = db.number_of_columns;
+  widths_ = db.column_width;
+  header_ = db.header;
+  data_ = db.body;
 }
 	
 void Table::print(){

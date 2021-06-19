@@ -4,6 +4,8 @@
 
 #include <fstream>
 
+#include "strings.h"
+
 #if DEBUG_MODE
 	#include <iostream>
 	#include "ansi.h"
@@ -17,7 +19,7 @@ StringDatabase Csv::load(){
 
 	std::ifstream file(filename_);
 	std::string line;
-	StringDatabase data;
+	StringDatabase db;
   
 	#if DEBUG_MODE
 		std::cout << ansi::UNDERLINE << "Contents of "
@@ -41,34 +43,25 @@ StringDatabase Csv::load(){
 		
 		if (first_element == "ID") {
 			// First, find and process headers
-			data.header = delimitString_(line);
-			data.number_of_columns = data.header.size();
+			db.header = delimitString_(line);
+			db.number_of_columns = db.header.size();
 			process_widths = true;
 		} else if (process_widths) {
 			// Then, process the field widths for each column
 			std::vector<std::string> widths = delimitString_(line);
 			for (unsigned int ii = 0; ii < widths.size(); ii++) {
-				data.column_width.push_back(widths.at(ii).size());
+				db.column_width.push_back(widths.at(ii).size());
 			}
-			data.column_width.resize(data.number_of_columns);
+			db.column_width.resize(db.number_of_columns);
 			process_widths = false;
 			process_data = true;
-		} else if (process_data && isInteger_(first_element)){
+		} else if (process_data && Strings::isInteger(first_element)){
 			// Finally, process the remaining data
-			data.body.push_back(delimitString_(line, data.number_of_columns));
+			db.body.push_back(delimitString_(line, db.number_of_columns));
 		}
 	}
 	
-	return data;
-}
-
-bool Csv::isInteger_(std::string str) {
-	
-	// Iterate throught the string until a non-digit is encountered
-	std::string::const_iterator it = str.begin();
-	while (it != str.end() && std::isdigit(*it)) ++it;
-	
-	return !str.empty() && it == str.end();
+	return db;
 }
 
 std::vector<std::string> Csv::delimitString_(std::string str,

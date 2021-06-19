@@ -4,7 +4,13 @@
 #include <string>
 #include <vector>
 
-#include "database.h"
+/// Unformatted Database
+struct StringDatabase{
+  unsigned int                        	number_of_columns;
+	std::vector<std::string> 				      header;
+	std::vector<unsigned int> 				    column_width; // in characters
+	std::vector<std::vector<std::string>> body;
+};
 
 class Csv {
 	const char * filename_;
@@ -18,8 +24,6 @@ class Csv {
 	/// Function to split a string into a vector of strings delimited by a character
 	std::vector<std::string> delimitString_(	std::string str,
 											std::vector<std::string>::size_type max_entries = (unsigned int)-1);
-	/// Function to determine if a string is an integer
-	bool isInteger_(std::string str);
 };
 
 #endif
