@@ -30,23 +30,23 @@ class CategoryDescriptions {
 
 
 class Category : public Element {
-	static std::vector<CategoryDescriptions>  categoryList_;
+  static std::vector<CategoryDescriptions>  categoryList_;
   int                                       id_;
-	
+  
  public:
-	Category(){
+  Category(){
     categoryList_.clear();
   };
-	
-	std::string str(const unsigned int &max_characters = 12) const override {
-		return std::string(max_characters, '*'); // Placeholder
-	}
-	void setFromStr(std::string str) override {
-		id_ = str.size(); // Placeholder
-		return;
-	}
-	const void* value_ptr(void) const override {return &categoryList_[id_].displayOrder_;}
-	bool operator<(const Element &rhs) const override;
+  
+  std::string str(const unsigned int &max_characters = 12) const override {
+    return std::string(max_characters, '*'); // Placeholder
+  }
+  void setFromStr(std::string str) override {
+    id_ = str.size(); // Placeholder
+    return;
+  }
+  const void* value_ptr(void) const override {return &categoryList_[id_].displayOrder_;}
+  bool operator<(const Element &rhs) const override;
 
   std::string getName()       const {return categoryList_[id_].name_;}
   int         getType()       const {return categoryList_[id_].type_;}

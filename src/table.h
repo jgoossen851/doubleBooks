@@ -8,12 +8,12 @@
 
 class Table{
 public:
-  Table(	unsigned int columns,
-      std::vector<unsigned int> widths,
-      std::vector<std::string> header,
-      std::vector<std::vector<std::string>> data );
-  Table(	Database<A1> db);
-  Table(	StringDatabase db);
+  Table(  unsigned int columns,
+          std::vector<unsigned int> widths,
+          std::vector<std::string> header,
+          std::vector<std::vector<std::string>> data );
+  Table(  Database<A1> db);
+  Table(  StringDatabase db);
 
   void print();
   

@@ -7,11 +7,11 @@
 
 template<FormatVersion VER>
 Database<VER>::Database(const StringDatabase &strDb)
-					: number_of_columns(Format<VER>::columns()),
-					  header(strDb.header),
-					  column_width(strDb.column_width) {
-	assert(this->number_of_columns == strDb.number_of_columns);
-	formatData_(strDb.body);
+          : number_of_columns(Format<VER>::columns()),
+            header(strDb.header),
+            column_width(strDb.column_width) {
+  assert(this->number_of_columns == strDb.number_of_columns);
+  formatData_(strDb.body);
 }
 // Template Instantiation
 template Database<A1>::Database(const StringDatabase&);
