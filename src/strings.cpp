@@ -21,4 +21,8 @@ float         toFloat(const std::string str){
   return (str == "") ? 0.0 : std::stof(str, nullptr);
 }
 
+double        toDouble(const std::string str){
+  return (str == "") ? 0.0 : std::stod(str, nullptr);
+}
+
 } // namespace Strings

@@ -9,6 +9,7 @@ namespace Strings {
   bool          isInteger(const std::string str);
   unsigned long toInteger(const std::string str);
   float         toFloat(const std::string str);
+  double        toDouble(const std::string str);
 
 } // namespace Strings
 

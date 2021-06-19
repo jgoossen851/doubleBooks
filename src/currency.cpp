@@ -75,10 +75,11 @@ bool Currency::operator<(const Element &rhs) const {
 }
 
 void Currency::setFromStr(std::string str) {
-  float dollars = Strings::toFloat(str);
+  double dollars = Strings::toDouble(str);
   // std::cout << "Currency, set to [" << dollars << "]" << std::endl;
   cents_ = round(dollars*100);
-  float residual = cents_ - dollars*100;
+  double residual = cents_ - dollars*100;
+  // std::cout << "Residual is " << residual << " and cents is " << cents_ << std::endl;
   assert(abs(residual) < 0.001);
   return;
 }
