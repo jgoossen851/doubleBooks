@@ -22,7 +22,7 @@ Table::Table(Database<A1> db) {
 	widths_ = db.column_width;
 	header_ = db.header;
 	for (unsigned int ii = 0; ii < db.body.size(); ii++) {
-		data_.push_back(Format<A1>::format_transaction(db.body.at(ii)));
+    data_.push_back(db.body.at(ii).formatEntry());
 	}
 }
 

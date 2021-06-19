@@ -1,0 +1,138 @@
+cEntry // Something that can go in an ordered/filtered Report
+	virtual bool 			operator<(cEntry)
+	v int					_getSortValue()
+	T<Fmt> v cEntry			parse_entry (vector<string>)
+	T<Fmt> v vector<string>	format_entry (cEntry)
+
+cTransaction : cEntry
+	int 			mID
+	cDate			mDate
+	cCurrency		mAmount
+	vector<cRecord>	mRecords
+	string			mVendor
+	bool			mIsBalanced
+
+cRecord : cEntry
+	int 			mID
+	string			mTitle
+	cPeriod			mPeriod
+	*cCategory		mCategory
+	string				getCategoryName()
+	cType				getType()
+	bool				getIsExpense() // cType.isNegated
+	bool				getIsBudgeted()
+	cCurrency 		mAmount
+	cCurrency 		getActualAmount(return getIsExpense() ? -mAmount : mAmount; )
+	string			mMemo
+	*cTransaction	mParentTransaction
+	cDate				getDate()
+	bool				getIsBalanced()
+	string				getVendor()
+	
+						
+cElement // Need to be able to be set, displayed, and compared.
+	v string 		str(uint maxChars)
+	v void 			setFromString(string)
+	v const void*	value_ptr(void)
+	v bool 			operator<(cElement &rhs)
+
+cCategory : cElement
+	static map<int, strings>	_mCategoryList
+	static map<int, int> 		_mSortOrder
+
+cPeriod  : cElement
+
+cCurrency  : cElement
+	int    					_mCents
+	string					_displayMagnitude(int)
+	string					_negateString(string)
+	const eNegativeFormat	_mNegativeFormat
+
+cType  : cElement
+	eTransactionType	_mType
+	bool				_mIsNegated
+
+cDate  : cElement
+	int		_mDate // Days since Jan 1, 1980 or something
+
+
+cSortFilterConfiguration
+	int					mActiveSortIndex
+						addConfiguration()
+						deleteConfiguration()
+
+cSortConfiguration
+	vector<cSortOrder>	mSavedSortOrders
+	
+
+cFilterConfiguration
+	vector<cFilter>		mSavedFilters
+	int					mActiveFilterIndex
+
+cSortOrder
+	string 				mName
+						swap(int index, int index)
+	array{int} 			_mSortOrderInds
+
+cFilter
+	string				mName
+	cElement			open(int index)
+	array{bool}		 	_mFilterInds
+
+
+cReport : cTable
+	generate()
+	mConfiguration // Containing order of strings to print, filters and sorting, etc.
+	configure()
+	printReportHeader()
+	addRecord()
+	editRecord()
+	// Allow selecting of records
+	
+cTable	// Prints an array of strings, allows selection of one of them
+							Table(uint columns, vector<uint> widths, vector<string> header, vector<vector<string>> data)
+							Table(cDatabase<A1> db)
+	void 					print()
+	void					_printHeader()
+	void					_printData()
+	uint					_mColumns
+	vector<uint>			_mWidths
+	vector<string>			_mHeader
+	vector<vector<string>	_mData;
+	uint					_mSelectionIndexColumn
+	uint					_mSelectionIndexRow
+	int 					_moveSelection() // Returns new RowColumnIndex, or current index if the cell is selected
+
+
+cCsv
+	const char*		_mFilename
+					Csv(const char* filename)
+	cDatabase		load()
+	vector<string>	_delimitString(string, uint)
+	bool			_isInteger()
+
+cDatabase
+							Database(StringDatabase)
+	uint					mNumberColumns
+	vector<string>			mHeader
+	vector<uint>			mColumn_width
+	vector<cEntry>			mBody
+
+
+
+
+
+cFormat // Convert to LUT
+	uint		numColumns()
+	
+cAnsiCode // ANSI codes
+	string			str
+	cAnsiCode		operator+(cAnsiCode &rhs)
+
+ENUMERATIONS
+
+eTransactionType: 	Income, Expense, Allocation, TransferIn, TransferOut
+
+eNegativeFormat: 	NEGATIVE_SIGN, PARENTHESIS, RED_COLOR
+
+eFormatVersion: 	A1

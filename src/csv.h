@@ -9,12 +9,12 @@
 class Csv {
 	const char * filename_;
 	
-  public:
+ public:
 	Csv(const char * filename);
 	
 	StringDatabase load(void);
 	
-  private:
+ private:
 	/// Function to split a string into a vector of strings delimited by a character
 	std::vector<std::string> delimitString_(	std::string str,
 											std::vector<std::string>::size_type max_entries = (unsigned int)-1);

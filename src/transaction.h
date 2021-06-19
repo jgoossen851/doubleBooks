@@ -8,47 +8,79 @@
 #include "date.h"
 #include "category.h"
 
-class Transaction{
-  public:
-	Transaction()
-		: transaction_amount(Currency(NEGATIVE_SIGN))
-		{};
+class Entry {
+ private:
+  virtual int getSortValue() const =0;
   
-	unsigned int 	id;
-	std::string 	entry_title;
-	unsigned int 	entry_number;
-	Date		 	entry_date;
-	Category 		category;
-	Currency 		transaction_amount;
-	std::string 	memo;
-	bool 			statement;
+ public:
+  /// @brief Function to format the entry as a vector of strings
+  virtual std::vector<std::string> formatEntry() const =0;
+  
+  bool operator<(const Entry &rhs) const;
+};
 
-	// Define functions to compare fields for std::sort()
-	bool IdCmp(Transaction const &A, Transaction const &B) {
-		return A.id < B.id;
-	}
-	bool TitleCmp(Transaction const &A, Transaction const &B) {
-		return A.entry_title < B.entry_title;
-	}
-	bool NumberCmp(Transaction const &A, Transaction const &B) {
-		return A.entry_number < B.entry_number;
-	}
-	bool DateCmp(Transaction const &A, Transaction const &B) {
-		return A.entry_date < B.entry_date;
-	}
-	bool CategoryCmp(Transaction const &A, Transaction const &B) {
-		return A.category < B.category;
-	}
-	bool AmountCmp(Transaction const &A, Transaction const &B) {
-		return A.transaction_amount < B.transaction_amount;
-	}
-	bool MemoCmp(Transaction const &A, Transaction const &B) {
-		return A.memo < B.memo;
-	}
-	bool StatementCmp(Transaction const &A, Transaction const &B) {
-		return A.statement < B.statement;
-	}
-	
+// Forward declare classes
+class Transaction;
+
+class Record : public Entry {
+ private:
+  unsigned int	id_;
+  std::string   title_;
+  int			      period_; // Change to class Period
+  Category      category_;
+  Currency		  amount_;
+  std::string	  memo_;
+  Transaction*  parent_;
+  
+  int getSortValue() const override;
+  
+ public:
+  Record();
+  Record(std::vector<std::string> strVec);
+
+  std::vector<std::string> formatEntry() const override;
+
+  std::string getTitle()        const {return title_;}
+  int			    getPeriod()       const {return period_;} // change to class Period
+  std::string	getCategoryName() const {return category_.getName();}
+  int			    getType()         const {return category_.getType();} // change to class Type
+  bool			  getIsExpense()    const {return category_.getIsExpense();}
+  bool			  getIsBudgeted()   const {return category_.getIsBudgeted();}
+  Currency		getAmount()       const {return amount_;}
+  Currency 		getActualAmount() const {return getIsExpense() ? amount_ : -amount_;}
+  std::string	getMemo()         const {return memo_;}
+  Date			  getDate()         const;
+  bool			  getIsBalanced()   const;
+  std::string	getVendor()       const;
+};
+
+
+class Transaction : public Entry {
+ private:
+  unsigned int  id_;
+  Date			    date_;
+  std::string	  vendor_;
+  bool			    isBalanced_;
+  
+  std::vector<Record>	records_;
+  
+  int getSortValue() const override {
+    return 13; // Placeholder
+  }
+  
+ public:
+  Transaction()	{};
+  Transaction(const std::vector<std::string> strVec) {
+    std::vector<std::string> temp;
+    temp = strVec;
+  };
+
+  std::vector<std::string> formatEntry() const override;
+  
+  Currency		  getAmount()     const {return Currency(0);} // Placeholder
+  Date			    getDate()       const {return date_;}
+  bool			    getIsBalanced() const {return isBalanced_;}
+  std::string	  getVendor()     const {return vendor_;}
 };
 
 #endif

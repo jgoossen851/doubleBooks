@@ -14,22 +14,26 @@ enum NegativeFormat{
 
 class Currency : public Element {
 	/// Internal Storage of the currency value, in cents
-	int cents;
+	int cents_;
 	
-  public:
-	Currency(NegativeFormat negativeFormat = NEGATIVE_SIGN)
-		: negativeFormat_(negativeFormat)
-		{}
+ public:
+	Currency(NegativeFormat negativeFormat = NEGATIVE_SIGN);
+  Currency(int            cents,
+           NegativeFormat negativeFormat = NEGATIVE_SIGN);
 		
 	// Function Overrides
 	/// Format the dollar amount as a string
 	std::string str(const unsigned int &max_characters = 10) const;	
 	void setFromStr(std::string str) override;
-	const void* value_ptr(void) const override {return &cents;}
+	const void* value_ptr(void) const override;
 	/// Comparison operator for two Currency objects
 	bool operator<(const Element &rhs) const override;
+
+  Currency operator-() const {
+    return Currency(-cents_, negativeFormat_);
+  }
 	
-  private:	
+ private:	
 	std::string display_magnitude(const int &max_characters) const;
 	std::string format_negative_string(std::string positiveString) const;
 	const NegativeFormat negativeFormat_;
