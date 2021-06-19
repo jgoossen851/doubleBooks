@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-#include <iostream>
+// #include <iostream>
 
 #include "currency.h"
 #include "date.h"
@@ -79,7 +79,7 @@ class Transaction : public Entry {
   Date          date_;
   std::string   vendor_;
   bool          isBalanced_;
- public: 
+  
   std::vector<Record>  records_;
   
   int getSortValue() const override {
@@ -93,16 +93,6 @@ class Transaction : public Entry {
   std::vector<std::string> formatEntry() const override;
 
   bool addRecord(const std::vector<std::string> strVec);
-  bool addRecord( const unsigned int  id,
-                  const std::string   title,
-                  const int           period, // Change to class Period
-                  const Date          date,
-                  const Category      category,
-                  const Currency      amount,
-                  const std::string   vendor,
-                  const std::string   memo,
-                  const bool          isBalanced
-                  );
   
   unsigned int  getId()         const {return id_;}
   Currency      getAmount()     const {return Currency(0);} // Placeholder

@@ -1,15 +1,15 @@
 
 #include "date.h"
 
-#include <iostream>
+// #include <iostream>
 
 std::string Date::str(const unsigned int &max_characters) const {
-  std::cout << "Converting date to string." << std::endl;
+  // std::cout << "Converting date to string." << std::endl;
   if (date_str.size() <= max_characters) {
-    std::cout << "Date ok length" << std::endl;
+    // std::cout << "Date ok length" << std::endl;
     return date_str;
   } else {
-    std::cout << "Date too long" << std::endl;
+    // std::cout << "Date too long" << std::endl;
     return std::string(max_characters, '*');
   }
 }

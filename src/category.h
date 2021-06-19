@@ -4,10 +4,9 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <cassert>
 
 #include "element.h"
-
-
 
 class CategoryDescriptions {
  public:
@@ -31,18 +30,16 @@ class CategoryDescriptions {
   friend class Category;
 };
 
+/// @todo Remove global variable. Construct Categories with a category list.
 extern std::vector<CategoryDescriptions>  gCategoryList_;
 
-
-
 class Category : public Element {
+  /// @todo Reenable this internal category list. Make a reference to allow all categories to share the same list?
   // static std::vector<CategoryDescriptions>  categoryList_;
   unsigned int    id_;
   
  public:
-  Category(){
-    // categoryList_.clear();
-  };
+  Category(){};
   Category(std::string str){
     setFromStr(str);
   }
@@ -57,12 +54,13 @@ class Category : public Element {
   const void* value_ptr(void) const override {return &gCategoryList_[id_].displayOrder_;}
   bool operator<(const Element &rhs) const override;
 
-  /// @todo Placeholder
   CategoryDescriptions getDescription() const {
-    if (id_ >= gCategoryList_.size()){
+    if (id_ >= gCategoryList_.size()){ /// @todo Placeholder
       std::cout << "ERROR: Id is too high. Id = " << id_ << " and size = " << gCategoryList_.size() << std::endl;
-      return gCategoryList_.at(0);
+      return gCategoryList_.at(0); 
     }
+    // Do bounds check on id_ in cagetory list
+    assert(id_ < gCategoryList_.size() && "No entry in Category List for this ID");
     return gCategoryList_.at(id_);
   }
   std::string getName()       const {return getDescription().name_;}

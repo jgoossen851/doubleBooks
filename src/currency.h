@@ -27,7 +27,6 @@ class Currency : public Element {
   }
   
   Currency operator=(const Currency &rhs){
-    // Currency lhs(rhs.cents_, rhs.negativeFormat_);
     return Currency(rhs.cents_, rhs.negativeFormat_);
   };
     

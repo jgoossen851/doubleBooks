@@ -8,9 +8,7 @@
  /// @todo Figure out what to do with this global variable
   std::vector<CategoryDescriptions>  gCategoryList_;
 
-
 int main() {
-
  
   // Placeholder: setup categories, rather than reading from file
   // ID, Name, Type, Display Order, isExpense, isBudgeted
