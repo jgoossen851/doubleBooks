@@ -3,8 +3,11 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 
 #include "element.h"
+
+
 
 class CategoryDescriptions {
  public:
@@ -28,15 +31,21 @@ class CategoryDescriptions {
   friend class Category;
 };
 
+extern std::vector<CategoryDescriptions>  gCategoryList_;
+
+
 
 class Category : public Element {
-  static std::vector<CategoryDescriptions>  categoryList_;
-  int                                       id_;
+  // static std::vector<CategoryDescriptions>  categoryList_;
+  unsigned int    id_;
   
  public:
   Category(){
-    categoryList_.clear();
+    // categoryList_.clear();
   };
+  Category(std::string str){
+    setFromStr(str);
+  }
   
   std::string str(const unsigned int &max_characters = 12) const override {
     return std::string(max_characters, '*'); // Placeholder
@@ -45,13 +54,21 @@ class Category : public Element {
     id_ = str.size(); // Placeholder
     return;
   }
-  const void* value_ptr(void) const override {return &categoryList_[id_].displayOrder_;}
+  const void* value_ptr(void) const override {return &gCategoryList_[id_].displayOrder_;}
   bool operator<(const Element &rhs) const override;
 
-  std::string getName()       const {return categoryList_[id_].name_;}
-  int         getType()       const {return categoryList_[id_].type_;}
-  bool        getIsExpense()  const {return categoryList_[id_].isExpense_;}
-  bool        getIsBudgeted() const {return categoryList_[id_].isBudgeted_;}
+  /// @todo Placeholder
+  CategoryDescriptions getDescription() const {
+    if (id_ >= gCategoryList_.size()){
+      std::cout << "ERROR: Id is too high. Id = " << id_ << " and size = " << gCategoryList_.size() << std::endl;
+      return gCategoryList_.at(0);
+    }
+    return gCategoryList_.at(id_);
+  }
+  std::string getName()       const {return getDescription().name_;}
+  int         getType()       const {return getDescription().type_;}
+  bool        getIsExpense()  const {return getDescription().isExpense_;}
+  bool        getIsBudgeted() const {return getDescription().isBudgeted_;}
 };
 
 #endif

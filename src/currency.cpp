@@ -3,8 +3,10 @@
 #include <cstdio>
 #include <cmath>
 #include <cassert>
+#include <iostream>
 
 #include "ansi.h"
+#include "strings.h"
 
 Currency::Currency(NegativeFormat negativeFormat) 
   : negativeFormat_(negativeFormat)
@@ -73,7 +75,8 @@ bool Currency::operator<(const Element &rhs) const {
 }
 
 void Currency::setFromStr(std::string str) {
-  float dollars = std::stof(str, nullptr);
+  float dollars = Strings::toFloat(str);
+  // std::cout << "Currency, set to [" << dollars << "]" << std::endl;
   cents_ = round(dollars*100);
   float residual = cents_ - dollars*100;
   assert(abs(residual) < 0.001);

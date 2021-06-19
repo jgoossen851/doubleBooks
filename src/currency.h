@@ -20,6 +20,16 @@ class Currency : public Element {
   Currency(NegativeFormat negativeFormat = NEGATIVE_SIGN);
   Currency(int            cents,
            NegativeFormat negativeFormat = NEGATIVE_SIGN);
+  Currency(std::string    str,
+           NegativeFormat negativeFormat = NEGATIVE_SIGN)
+      : negativeFormat_(negativeFormat){
+    setFromStr(str);
+  }
+  
+  Currency operator=(const Currency &rhs){
+    // Currency lhs(rhs.cents_, rhs.negativeFormat_);
+    return Currency(rhs.cents_, rhs.negativeFormat_);
+  };
     
   // Function Overrides
   /// Format the dollar amount as a string

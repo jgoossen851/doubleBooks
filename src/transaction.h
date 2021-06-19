@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 
 #include "currency.h"
 #include "date.h"
@@ -25,19 +26,33 @@ class Transaction;
 class Record : public Entry {
  private:
   unsigned int        id_;
-  const Transaction*  parent_;
+  // Transaction &       parent_;
   std::string         title_;
   int                 period_; // Change to class Period
   Category            category_;
   Currency            amount_;
   std::string         memo_;
+  Date          date_;
+  std::string   vendor_;
+  bool          isBalanced_;
   
   int getSortValue() const override;
   
  public:
   // Record();
-  Record(const Transaction*             parent,
-         const std::vector<std::string> strVec);
+  // Record(Transaction              &parent,
+  //        const std::vector<std::string> &strVec);
+  Record( const unsigned int    id,
+                  const std::string   title,
+                  const int           period, // Change to class Period
+                  const Date          date,
+                  const Category      category,
+                  const Currency      amount,
+                  const std::string   vendor,
+                  const std::string   memo,
+                  const bool          isBalanced
+                  );
+
 
   std::vector<std::string> formatEntry() const override;
 
@@ -54,7 +69,7 @@ class Record : public Entry {
   Date                getDate()         const;
   bool                getIsBalanced()   const;
   std::string         getVendor()       const;
-  const Transaction*  getParent()       const {return parent_;}
+  // Transaction &       getParent()       const {return parent_;}
 };
 
 
@@ -64,7 +79,7 @@ class Transaction : public Entry {
   Date          date_;
   std::string   vendor_;
   bool          isBalanced_;
-  
+ public: 
   std::vector<Record>  records_;
   
   int getSortValue() const override {
@@ -78,6 +93,16 @@ class Transaction : public Entry {
   std::vector<std::string> formatEntry() const override;
 
   bool addRecord(const std::vector<std::string> strVec);
+  bool addRecord( const unsigned int  id,
+                  const std::string   title,
+                  const int           period, // Change to class Period
+                  const Date          date,
+                  const Category      category,
+                  const Currency      amount,
+                  const std::string   vendor,
+                  const std::string   memo,
+                  const bool          isBalanced
+                  );
   
   unsigned int  getId()         const {return id_;}
   Currency      getAmount()     const {return Currency(0);} // Placeholder

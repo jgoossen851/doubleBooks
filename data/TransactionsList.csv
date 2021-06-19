@@ -10,7 +10,7 @@ Field Width		The number signs (#) below the header determine
 Transactions		Must have integer ID to be processed							
 									
 ID	Parent	Entry Title	Entry Number	Entry Date	Category	Transaction Amount	Vendor	Memo	Statement
-######	######	###########################	####	########	#########################	########	##########	###########################################################################	#
+######	######	###########################	####	########	#########################	########	##########	#################################################################	#
 1		Income Taxes	2101	01/01/21	Taxes	122.56		Sample note on the taxes paid	0
 2		Gadget	2101	01/10/21	Household	12.36	Widgets, Inc.	Some household gadget that was not needed, and probably serves no purpose whatsoever	1
 3		Car Insurance	2102	02/05/21	DB	53.21			0
@@ -22,3 +22,4 @@ ID	Parent	Entry Title	Entry Number	Entry Date	Category	Transaction Amount	Vendor
 13	13	Food	2103	03/03/21	Groceries	35.65	General Store		0
 14	13	Supplies	2103	X	Household	12.5	X	Table¶Chairs (beneath the table)	X
 15	13	Pharmacy	2103	X	Medical	42.21	X	Snake Oil	X
+16								Not a lot of info on this one...	
