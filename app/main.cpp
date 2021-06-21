@@ -28,7 +28,7 @@ int main() {
   gCategoryList_.push_back(CategoryDescriptions(13, "Thirteenth Cat", 0, 88,  true,   true));
 
   // Set up files
-  Csv transactionsList("./data/TransactionsList.csv");
+  Csv transactionsList("../data/TransactionsList.csv");
   std::cout << "CSV opened." << std::endl;
   
   // Load database
