@@ -31,7 +31,7 @@ class CategoryDescriptions {
 };
 
 /// @todo Remove global variable. Construct Categories with a category list.
-extern std::vector<CategoryDescriptions>  gCategoryList_;
+// extern std::vector<CategoryDescriptions>  gCategoryList_;
 
 class Category : public Element {
   /// @todo Reenable this internal category list. Make a reference to allow all categories to share the same list?
@@ -51,17 +51,18 @@ class Category : public Element {
     id_ = str.size(); // Placeholder
     return;
   }
-  const void* value_ptr(void) const override {return &gCategoryList_[id_].displayOrder_;}
+  const void* value_ptr(void) const override {return nullptr;} // Placeholder         &gCategoryList_[id_].displayOrder_;}
   bool operator<(const Element &rhs) const override;
 
   CategoryDescriptions getDescription() const {
-    if (id_ >= gCategoryList_.size()){ /// @todo Placeholder
-      std::cout << "ERROR: Id is too high. Id = " << id_ << " and size = " << gCategoryList_.size() << std::endl;
-      return gCategoryList_.at(0); 
-    }
-    // Do bounds check on id_ in cagetory list
-    assert(id_ < gCategoryList_.size() && "No entry in Category List for this ID");
-    return gCategoryList_.at(id_);
+    return CategoryDescriptions(0,  "", 0, 0, false, false); // Placeholder
+    // if (id_ >= gCategoryList_.size()){ /// @todo Placeholder
+    //   std::cout << "ERROR: Id is too high. Id = " << id_ << " and size = " << gCategoryList_.size() << std::endl;
+    //   return gCategoryList_.at(0); 
+    // }
+    // // Do bounds check on id_ in cagetory list
+    // assert(id_ < gCategoryList_.size() && "No entry in Category List for this ID");
+    // return gCategoryList_.at(id_);
   }
   std::string getName()       const {return getDescription().name_;}
   int         getType()       const {return getDescription().type_;}

@@ -5,8 +5,8 @@
 #include <cassert>
 // #include <iostream>
 
-#include "ansi.h"
-#include "strings.h"
+// #include "ansi.h"
+// #include "strings.h"
 
 Currency::Currency(NegativeFormat negativeFormat) 
   : negativeFormat_(negativeFormat)
@@ -61,7 +61,7 @@ std::string Currency::format_negative_string(std::string positiveString) const {
       negativeString = "(" + positiveString + ")";
       break;
     case RED_COLOR :
-      negativeString = ansi::SAVE_ATTRIBUTES + ansi::RED + positiveString + ansi::RESTORE_ATTRIBUTES;
+      negativeString = "RED"; // Placeholder       ansi::SAVE_ATTRIBUTES + ansi::RED + positiveString + ansi::RESTORE_ATTRIBUTES;
       break;
     default :
       negativeString = "-" + positiveString;
@@ -75,7 +75,7 @@ bool Currency::operator<(const Element &rhs) const {
 }
 
 void Currency::setFromStr(std::string str) {
-  double dollars = Strings::toDouble(str);
+  double dollars = 0.0 ; // Placeholder     Strings::toDouble(str);
   // std::cout << "Currency, set to [" << dollars << "]" << std::endl;
   cents_ = round(dollars*100);
   double residual = cents_ - dollars*100;

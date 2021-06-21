@@ -3,6 +3,8 @@
 #define DEBUG_MODE 0
 
 #include <fstream>
+#include <iostream>
+#include <exception>
 
 #include "strings.h"
 
@@ -18,6 +20,18 @@ Csv::Csv(const char * filename)
 StringDatabase Csv::load(){
 
   std::ifstream file(filename_);
+  try
+  {
+    if (!file.good()) {
+      throw std::runtime_error("Error opening file " + std::string(filename_));
+    }
+  }
+  catch(const std::exception& e)
+  {
+    std::cerr << e.what() << '\n';
+    exit(EXIT_FAILURE);
+  }
+
   std::string line;
   StringDatabase db;
   
