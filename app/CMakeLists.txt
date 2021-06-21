@@ -9,12 +9,12 @@ set(HEADER_FILES
                 ../include/transaction.h
 )
 set(SOURCE_FILES 
-                ../src/ansi.cpp
-                ../src/csv.cpp
-                ../src/database.cpp
-                ../src/strings.cpp
-                ../src/table.cpp
-                ../src/transaction.cpp
+                ${PROJECT_SOURCE_DIR}/src/ansi.cpp
+                ${PROJECT_SOURCE_DIR}/src/csv.cpp
+                ${PROJECT_SOURCE_DIR}/src/database.cpp
+                ${PROJECT_SOURCE_DIR}/src/strings.cpp
+                ${PROJECT_SOURCE_DIR}/src/table.cpp
+                ${PROJECT_SOURCE_DIR}/src/transaction.cpp
 )
 
 
@@ -30,3 +30,8 @@ target_link_libraries(${PROJECT_NAME} PUBLIC Datafield)
 target_include_directories(${PROJECT_NAME} PUBLIC 
                               ../include
                               )
+
+# Install the application
+install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/../${HEADER_FILES}
+        DESTINATION include)

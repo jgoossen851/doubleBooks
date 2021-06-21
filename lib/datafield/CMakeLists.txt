@@ -21,6 +21,6 @@ target_include_directories(Datafield
     PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include"
 )
 
-# # Install the library
-# install(TARGETS Datafield DESTINATION lib)
-# install(FILES ${HEADER_FILES} DESTINATION include)
+# Install the library
+install(TARGETS Datafield DESTINATION lib)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${HEADER_FILES} DESTINATION include)
