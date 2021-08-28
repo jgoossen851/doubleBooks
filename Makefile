@@ -1,9 +1,15 @@
-# Makefile for C++ RT-MPDMC Project
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#
+# Copyright (c) 2021, Jeremy Goossen jeremyg995@gmail.com
 
-# Makefile based on Job Vranish's example for compiling medium
-# sized projects in C++, C, and assembly
+# This Makefile is based on Job Vranish's blog post for compiling
+# medium sized projects in C++, C, and assembly
 # "A Super-Simple Makefile for Medium-Sized C/C++ Projects"
+# on 26 August 2016
 # https://spin.atomicobject.com/2016/08/26/makefile-c-projects/
+
 
 # This file supports:
 #  Out-of-source builds (object files get dumped in a separate 
@@ -11,7 +17,7 @@
 #  Automatic (and accurate!) header dependencies
 #  Automatic determination of list of object/source files
 #  Automatic generation of include directory flags
-# -------------------------------------------------------------
+
 
 # Define programs
 ifeq ($(OS),Windows_NT)
