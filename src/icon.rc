@@ -1,4 +1,6 @@
-// Define an Icon resource
-icon  ICON  "./src/Custom-Icon-Design-Pretty-Office-11-Coin-us-dollar.ico"
-/* Icon downloaded from:
-   https://iconarchive.com/show/pretty-office-11-icons-by-custom-icon-design/coin-us-dollar-icon.html */
+/*
+Icon design by Aleksandr Reva
+  https://www.iconfinder.com/icons/1059389/wallet_cash_coin_money_pay_icon
+*/
+icon  ICON  "./res/1059389_wallet_cash_coin_money_pay_icon.ico"
+
