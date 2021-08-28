@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<!--
+Inspired by Robert Elder
+https://blog.robertelder.org/custom-mime-type-ubuntu/
+-->
+<svg id="icons" viewBox="0 0 128 128" height="128" width="128">
+  <ellipse cx="42" cy="42" rx="35" ry="35" style="fill:brown" />
+  <ellipse cx="86" cy="42" rx="35" ry="35" style="fill:orange" />
+  <ellipse cx="86" cy="86" rx="35" ry="35" style="fill:gold" />
+  <ellipse cx="42" cy="86" rx="35" ry="35" style="fill:olive" />
+</svg>

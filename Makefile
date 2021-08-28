@@ -108,7 +108,7 @@ else
 .PHONY: icon
 icon:
 	$(ECHO) "\033[33mCompiling \033[1m$<\033[0m"
-	cp src/$(TARGET_EXEC).desktop ~/.local/share/applications/
+	cp res/target.desktop ~/.local/share/applications/
 
 endif
 

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=To Be Determined
+Comment=A Short Description
+Exec=bash -c '/home/jeremy/Documents/projects/new_project/bin/budget %f;$SHELL'
+Icon=/home/jeremy/Documents/projects/new_project/res/icon_executable.svg
+Terminal=true
+MimeType=text/csv
+
