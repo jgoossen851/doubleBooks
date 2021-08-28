@@ -16,9 +16,8 @@ cmake --install .
 
 ## Using the Program
 
-Run the program generated in the repository's `bin` directory. From the `build/` directory, run
+Run the program generated in the repository's `bin` directory. Pass the data file to parse as the only argument to the function. From the `build/` directory, run
 
 ```bash
-../bin/budget
+../bin/budget ../data/TransactionsList.csv
 ```
-
