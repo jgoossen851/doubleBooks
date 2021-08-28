@@ -8,8 +8,14 @@
  /// @todo Figure out what to do with this global variable
   std::vector<CategoryDescriptions>  gCategoryList_;
 
-int main() {
- 
+int main(int argc, char* argv[]) {
+
+  // Check that a single argument was given
+  if (argc != 2) {
+    std::cerr << argv[0] << " requires a single argument containing the file to parse." << std::endl;
+    return 1;
+  }
+
   // Placeholder: setup categories, rather than reading from file
   // ID, Name, Type, Display Order, isExpense, isBudgeted
   gCategoryList_.push_back(CategoryDescriptions(0,  "Zeroth Cat",     0, 12,  true,   false));
@@ -28,7 +34,7 @@ int main() {
   gCategoryList_.push_back(CategoryDescriptions(13, "Thirteenth Cat", 0, 88,  true,   true));
 
   // Set up files
-  Csv transactionsList("./data/TransactionsList.csv");
+  Csv transactionsList(argv[1]);
   std::cout << "CSV opened." << std::endl;
   
   // Load database
