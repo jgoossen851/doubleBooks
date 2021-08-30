@@ -139,3 +139,143 @@ What does the program do?
   * `SA` Display the transfered amount to allow to balance with bank statement (pending-item reconciliation in `SA`)
   * `NEW` Display on some main display the pending transaction amount to let user know when "its time" to do a reconciliation.
 
+## New Program Structure
+
+* Main Menu:
+  * `Edit Setup`
+    * `Categories` Displays current categories, in display order. *Display List Editing Options*
+    * `Budget` *Process saved budgets and large costs*.  *Display List Editing Options*
+      * `LEFT/RIGHT` Change selection from savings to checking to large entry, etc. How to enter numbers? How to enter budgeted items as percents?
+    * `Living Expenses Cap` Set the desired cap for `CFP` Savings + Checking
+    * `Savings Subaccounts` *Display List Editing Options*
+  * `Enter Transaction (Receipt)` *Process database*. Shows latest transactions in database
+
+### Actions
+
+*Process Database*: Apply active filters and sorts to generate new database. Cache this for faster processing.
+
+*Display List Editing Options*: Displays current list
+
+* `UP/DOWN` moves cursor up/down
+
+* `[0-100] ENTER` moves the cursor to position #
+
+* `New` Enters appropriate **Entry Form**
+* `Edit` Enters appropriate **Entry Form**. Prefills form with current data.
+* `Reorder` Selects the current category. Enters **Reorder Form**
+
+### Forms
+
+**Entry Form Template** (data entry template)
+
+For all forms:
+
+* `TAB`, `RIGHT` Next
+* `SHIFT-TAB`, `LEFT` Previous
+* `ENTER` Done
+* `[A-z]|[0-9]` Enter data in current field, or choose matching from dropdown.
+* `UP/DOWN` Move to lower field, or Move through dropdown.
+
+
+
+**Categories Entry Form**
+
+`Transaction Type`, `Budgeted`
+
+**Budget Entry Form**
+
+Display all categories. If large cost selected, open **Large Cost Entry Form**.
+
+**Large Cost Entry Form**
+
+Fill in `Name`, `Amount`, `Months`, `Category` (from dropdown)
+
+Compute budget entry.
+
+**Reorder Form** (different template)
+
+Display current selections as (with color for selection):
+
+```
+1 -/ Alpha
+2 -/ Bravo
+3 -/ Charlie
+4 -- [DELTA]
+5 -\ Echo
+6 -\ Foxtrot
+7 -\ Golf
+```
+
+The lines show where the selected item will fall when number is selected. Use unicode for better arrows.
+
+* `UP/DOWN` moves cursor up/down
+* `SHIFT UP/DOWN` moves selection up/down
+* `[0-100] ENTER` moves the cursor to position #
+* `SHIFT [0-100] ENTER` moves the category to position #
+* `H` Hide. Transactions of this type will all be conglomerated under a single category "Hidden" (so things still balance). They will not appear in any filters. They will still appear on reports with all categories shown under "Hidden"
+
+### Data Structure
+
+GnuCash accounting principles.
+
+Transactions into Splits. Each Split has one account. A transaction has at least two splits. All splits sum to zero.
+
+Accounting Equation: Assets - Liabilities = Equity + (Income - Expenses)
+
+| Income ---> | Equity = (Assets - Liabilities) | Expenses --> |
+| ----------- | :-----------------------------: | ------------ |
+|             | Assets (+)      Liabilities (-) |              |
+
+Balance Sheet Accounts: Assets, Liabilites, Equity. **Track** what you own, owe.
+
+Income and Expense Accounts: Income, Expense. **Change** what you own, owe.
+
+Accounts:
+
+* Assets`C-D+` (anything with convertible value. House, car, cash, stocks, ...)
+  * Cash (most liquid)
+  * Bank (second most liquid - easily traded for cash) [Reconcile Bank Statements]
+    * Checking (Debit Card)
+    * Savings
+  * Stock (stocks & bonds. Shares and price. Not convertible unless there's a buyer. May not get same amount for them.)
+  * Mutual Fund (Basically like stocks)
+  * Accounts Receivable (A/Receivable: business only account. Place debts here that are owed to you, you can count on them.)
+  * Other Assets
+* Equity `C+D-`(Net worth, Assets - liabilities, what you own outright without debt.)
+  * Equity (put opening balances here, as they are beginning net worth.) (typically only one account, unless in a business with a partner where you can each have one.)
+    * Initial Balance
+    * Retained Earnings (at the end of the year/period? you want your income and expenses to be zero. You convert the difference to equity - you net worth has increased/decreased. Balances net income, i.e. income-expenses )
+* Income `C+D-` (Payment for time, service, use of money. Paycheck, dividends, interest. Income always increases Assets)
+  * Income
+    * Paycheck
+    * Interest
+* Expense `C-D+`(Money you spend **for early consumption**??. Meal, rent, groceries, gas, tickets. Always decrease equity - if immediate, it decreases Assets, if delayed, it increases Liabilities.)
+  * Expense
+    * Category 1
+    * Category 2
+* Liabilities `C+D-` (things on which you own money. Loans, mortgage, credit card)
+  * Credit Card (Credit Card receipts, reconcile Credit Card statements) (Short term Loan)
+    * Credit Card 1
+    * Credit Card 2
+  * Accounts Payable (A/Payable: business-only account for bills you owe.)
+  * Liability (Larger Loans: Car, Mortgage, etc.)
+
+Credits are money leaving an account. Debits are money going in.
+
+**How do my transactions work:**
+
+Receipt:
+
+* Assets + Expense
+* Liabilities + Expense && (Assets + Liabilities periodically)
+* Assets + Income
+
+Allocation:
+
+* Assets::Checking + Assets::Savings
+* Assets + Assets in general
+
+Interest Payments: (nothing weird here, as it goes to savings, so another "allocation" is not needed to list it with the savings.)
+
+* Income::Interest + Assets::Savings
+
