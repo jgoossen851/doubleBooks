@@ -49,7 +49,7 @@ add_subdirectory(src-trees)
 add_subdirectory(doc)
 
 # Add icon from resources
-add_subdirectory(res)
+add_subdirectory(res/icons)
 
 # uninstall target (requires root)
 if(NOT TARGET uninstall)

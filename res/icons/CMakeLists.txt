@@ -37,10 +37,10 @@ set(PROG_ICON_PATH "${SHARE_DIR}/icons/hicolor/scalable/apps")
 
 # Configure resource files
 message(STATUS "Configuring Desktop entry")
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/icons/target.desktop.in ${PROJECT_BINARY_DIR}/res/target.desktop)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/target.desktop.in ${PROJECT_BINARY_DIR}/res/target.desktop)
 
 message(STATUS "Configuring MIME type definition")
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/icons/target.xml.in ${PROJECT_BINARY_DIR}/res/target.xml)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/target.xml.in ${PROJECT_BINARY_DIR}/res/target.xml)
 
 
 # TODO:
@@ -50,8 +50,8 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/icons/target.xml.in ${PROJECT_BINARY_
 #fi
 
 # Install icons
-INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/icons/${PROGRAM_ICON} DESTINATION ${PROG_ICON_PATH} RENAME ${PROGRAM_ICON_FILE})
-INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/icons/${MIME_ICON} DESTINATION ${ICON_PATH} RENAME ${ICON_RESOURCE_I})
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${PROGRAM_ICON} DESTINATION ${PROG_ICON_PATH} RENAME ${PROGRAM_ICON_FILE})
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${MIME_ICON} DESTINATION ${ICON_PATH} RENAME ${ICON_RESOURCE_I})
 
 # Generate Desktop Entry File
 INSTALL(FILES ${PROJECT_BINARY_DIR}/res/target.desktop DESTINATION ${DESKTOP_PATH} RENAME ${DESKTOP_FILE})
@@ -151,10 +151,10 @@ INSTALL(CODE "
 #set(APP_PIXMAPS_DIR "/usr/share/icons/hicolor/scalable/mimetypes")
 
 #INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/target.desktop DESTINATION ${APP_DESKTOP_DIR})
-#INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/icons/target.xml DESTINATION ${APP_DESKTOP_DIR})
+#INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/target.xml DESTINATION ${APP_DESKTOP_DIR})
 
 # Copy the pixmap
-#INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/icons/1059389_wallet_cash_coin_money_pay_icon.svg DESTINATION ${APP_PIXMAPS_DIR})
+#INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/1059389_wallet_cash_coin_money_pay_icon.svg DESTINATION ${APP_PIXMAPS_DIR})
 
 # Try to set up the menu system
 ##find_program(XDG-MIME_EXECUTABLE xdg-mime)
@@ -168,9 +168,9 @@ INSTALL(CODE "
 #)
 
 #INSTALL(CODE "
-#  execute_process(COMMAND ${XDG-MIME_EXECUTABLE} install --novendor ${CMAKE_CURRENT_SOURCE_DIR}/icons/target.xml)
-#  execute_process(COMMAND ${XDG-DESKTOP-MENU_EXECUTABLE} install --novendor ${CMAKE_CURRENT_SOURCE_DIR}/icons/target.desktop)
-#  execute_process(COMMAND ${XDG-MIME_EXECUTABLE} default ${CMAKE_CURRENT_SOURCE_DIR}/icons/target.desktop ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/budget)
+#  execute_process(COMMAND ${XDG-MIME_EXECUTABLE} install --novendor ${CMAKE_CURRENT_SOURCE_DIR}/target.xml)
+#  execute_process(COMMAND ${XDG-DESKTOP-MENU_EXECUTABLE} install --novendor ${CMAKE_CURRENT_SOURCE_DIR}/target.desktop)
+#  execute_process(COMMAND ${XDG-MIME_EXECUTABLE} default ${CMAKE_CURRENT_SOURCE_DIR}/target.desktop ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/budget)
 #  "
 #)
 
