@@ -21,3 +21,5 @@ foreach(file ${files})
   endif()
 endforeach()
 
+message(STATUS "Removing Install Manifest")
+file(REMOVE "@CMAKE_BINARY_DIR@/install_manifest.txt")
