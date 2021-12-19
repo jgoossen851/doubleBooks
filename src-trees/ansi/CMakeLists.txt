@@ -7,23 +7,19 @@
 cmake_minimum_required(VERSION 3.5.1)
 
 # Set the CMake target name and files for this subdirectory
-set(TARGET_NAME ${PROJECT_NAME})
+set(TARGET_NAME Ansi)
 
 set(SOURCE_FILES
-    src/main.cpp
+    src/ansi.cpp 
 )
 
-configure_file(include/version.h.in ${PROJECT_BINARY_DIR}/include/version.h)
-
 set(INCLUDE_FILES
-    ${PROJECT_BINARY_DIR}/include/version.h
+    include/ansi.h
+    include/ansi.tcc
 )
 
 # Create a new target with the source and header files as dependencies
-add_executable("${TARGET_NAME}" ${SOURCE_FILES} ${INCLUDE_FILES})
-
-# Set the output name of the binary executable
-set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "budget")
+add_library("${TARGET_NAME}" STATIC "${SOURCE_FILES}" "${INCLUDE_FILES}")
 
 # The keywords PUBLIC, PRIVATE, and INTERFACE are used for both Include
 # Directories and Link Libraries.
@@ -36,16 +32,13 @@ set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "budget")
 
 # Specify include directories to use when compiling the given target
 target_include_directories("${TARGET_NAME}"
-    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-    PRIVATE ${PROJECT_BINARY_DIR}/include
+    PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include"
 )
 
 # Specify libraries or flags to use when linking a given target and/or its dependents
 target_link_libraries("${TARGET_NAME}"
-    PRIVATE Datafield Ansi Misc
 )
 
-# If install target is built, create a local installation of target
-install(TARGETS "${TARGET_NAME}" DESTINATION bin)
-# install(FILES ${PATH_TO_INCLUDE_FILES}
-#         DESTINATION include)
+# # Install the library
+# install(TARGETS "${TARGET_NAME}" DESTINATION lib)
+# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${HEADER_FILES} DESTINATION include)

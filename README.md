@@ -17,7 +17,7 @@ cmake ..
 cmake --build .
 make docs
 make test
-sudo cmake --install .
+sudo make install
 ```
 
 ## Using the Program
