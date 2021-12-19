@@ -1,8 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Budgeting
-Comment=A Short Description of the Budget Program
-Exec=bash -c 'budget %f;$SHELL'
-Icon=/usr/share/icons/hicolor/scalable/apps/budget.svg
-Terminal=true
-MimeType=application/csv-data-table

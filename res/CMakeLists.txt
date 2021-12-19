@@ -1,20 +1,21 @@
 cmake_minimum_required(VERSION 3.5.1)
 
+# Set properties for installed program
+# TODO:
+# Set program name dynamically according to installed program name
+set(PROGRAM_NAME "budget")
+set(PROGRAM_DISPLAY_NAME "Budgeting")
+set(PROGRAM_COMMENT "A Short Description of the Budget Program")
+set(PROGRAM_ICON "1059389_wallet_cash_coin_money_pay_icon.svg")
+
+# Set properties for associated MIME types
 set(MIME_TYPE "application")
 set(MIME_SUBTYPE "csv-data-table")
 set(MIME_COMMENT "Data Table for budget program")
 set(MIME_EXTENSION ".tab")
 set(MIME_ICON "Gthumb.svg")
-#set(MIME_ICON "${MIME_TYPE}-${MIME_SUBTYPE}.svg")
 
-set(PROGRAM_ICON "1059389_wallet_cash_coin_money_pay_icon.svg")
-#set(PROGRAM_ICON "budget.svg")
-
-# TODO:
-# Set this dynamically according to installed program name
-set(PROGRAM_NAME "budget")
-
-
+# Set installed file names
 set(DESKTOP_FILE "${PROGRAM_NAME}.desktop")
 set(MIME_TYPE_FILE "${PROGRAM_NAME}.xml")
 set(PROGRAM_ICON_FILE "${PROGRAM_NAME}.svg")
@@ -36,9 +37,17 @@ set(MIME_TYPE_PATH "${SHARE_DIR}/mime/packages")
 set(ICON_PATH "${SHARE_DIR}/icons/hicolor/scalable/mimetypes")
 set(PROG_ICON_PATH "${SHARE_DIR}/icons/hicolor/scalable/apps")
 
+# Configure resource files
+message(STATUS "Configuring Desktop entry")
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/icons/target.desktop.in ${PROJECT_BINARY_DIR}/res/target.desktop)
+
+message(STATUS "Configuring MIME type definition")
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/icons/target.xml.in ${PROJECT_BINARY_DIR}/res/target.xml)
+
+
 # TODO:
 # Create Default applications file if it does not exit
-#if [ ! -f $DESKTOP_PATH/defaults.list ]; then    
+#if [ ! -f $DESKTOP_PATH/defaults.list ]; then
 #  $DO echo "[Default Applications]" > $DESKTOP_PATH/defaults.list
 #fi
 
@@ -47,16 +56,10 @@ INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/icons/${PROGRAM_ICON} DESTINATION ${PR
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/icons/${MIME_ICON} DESTINATION ${ICON_PATH} RENAME ${ICON_RESOURCE_I})
 
 # Generate Desktop Entry File
-# TODO:
-# Make ${PROGRAM_NAME}.desktop a generated file from target.desktop.in
-# for consistency with settings here.
-INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/icons/target.desktop DESTINATION ${DESKTOP_PATH} RENAME ${DESKTOP_FILE})
+INSTALL(FILES ${PROJECT_BINARY_DIR}/res/target.desktop DESTINATION ${DESKTOP_PATH} RENAME ${DESKTOP_FILE})
 
 # Generate MIME XML File
-# TODO:
-# Make ${PROGRAM_NAME}.xml a generated file from target.xml.in
-# for consistency with settings here.
-INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/icons/target.xml DESTINATION ${MIME_TYPE_PATH} RENAME ${MIME_TYPE_FILE})
+INSTALL(FILES ${PROJECT_BINARY_DIR}/res/target.xml DESTINATION ${MIME_TYPE_PATH} RENAME ${MIME_TYPE_FILE})
 
 # TODO:
 # Append default application for extensions
