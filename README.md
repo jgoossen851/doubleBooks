@@ -15,7 +15,9 @@ mkdir -p build
 cd build/
 cmake ..
 cmake --build .
-cmake --install .
+make docs
+make test
+sudo cmake --install .
 ```
 
 ## Using the Program
