@@ -45,6 +45,12 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")
 # add the library and executable subdirectories
 add_subdirectory(src-trees)
 
+# Add documentation
+add_subdirectory(doc)
+
+# Add icon from resources
+add_subdirectory(res)
+
 # uninstall target (requires root)
 if(NOT TARGET uninstall)
   configure_file(
@@ -55,12 +61,6 @@ if(NOT TARGET uninstall)
   add_custom_target(uninstall
     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
 endif()
-
-# Add documentation
-add_subdirectory(doc)
-
-# Add icon from resources
-add_subdirectory(res)
 
 
 ## TESTING ##

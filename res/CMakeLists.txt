@@ -1,9 +1,6 @@
 cmake_minimum_required(VERSION 3.5.1)
 
 # Set properties for installed program
-# TODO:
-# Set program name dynamically according to installed program name
-set(PROGRAM_NAME "budget")
 set(PROGRAM_DISPLAY_NAME "Budgeting")
 set(PROGRAM_COMMENT "A Short Description of the Budget Program")
 set(PROGRAM_ICON "1059389_wallet_cash_coin_money_pay_icon.svg")
@@ -16,6 +13,7 @@ set(MIME_EXTENSION ".tab")
 set(MIME_ICON "Gthumb.svg")
 
 # Set installed file names
+get_target_property(PROGRAM_NAME ${PROJECT_NAME} OUTPUT_NAME)
 set(DESKTOP_FILE "${PROGRAM_NAME}.desktop")
 set(MIME_TYPE_FILE "${PROGRAM_NAME}.xml")
 set(PROGRAM_ICON_FILE "${PROGRAM_NAME}.svg")
@@ -83,7 +81,7 @@ INSTALL(CODE "
 find_program(UPDATE-ICON-CACHES_EXECUTABLE update-icon-caches)
 INSTALL(CODE "
   message(STATUS \"Updating icon cache\")
-  execute_process(COMMAND ${UPDATE-ICON-CACHES_EXECUTABLE} ${SHARE_DIR}/icons/\*)
+  execute_process(COMMAND ${UPDATE-ICON-CACHES_EXECUTABLE} \"${SHARE_DIR}/icons/\*\")
 ")
 
 find_program(UPDATE-DESKTOP-DATABASE_EXECUTABLE update-desktop-database)
