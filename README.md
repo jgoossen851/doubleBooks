@@ -2,6 +2,10 @@
 
 A C++ program to record transactions, help with budgeting etc.
 
+## Dependencies
+
+
+
 ## Building and Installing the Program
 
 Do the following
