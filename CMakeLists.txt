@@ -59,6 +59,9 @@ endif()
 # Add documentation
 add_subdirectory(doc)
 
+# Add icon from resources
+add_subdirectory(res)
+
 
 ## TESTING ##
 include(CTest)
