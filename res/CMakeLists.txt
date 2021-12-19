@@ -20,7 +20,8 @@ set(MIME_TYPE_FILE "${PROGRAM_NAME}.xml")
 set(PROGRAM_ICON_FILE "${PROGRAM_NAME}.svg")
 set(ICON_RESOURCE_I "${MIME_TYPE}-${MIME_SUBTYPE}.svg")
 
-
+# TODO:
+# Make these dynamic so that CPack (possibly) installs these in .../build/_CPackPackages/Linux/*/Budget-x.x.x-Linux/bin (rather than in system?)
 # Select Local or Global Installation
 #  Local:
 #set(SHARE_DIR "$HOME/.local/share")
