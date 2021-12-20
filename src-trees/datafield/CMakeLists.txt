@@ -46,3 +46,26 @@ target_link_libraries("${TARGET_NAME}"
 # # Install the library
 # install(TARGETS "${TARGET_NAME}" DESTINATION lib)
 # install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${HEADER_FILES} DESTINATION include)
+
+
+## TESTING ##
+set(TEST_TARGET_NAME "${TARGET_NAME}.test")
+
+set(TEST_FILES
+    test/datafield.test.cpp
+)
+
+# Create a new target with the source and header files as dependencies
+add_executable("${TEST_TARGET_NAME}" ${TEST_FILES} ${SOURCE_FILES} ${INCLUDE_FILES})
+
+# Specify include directories to use when compiling the given target
+target_include_directories("${TEST_TARGET_NAME}"
+    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+# Specify libraries or flags to use when linking a given target and/or its dependents
+target_link_libraries("${TEST_TARGET_NAME}"
+)
+
+# Add build-in self test (BIST) to test list
+add_test(NAME "${TARGET_NAME}-BIST" COMMAND Datafield.test)
