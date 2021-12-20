@@ -6,6 +6,7 @@
 
 # Add the library subdirectories
 add_subdirectory(ansi)
+add_subdirectory(csv)
 add_subdirectory(datafield)
 # add_subdirectory(fileio)
 add_subdirectory(misc)

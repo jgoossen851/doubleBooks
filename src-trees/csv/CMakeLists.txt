@@ -7,19 +7,16 @@
 cmake_minimum_required(VERSION 3.5.1)
 
 # Set the CMake target name and files for this subdirectory
-set(TARGET_NAME Misc)
+set(TARGET_NAME Csv)
 
 set(SOURCE_FILES
-    src/database.cpp
-    src/table.cpp
-    src/transaction.cpp
+    src/csv.cpp
+    src/strings.cpp
 )
 
 set(INCLUDE_FILES
-    include/database.h
-    include/format.h
-    include/table.h
-    include/transaction.h
+    include/csv.h
+    include/strings.h
 )
 
 # Create a new target with the source and header files as dependencies
@@ -41,8 +38,6 @@ target_include_directories("${TARGET_NAME}"
 
 # Specify libraries or flags to use when linking a given target and/or its dependents
 target_link_libraries("${TARGET_NAME}"
-    PUBLIC Datafield Csv
-    PRIVATE Ansi
 )
 
 # # Install the library
