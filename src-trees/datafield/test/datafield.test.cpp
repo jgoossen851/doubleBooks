@@ -5,9 +5,11 @@
  * Copyright (c) 2021, Jeremy Goossen jeremyg995@gmail.com
  */
 
+#include "ansi.h"
 #include "currency.h"
 #include "date.h"
 #include "category.h"
+#include "account.h"
 
 #include <cstdlib>
 #include <iostream>
@@ -37,6 +39,16 @@ int main() {
 
   Category category;
   exitStatus |= runTest("Category", &category, "Cat1", "************");
+
+  Account account;
+  exitStatus |= runTest("Account", &account, "Savings", "************");
+
+  // Display Test Status
+  std::cout << (exitStatus ? ansi::RED : ansi::GREEN)
+            << std::string(15, '#')
+            << " Tests " << (exitStatus ? "Failed!" : "Passed!") << " "
+            << std::string(15, '#')
+            << ansi::RESET << std::endl;
 
   return exitStatus;
 }

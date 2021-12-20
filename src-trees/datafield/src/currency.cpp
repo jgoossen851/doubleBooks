@@ -87,7 +87,7 @@ void Currency::setFromStr(std::string str) {
   cents_ = round(dollars*100);
   double residual = cents_ - dollars*100;
   // std::cout << "Residual is " << residual << " and cents is " << cents_ << std::endl;
-  assert(abs(residual) < 0.001);
+  assert(fabs(residual) < 0.001);
   return;
 }
 

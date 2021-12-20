@@ -12,8 +12,8 @@
 
 /// Base class for transaction elements
 class Element{
-  public:
-  /// Function to format the element as a string
+ public:
+  /// Function to format the element as a string for printing
   virtual std::string str(const unsigned int &max_characters) const =0;
   /// Function to initialize the element from a string
   virtual void setFromStr(std::string str) =0;
