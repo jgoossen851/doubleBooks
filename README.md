@@ -2,6 +2,10 @@
 
 A C++ program to record transactions, help with budgeting etc.
 
+## Dependencies
+
+
+
 ## Building and Installing the Program
 
 Do the following
@@ -11,7 +15,9 @@ mkdir -p build
 cd build/
 cmake ..
 cmake --build .
-cmake --install .
+make docs
+make test
+sudo make install
 ```
 
 ## Using the Program

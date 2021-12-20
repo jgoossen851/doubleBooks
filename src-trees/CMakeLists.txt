@@ -4,5 +4,11 @@
 #
 # Copyright (c) 2021, Jeremy Goossen jeremyg995@gmail.com
 
-# Add subdirectories for the libraries
+# Add the library subdirectories
+add_subdirectory(ansi)
 add_subdirectory(datafield)
+# add_subdirectory(fileio)
+add_subdirectory(misc)
+
+# Add the executable subdirectory
+add_subdirectory(app)

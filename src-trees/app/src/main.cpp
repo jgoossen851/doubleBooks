@@ -4,7 +4,8 @@
  *
  * Copyright (c) 2021, Jeremy Goossen jeremyg995@gmail.com
  */
- 
+
+#include "version.h"
 #include "csv.h"
 #include "table.h"
 #include "currency.h"
@@ -19,6 +20,7 @@ int main(int argc, char* argv[]) {
 
   // Check that a single argument was given
   if (argc != 2) {
+    std::cout << argv[0] << " Version " << PROJECT_VERSION << std::endl;
     std::cerr << argv[0] << " requires a single argument containing the file to parse." << std::endl;
     return 1;
   }
