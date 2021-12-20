@@ -18,6 +18,15 @@ cmake --build .
 make docs
 make test
 sudo make install
+sudo make uninstall
+sudo make package
+sudo make package_source
+```
+
+To install the program without root privileges, run `cmake` as
+
+```bash
+cmake -DLocalInstall=YES ..
 ```
 
 ## Using the Program

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5.1)
+cmake_minimum_required(VERSION 3.7.1)
 
 # Set properties for installed program
 set(PROGRAM_DISPLAY_NAME "Budgeting")
@@ -19,15 +19,34 @@ set(MIME_TYPE_FILE "${PROGRAM_NAME}.xml")
 set(PROGRAM_ICON_FILE "${PROGRAM_NAME}.svg")
 set(ICON_RESOURCE_I "${MIME_TYPE}-${MIME_SUBTYPE}.svg")
 
+# Add option for local installation
+option(LocalInstall "Install locally without root privledges" OFF)
+
+# Set share directory to be a child of install location for any user-input install location
+set(SHARE_DIR "${CMAKE_INSTALL_PREFIX}/share")
+
 # TODO:
-# Make these dynamic so that CPack (possibly) installs these in .../build/_CPackPackages/Linux/*/Budget-x.x.x-Linux/bin (rather than in system?)
-# Select Local or Global Installation
-#  Local:
-#set(SHARE_DIR "$HOME/.local/share")
-#set(BIN_DIR "$HOME/.local/bin")
-#  Global:
-set(SHARE_DIR "/usr/share")
-set(BIN_DIR "/usr/local/bin")
+# Keep CPack from installing the icon resources to the system when creating install targets for package
+# Only set the installation location if not given with the --prefix command (CMake 3.15)
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+  if(LocalInstall)
+    message(STATUS "Configured for Local installation")
+    # Change default install location to a local directory not requiring root privledges
+    # IF(WINDOWS)
+      # set(CMAKE_INSTALL_PREFIX "C:/Users/$ENV{USER}/AppData/Local/Programs/${PROJECT_NAME}" CACHE PATH "..." FORCE)
+    # ELSE()
+      set(CMAKE_INSTALL_PREFIX "$ENV{HOME}/.local" CACHE PATH "..." FORCE)
+    # ENDIF()
+    # Update share directory
+    set(SHARE_DIR "${CMAKE_INSTALL_PREFIX}/share")
+  else()
+    # Update default location of global share directory
+    # IF(NOT WINDOWS)
+      set(SHARE_DIR "${CMAKE_INSTALL_PREFIX}/../share")
+    # ENDIF()
+  endif()
+endif()
+message(STATUS "Configured for installation at ${CMAKE_INSTALL_PREFIX}")
 
 # Name paths (could be distro-dependent)
 set(DESKTOP_PATH "${SHARE_DIR}/applications")
