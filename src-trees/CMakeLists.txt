@@ -5,6 +5,7 @@
 # Copyright (c) 2021, Jeremy Goossen jeremyg995@gmail.com
 
 # Add the library subdirectories
+add_subdirectory(accountList)
 add_subdirectory(ansi)
 add_subdirectory(csv)
 add_subdirectory(datafield)

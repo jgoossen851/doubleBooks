@@ -7,21 +7,14 @@
 cmake_minimum_required(VERSION 3.5.1)
 
 # Set the CMake target name and files for this subdirectory
-set(TARGET_NAME Datafield)
+set(TARGET_NAME AccountList)
 
 set(SOURCE_FILES
-    src/account.cpp
-    src/category.cpp 
-    src/currency.cpp 
-    src/date.cpp
+    src/accountList.cpp
 )
 
 set(INCLUDE_FILES
-    include/account.h
-    include/category.h
-    include/currency.h
-    include/date.h
-    include/element.h
+    include/accountList.h
 )
 
 # Create a new target with the source and header files as dependencies
@@ -43,7 +36,7 @@ target_include_directories("${TARGET_NAME}"
 
 # Specify libraries or flags to use when linking a given target and/or its dependents
 target_link_libraries("${TARGET_NAME}"
-    PUBLIC AccountList
+    Datafield Csv
 )
 
 # # Install the library

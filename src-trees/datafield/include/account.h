@@ -8,88 +8,40 @@
 #ifndef ACCOUNT_H_
 #define ACCOUNT_H_
 
-// #include <string>
-// #include <vector>
-// #include <iostream>
-// #include <cassert>
+#include <string>
+#include <vector>
 
 #include "element.h"
+#include "strings.h"
+#include "accountList.h"
 
-enum InheritBool{
-  FALSE = 0,  //!< False
-  TRUE = 1,   //!< True 
-  INHERITED,  //!< Value is not stored locally but must be ascertained from parent object
-  UNDEFINED   //!< Value is not set
-};
+
 
 class Account : public Element {
-  Account             *pParent_;
-  const unsigned int  sortOrder_;
-  const std::string   name_;
-  InheritBool         isBudgeted_;
-  InheritBool         isDebitIncrease_;
+  const AccountList *pAcctList_;
+  unsigned int      acctListInd_ = 0;
 
  public:
   /// Default constructor function
   Account()
-    : pParent_(nullptr),
-      sortOrder_(0),
-      name_("Undefined"),
-      isBudgeted_(UNDEFINED),
-      isDebitIncrease_(UNDEFINED)
+    : pAcctList_(nullptr)
     {}
-  
-  /// Parameterized constructor function
-  Account(unsigned int  sortOrder,
-          std::string   name,
-          InheritBool   isBudgeted,
-          InheritBool   isDebitIncrease,
-          Account       *pParent = nullptr
-          )
-    : pParent_(pParent),
-      sortOrder_(sortOrder),
-      name_(name),
-      isBudgeted_(isBudgeted),
-      isDebitIncrease_(isDebitIncrease)
-    {}
+
+  /// Parameterized constructor functions
+  Account(AccountList *pAcctList);
+  Account(AccountList *pAcctList, std::string str);
  
   // Override inherited functions
   std::string str(const unsigned int &max_characters = 12) const override {
-    // Recursively find name:
-    std::string fullname;
-    if (pParent_ == nullptr) {
-      fullname = name_;
-    } else {
-      fullname = pParent_->str(max_characters);
-      fullname.append(":");
-      fullname.append(name_);
-    }
-
-    return (fullname.length() > max_characters) 
-        ? fullname.substr(fullname.length() - max_characters, std::string::npos)
-        : fullname;
+    return pAcctList_->at(acctListInd_).str(max_characters);
+  }
+  void setFromStr(std::string str) override {
+    unsigned int index = Strings::toInteger(str);
+    acctListInd_ = index < pAcctList_->size() ? index : 0;
+    return;
   }
   const void* value_ptr(void) const override {return nullptr;} // Placeholder
   bool operator<(const Element &rhs) const override;
-
-  // Getter and Setter Functions
-  InheritBool getIsBudgeted(void) {
-    return isBudgeted_ == INHERITED ? pParent_->getIsBudgeted() : isBudgeted_;
-  }
-  InheritBool getIsDebitIncrease(void) {
-    return isDebitIncrease_ == INHERITED ? pParent_->getIsDebitIncrease() : isDebitIncrease_;
-  }
-  void setParent(Account *pParent = nullptr) {
-    pParent_ = pParent;
-    return;
-  };
-  void setIsBudgeted(const InheritBool isBudgeted) {
-    isBudgeted_ = isBudgeted;
-  };
-  void setIsDebitIncrease(const InheritBool isDebitIncrease) {
-    isDebitIncrease_ = isDebitIncrease;
-  };
-
 };
 
 #endif // ACCOUNT_H_

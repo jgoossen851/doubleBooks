@@ -17,6 +17,9 @@ struct StringDatabase{
   std::vector<std::string>              header;
   std::vector<unsigned int>             column_width; // in characters
   std::vector<std::vector<std::string>> body;
+  std::string at(unsigned int row, unsigned int col) {
+    return body.at(row).at(col);
+  }
 };
 
 class Csv {

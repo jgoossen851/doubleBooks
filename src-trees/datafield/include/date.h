@@ -17,7 +17,7 @@ class Date : public Element {
   public:
   Date(){};
   std::string str(const unsigned int &max_characters = 8) const override;
-  void setFromStr(std::string str);
+  void setFromStr(std::string str) override;
   const void* value_ptr(void) const override;
   bool operator<(const Element &rhs) const override;
 };

@@ -10,3 +10,15 @@
 bool Account::operator<(const Element &rhs) const {
   return *(static_cast<const int*>(this->value_ptr())) < *(static_cast<const int*>(rhs.value_ptr()));
 }
+
+
+/// Parameterized constructor functions
+  Account::Account(AccountList *pAcctList)
+      : pAcctList_(pAcctList)
+      {}
+
+  Account::Account(AccountList *pAcctList, std::string str)
+      : pAcctList_(pAcctList)
+      {
+    setFromStr(str);
+  }
