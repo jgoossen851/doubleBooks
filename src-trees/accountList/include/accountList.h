@@ -5,8 +5,8 @@
  * Copyright (c) 2021, Jeremy Goossen jeremyg995@gmail.com
  */
  
-#ifndef ACCOUNT_H_
-#define ACCOUNT_H_
+#ifndef ACCOUNTLIST_H_
+#define ACCOUNTLIST_H_
 
 #include <string>
 // #include <vector>
@@ -87,4 +87,4 @@ class AccountList {
 
 };
 
-#endif // ACCOUNT_H_
+#endif // ACCOUNTLIST_H_
