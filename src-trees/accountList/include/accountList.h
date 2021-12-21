@@ -8,12 +8,10 @@
 #ifndef ACCOUNT_H_
 #define ACCOUNT_H_
 
-// #include <string>
+#include <string>
 // #include <vector>
 // #include <iostream>
 // #include <cassert>
-
-#include "element.h"
 
 enum InheritBool{
   FALSE = 0,  //!< False
@@ -22,8 +20,8 @@ enum InheritBool{
   UNDEFINED   //!< Value is not set
 };
 
-class Account : public Element {
-  Account             *pParent_;
+class AccountList {
+  AccountList         *pParent_;
   const unsigned int  sortOrder_;
   const std::string   name_;
   InheritBool         isBudgeted_;
@@ -31,7 +29,7 @@ class Account : public Element {
 
  public:
   /// Default constructor function
-  Account()
+  AccountList()
     : pParent_(nullptr),
       sortOrder_(0),
       name_("Undefined"),
@@ -40,12 +38,12 @@ class Account : public Element {
     {}
   
   /// Parameterized constructor function
-  Account(unsigned int  sortOrder,
-          std::string   name,
-          InheritBool   isBudgeted,
-          InheritBool   isDebitIncrease,
-          Account       *pParent = nullptr
-          )
+  AccountList(unsigned int  sortOrder,
+              std::string   name,
+              InheritBool   isBudgeted,
+              InheritBool   isDebitIncrease,
+              AccountList   *pParent = nullptr
+              )
     : pParent_(pParent),
       sortOrder_(sortOrder),
       name_(name),
@@ -53,8 +51,7 @@ class Account : public Element {
       isDebitIncrease_(isDebitIncrease)
     {}
  
-  // Override inherited functions
-  std::string str(const unsigned int &max_characters = 12) const override {
+  std::string str(const unsigned int &max_characters = 12) const {
     // Recursively find name:
     std::string fullname;
     if (pParent_ == nullptr) {
@@ -69,8 +66,6 @@ class Account : public Element {
         ? fullname.substr(fullname.length() - max_characters, std::string::npos)
         : fullname;
   }
-  const void* value_ptr(void) const override {return nullptr;} // Placeholder
-  bool operator<(const Element &rhs) const override;
 
   // Getter and Setter Functions
   InheritBool getIsBudgeted(void) {
@@ -79,7 +74,7 @@ class Account : public Element {
   InheritBool getIsDebitIncrease(void) {
     return isDebitIncrease_ == INHERITED ? pParent_->getIsDebitIncrease() : isDebitIncrease_;
   }
-  void setParent(Account *pParent = nullptr) {
+  void setParent(AccountList *pParent = nullptr) {
     pParent_ = pParent;
     return;
   };

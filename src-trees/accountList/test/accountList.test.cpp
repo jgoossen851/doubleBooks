@@ -26,7 +26,7 @@ int failTest() {
 }
 
 int testElementDisplay(std::string testName,
-                       Element     *elementUnderTest,
+                       AccountList     *elementUnderTest,
                        std::string ansString ) {
   std::cout << testName << " displays as " << elementUnderTest->str(12) << std::endl;
   if( ansString.compare(elementUnderTest->str(12)) != 0) return failTest();
@@ -45,9 +45,9 @@ int main() {
   // Initialize exit status
   int exitStatus = EXIT_SUCCESS;
 
-  Account account;
+  AccountList account;
   exitStatus |= testElementDisplay("Account", &account, "Undefined");
-  Account account2(1, "Savings", UNDEFINED, UNDEFINED);
+  AccountList account2(1, "Savings", UNDEFINED, UNDEFINED);
   exitStatus |= testElementDisplay("Account2", &account2, "Savings");
 
   // Initialize Accounts from CSV
@@ -60,7 +60,7 @@ int main() {
   // Load data into vector of Accounts
   std::vector<int> accountIDs;
   std::vector<int> accountParentIDs;
-  std::vector<Account> accountList;
+  std::vector<AccountList> accountList;
   for (unsigned int iAct = 0; iAct < numAccounts; iAct++) {
     std::vector<std::string> dataVec = strDat.body.at(iAct);
 
@@ -74,7 +74,7 @@ int main() {
         ? (Strings::toInteger(dataVec.at(5)) == 0 ? FALSE : TRUE)
         : UNDEFINED;
 
-    accountList.push_back(Account(
+    accountList.push_back(AccountList(
         Strings::toInteger(dataVec.at(3)),  // Sort Order
         dataVec.at(2),                      // Name
         isBudgeted,                         // isBudgeted
