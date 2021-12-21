@@ -15,12 +15,16 @@
 #include <iostream>
 
 
-int runTest(std::string testName,
-            Element     *elementUnderTest,
-            std::string testString,
-            std::string ansString ) {
-  std::cout << testName << " is set to " << testString << " and displayed as " << elementUnderTest->str(12) << std::endl;
-  if( ansString.compare(elementUnderTest->str(12)) != 0) return EXIT_FAILURE;
+int failTest() {
+  std::cout << ansi::RED << "  ^ Test Failed!" << ansi::RESET << std::endl;
+  return EXIT_FAILURE;
+}
+
+int testElementDisplay(std::string testName,
+                       Element     *elementUnderTest,
+                       std::string ansString ) {
+  std::cout << testName << " displays as " << elementUnderTest->str(12) << std::endl;
+  if( ansString.compare(elementUnderTest->str(12)) != 0) return failTest();
   return EXIT_SUCCESS;
 }
 
@@ -29,21 +33,25 @@ int main() {
   // Initialize exit status
   int exitStatus = EXIT_SUCCESS;
 
-  // Test setting and printing elements
+  // Test setting and printing table elements
   Currency currency;
+  exitStatus |= testElementDisplay("Currency", &currency, "$0.00");
   currency.setFromStr("$1.23");
-  exitStatus |= runTest("Currency", &currency, "$1.23", "$0.00");
+  exitStatus |= testElementDisplay("Currency", &currency, "$0.00");
 
   Date date;
+  exitStatus |= testElementDisplay("Date", &date, "");
   date.setFromStr("12/11/2010");
-  exitStatus |= runTest("Date", &date, "12/11/2010", "12/11/2010");
+  exitStatus |= testElementDisplay("Date", &date, "12/11/2010");
 
   Category category;
+  exitStatus |= testElementDisplay("Category", &category, "************");
   category.setFromStr("Cat1");
-  exitStatus |= runTest("Category", &category, "Cat1", "************");
+  exitStatus |= testElementDisplay("Category", &category, "************");
 
   Account account;
-  exitStatus |= runTest("Account", &account, "", "************");
+  exitStatus |= testElementDisplay("Account", &account, "Undefined");
+
 
   // Display Test Status
   std::cout << (exitStatus ? ansi::RED : ansi::GREEN)

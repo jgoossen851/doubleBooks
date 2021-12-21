@@ -29,7 +29,8 @@ class Currency : public Element {
            NegativeFormat negativeFormat = NEGATIVE_SIGN);
   Currency(std::string    str,
            NegativeFormat negativeFormat = NEGATIVE_SIGN)
-      : negativeFormat_(negativeFormat){
+      : cents_(0),
+        negativeFormat_(negativeFormat){
     setFromStr(str);
   }
   

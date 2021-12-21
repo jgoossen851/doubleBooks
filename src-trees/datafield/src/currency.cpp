@@ -16,14 +16,15 @@
 // #include "strings.h"
 
 Currency::Currency(NegativeFormat negativeFormat) 
-  : negativeFormat_(negativeFormat)
+  : cents_(0),
+    negativeFormat_(negativeFormat)
   {}
 
 Currency::Currency( int            cents,
                     NegativeFormat negativeFormat)
-    : cents_(cents),
-      negativeFormat_(negativeFormat) {
-}
+  : cents_(cents),
+    negativeFormat_(negativeFormat)
+  {}
 
 std::string Currency::str(const unsigned int &max_characters) const {
   if (cents_ < 0) {
