@@ -69,7 +69,7 @@ int main() {
   exitStatus |= testElementDisplay("Account2", &account2, "Savings");
 
   // Initialize Accounts from CSV
-  Csv csv("../../../res/data/Accounts.csv");
+  Csv csv("../../../../res/data/Accounts.csv");
   StringDatabase strDat = csv.load();
   unsigned int numCols = 6;
   assert(strDat.number_of_columns == numCols);
