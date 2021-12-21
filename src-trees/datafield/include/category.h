@@ -54,7 +54,7 @@ class Category : public Element {
   std::string str(const unsigned int &max_characters = 12) const override {
     return std::string(max_characters, '*'); // Placeholder
   }
-  void setFromStr(std::string str) override {
+  void setFromStr(std::string str) {
     id_ = str.size(); // Placeholder
     return;
   }

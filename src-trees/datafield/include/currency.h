@@ -40,7 +40,7 @@ class Currency : public Element {
   // Function Overrides
   /// Format the dollar amount as a string
   std::string str(const unsigned int &max_characters = 10) const;  
-  void setFromStr(std::string str) override;
+  void setFromStr(std::string str);
   const void* value_ptr(void) const override;
   /// Comparison operator for two Currency objects
   bool operator<(const Element &rhs) const override;

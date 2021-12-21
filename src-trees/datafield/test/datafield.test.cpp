@@ -19,7 +19,6 @@ int runTest(std::string testName,
             Element     *elementUnderTest,
             std::string testString,
             std::string ansString ) {
-  elementUnderTest->setFromStr(testString);
   std::cout << testName << " is set to " << testString << " and displayed as " << elementUnderTest->str(12) << std::endl;
   if( ansString.compare(elementUnderTest->str(12)) != 0) return EXIT_FAILURE;
   return EXIT_SUCCESS;
@@ -32,16 +31,19 @@ int main() {
 
   // Test setting and printing elements
   Currency currency;
+  currency.setFromStr("$1.23");
   exitStatus |= runTest("Currency", &currency, "$1.23", "$0.00");
 
   Date date;
+  date.setFromStr("12/11/2010");
   exitStatus |= runTest("Date", &date, "12/11/2010", "12/11/2010");
 
   Category category;
+  category.setFromStr("Cat1");
   exitStatus |= runTest("Category", &category, "Cat1", "************");
 
   Account account;
-  exitStatus |= runTest("Account", &account, "Savings", "************");
+  exitStatus |= runTest("Account", &account, "", "************");
 
   // Display Test Status
   std::cout << (exitStatus ? ansi::RED : ansi::GREEN)
