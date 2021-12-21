@@ -12,28 +12,32 @@
 #include <vector>
 
 #include "element.h"
+#include "strings.h"
 #include "accountList.h"
 
 
 
 class Account : public Element {
-  std::vector<AccountList> *pAcctList_;
-  unsigned int             acctListInd_;
+  const AccountList *pAcctList_;
+  unsigned int      acctListInd_ = 0;
 
  public:
   /// Default constructor function
-  Account(){}
-  
-  /// Parameterized constructor function
-  Account(std::string str){
-    setFromStr(str);
-  }
+  Account()
+    : pAcctList_(nullptr)
+    {}
+
+  /// Parameterized constructor functions
+  Account(AccountList *pAcctList);
+  Account(AccountList *pAcctList, std::string str);
  
   // Override inherited functions
   std::string str(const unsigned int &max_characters = 12) const override {
     return pAcctList_->at(acctListInd_).str(max_characters);
   }
   void setFromStr(std::string str) override {
+    unsigned int index = Strings::toInteger(str);
+    acctListInd_ = index < pAcctList_->size() ? index : 0;
     return;
   }
   const void* value_ptr(void) const override {return nullptr;} // Placeholder

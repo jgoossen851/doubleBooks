@@ -10,14 +10,14 @@ cmake_minimum_required(VERSION 3.5.1)
 set(TARGET_NAME Datafield)
 
 set(SOURCE_FILES
-#    src/account.cpp
+    src/account.cpp
     src/category.cpp 
     src/currency.cpp 
     src/date.cpp
 )
 
 set(INCLUDE_FILES
-#    include/account.h
+    include/account.h
     include/category.h
     include/currency.h
     include/date.h

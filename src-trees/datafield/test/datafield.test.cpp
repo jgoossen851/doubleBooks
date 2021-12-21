@@ -5,11 +5,13 @@
  * Copyright (c) 2021, Jeremy Goossen jeremyg995@gmail.com
  */
 
+#include "accountList.h"
 #include "ansi.h"
 
 #include "currency.h"
 #include "date.h"
 #include "category.h"
+#include "account.h"
 
 #include <iostream>
 
@@ -54,6 +56,14 @@ int main() {
   exitStatus |= testElementDisplay("Category", &category, "************");
   category.setFromStr("Cat1");
   exitStatus |= testElementDisplay("Category", &category, "************");
+
+  AccountList accountList("../../../../res/data/Accounts.csv");
+
+
+  Account account(&accountList);
+  exitStatus |= testElementDisplay("Account", &account, "Undefined");
+  account.setFromStr("42");
+  exitStatus |= testElementDisplay("Account", &account, "sets:Savings");
 
 
   // Display Test Status
