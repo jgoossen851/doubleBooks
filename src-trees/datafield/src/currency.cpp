@@ -13,19 +13,24 @@
 #include <string>
 #include <iostream>
 
-// #include "ansi.h"
+#include "ansi.h"
 // #include "strings.h"
 
 Currency::Currency(NegativeFormat negativeFormat) 
-  : cents_(0),
-    negativeFormat_(negativeFormat)
-  {}
+    : cents_(0),
+      negativeFormat_(negativeFormat) {}
 
 Currency::Currency( int            cents,
                     NegativeFormat negativeFormat)
   : cents_(cents),
-    negativeFormat_(negativeFormat)
-  {}
+    negativeFormat_(negativeFormat) {}
+
+Currency::Currency( std::string    str,
+                    NegativeFormat negativeFormat)
+    : cents_(0),
+      negativeFormat_(negativeFormat) {
+  setFromStr(str);
+}
 
 std::string Currency::str(const unsigned int &max_characters) const {
   if (cents_ < 0) {
@@ -70,7 +75,7 @@ std::string Currency::format_negative_string(std::string positiveString) const {
       negativeString = "(" + positiveString + ")";
       break;
     case RED_COLOR :
-      negativeString = "RED"; // Placeholder       ansi::SAVE_ATTRIBUTES + ansi::RED + positiveString + ansi::RESTORE_ATTRIBUTES;
+      negativeString = ansi::SAVE_ATTRIBUTES + ansi::RED + positiveString + ansi::RESTORE_ATTRIBUTES;
       break;
     default :
       negativeString = "-" + positiveString;
@@ -84,13 +89,11 @@ bool Currency::operator<(const Element &rhs) const {
 }
 
 void Currency::setFromStr(std::string str) {
-  // Erase non-digit or decimal characters
-  str.erase(0, str.find_first_of("0123456789."));
+  // Erase non-digit or decimal or negative characters
+  str.erase(0, str.find_first_of("0123456789.-"));
   double dollars = std::stod(str);
-  // std::cout << "Currency, set to [" << dollars << "]" << std::endl;
   cents_ = round(dollars*100);
   double residual = cents_ - dollars*100;
-  // std::cout << "Residual is " << residual << " and cents is " << cents_ << std::endl;
   assert(fabs(residual) < 0.001);
   return;
 }

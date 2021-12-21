@@ -46,6 +46,15 @@ int main() {
   exitStatus |= testElementDisplay("Currency", &currency, "$0.00");
   currency.setFromStr("$1.23");
   exitStatus |= testElementDisplay("Currency", &currency, "$1.23");
+  currency.setFromStr("-4.56");
+  exitStatus |= testElementDisplay("Currency", &currency, "-$4.56");
+  Currency currencyParen(PARENTHESIS);
+  currencyParen.setFromStr("-5.67");
+  exitStatus |= testElementDisplay("Currency", &currencyParen, "($5.67)");
+  Currency currencyRed(RED_COLOR);
+  currencyRed.setFromStr("-6.78");
+  exitStatus |= testElementDisplay("Currency", &currencyRed, ansi::SAVE_ATTRIBUTES + ansi::RED + "$6.78" + ansi::RESTORE_ATTRIBUTES);
+
 
   Date date;
   exitStatus |= testElementDisplay("Date", &date, "--/--/----");
@@ -57,9 +66,8 @@ int main() {
   category.setFromStr("Cat1");
   exitStatus |= testElementDisplay("Category", &category, "************");
 
+
   AccountList accountList("../../../../res/data/Accounts.csv");
-
-
   Account account(&accountList);
   exitStatus |= testElementDisplay("Account", &account, "Undefined");
   account.setFromStr("42");

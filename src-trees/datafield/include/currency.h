@@ -14,33 +14,28 @@
 
 /// Allowable formats for negative currencies
 enum NegativeFormat{
-  NEGATIVE_SIGN,   /// Value printed to the right of a negative sign
-  PARENTHESIS,  /// Value printed inside parenthesis  
-  RED_COLOR     /// Value printed in red
+  NEGATIVE_SIGN,  //!< Value printed to the right of a negative sign
+  PARENTHESIS,    //!< Value printed inside parenthesis
+  RED_COLOR       //!< Value printed in red
 };
 
 class Currency : public Element {
   /// Internal Storage of the currency value, in cents
-  int cents_;
+  int             cents_;
+  NegativeFormat  negativeFormat_;
   
  public:
+  /// Default Constructor
   Currency(NegativeFormat negativeFormat = NEGATIVE_SIGN);
+  /// Parameterized Constructors
   Currency(int            cents,
            NegativeFormat negativeFormat = NEGATIVE_SIGN);
   Currency(std::string    str,
-           NegativeFormat negativeFormat = NEGATIVE_SIGN)
-      : cents_(0),
-        negativeFormat_(negativeFormat){
-    setFromStr(str);
-  }
-  
-  Currency operator=(const Currency &rhs){
-    return Currency(rhs.cents_, rhs.negativeFormat_);
-  };
+           NegativeFormat negativeFormat = NEGATIVE_SIGN);
     
   // Function Overrides
   /// Format the dollar amount as a string
-  std::string str(const unsigned int &max_characters = 10) const;  
+  std::string str(const unsigned int &max_characters = 10) const override;
   void setFromStr(std::string str) override;
   const void* value_ptr(void) const override;
   /// Comparison operator for two Currency objects
@@ -53,7 +48,7 @@ class Currency : public Element {
  private:  
   std::string display_magnitude(const int &max_characters) const;
   std::string format_negative_string(std::string positiveString) const;
-  const NegativeFormat negativeFormat_;
+
 };
 
 #endif
