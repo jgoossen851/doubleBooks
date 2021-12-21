@@ -10,7 +10,8 @@
 #include <cstdio>
 #include <cmath>
 #include <cassert>
-// #include <iostream>
+#include <string>
+#include <iostream>
 
 // #include "ansi.h"
 // #include "strings.h"
@@ -83,7 +84,9 @@ bool Currency::operator<(const Element &rhs) const {
 }
 
 void Currency::setFromStr(std::string str) {
-  double dollars = 0.0 ; // Placeholder     Strings::toDouble(str);
+  // Erase non-digit or decimal characters
+  str.erase(0, str.find_first_of("0123456789."));
+  double dollars = std::stod(str);
   // std::cout << "Currency, set to [" << dollars << "]" << std::endl;
   cents_ = round(dollars*100);
   double residual = cents_ - dollars*100;

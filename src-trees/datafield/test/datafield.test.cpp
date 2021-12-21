@@ -51,10 +51,10 @@ int main() {
   Currency currency;
   exitStatus |= testElementDisplay("Currency", &currency, "$0.00");
   currency.setFromStr("$1.23");
-  exitStatus |= testElementDisplay("Currency", &currency, "$0.00");
+  exitStatus |= testElementDisplay("Currency", &currency, "$1.23");
 
   Date date;
-  exitStatus |= testElementDisplay("Date", &date, "");
+  exitStatus |= testElementDisplay("Date", &date, "--/--/----");
   date.setFromStr("12/11/2010");
   exitStatus |= testElementDisplay("Date", &date, "12/11/2010");
 
