@@ -26,4 +26,5 @@
 # Needed Features
 
 * [ ] Create a Windows installer
+* [ ] Allow CSV data table to be delimited by commas (or other punctuation of user's choice). Pass as optional parameter to the function.
 

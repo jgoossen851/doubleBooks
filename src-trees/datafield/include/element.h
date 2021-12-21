@@ -15,7 +15,7 @@ class Element{
  public:
   /// Function to format the element as a string for printing
   virtual std::string str(const unsigned int &max_characters) const =0;
-  /// Function to return a pointer to the element's value, for comparisons
+  /// Function to return a pointer to the element's value, for comparisons with elements of the same type
   virtual const void* value_ptr(void) const =0;
   /// Function to compare two elements
   virtual bool operator<(const Element &rhs) const =0;
