@@ -14,7 +14,7 @@
 #include <iostream>
 
 #include "ansi.h"
-// #include "strings.h"
+#include "strings.h"
 
 Currency::Currency(NegativeFormat negativeFormat) 
     : cents_(0),
@@ -91,7 +91,7 @@ bool Currency::operator<(const Element &rhs) const {
 void Currency::setFromStr(std::string str) {
   // Erase non-digit or decimal or negative characters
   str.erase(0, str.find_first_of("0123456789.-"));
-  double dollars = std::stod(str);
+  double dollars = Strings::toDouble(str);
   cents_ = round(dollars*100);
   double residual = cents_ - dollars*100;
   assert(fabs(residual) < 0.001);
