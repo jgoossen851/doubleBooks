@@ -10,16 +10,30 @@
 
 #include "element.h"
 
+#include <ctime>
+
 // Placeholder
 class Date : public Element {
-  std::string date_str;
+  struct std::tm  date_;
+  int             sortValue_;
   
-  public:
-  Date(){};
+ public:
+  /// Default Constructor Function
+  Date();
+  /// Parameterized Constructor Function
+  Date(std::string str);
+
+  /// Function Overrides from Element
   std::string str(const unsigned int &max_characters = 8) const override;
   void setFromStr(std::string str) override;
   const void* value_ptr(void) const override;
   bool operator<(const Element &rhs) const override;
+
+ private:
+  bool isDateValid() const;
+  std::string getDateStr(const char * format) const;
+  void invalidateDate();
+  void setDaysSinceJan1();
 };
 
 #endif

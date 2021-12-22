@@ -62,9 +62,11 @@ int main() {
 
 
   Date date;
-  exitStatus |= testElementDisplay("Date", &date, "--/--/----");
+  exitStatus |= testElementDisplay("Date", &date, "--/--/--");
   date.setFromStr("12/11/2010");
-  exitStatus |= testElementDisplay("Date", &date, "12/11/2010");
+  exitStatus |= testElementDisplay("Date", &date, "12/11/10");
+  date.setFromStr("December 10, 2001");
+  exitStatus |= testElementDisplay("Date", &date, "--/--/--");
 
   Category category;
   exitStatus |= testElementDisplay("Category", &category, "************");
