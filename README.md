@@ -1,6 +1,6 @@
-# Project Name (not yet determined)
+# DoubleBooks
 
-A C++ program to record transactions, help with budgeting etc.
+A C++ based double-entry bookkeeping and accounting system to record transactions and manage account allocations.
 
 ## Dependencies
 
