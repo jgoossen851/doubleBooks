@@ -48,6 +48,7 @@ class Currency : public Element {
  private:  
   std::string display_magnitude(const int &max_characters) const;
   std::string format_negative_string(std::string positiveString) const;
+  std::string format_positive_string(std::string positiveString) const;
 
 };
 

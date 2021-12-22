@@ -33,24 +33,25 @@ Currency::Currency( std::string    str,
 }
 
 std::string Currency::str(const unsigned int &max_characters) const {
+  int usuable_chars = max_characters;
   if (cents_ < 0) {
     // Format negative number
-    int characters = max_characters;
     switch (negativeFormat_) {
       case NEGATIVE_SIGN :
-        characters--;     // Reserve space for negative sign
+        usuable_chars--;     // Reserve space for negative sign
         break;
       case PARENTHESIS :
-        characters -= 2;   // Reserve space for parenthesis
+        usuable_chars -= 2;   // Reserve space for parenthesis
         break;
       case RED_COLOR :
       default :
         break;
     }
-    return format_negative_string(display_magnitude(characters));
+    return format_negative_string(display_magnitude(usuable_chars));
   } else {
     // Format positive number
-    return display_magnitude(max_characters);
+    if (negativeFormat_ == PARENTHESIS) { usuable_chars--; } // Reserve space to align with negative numbers
+    return format_positive_string(display_magnitude(usuable_chars));
   }
 }
 
@@ -60,7 +61,7 @@ std::string Currency::display_magnitude(const int &max_chars) const {
   char display_value[buffer_len];
   int chars = snprintf( display_value, buffer_len, "$%04.2f", (float)abs(cents_)/100);
   return (chars <= max_chars)
-        ? std::string(display_value)
+        ? std::string(max_chars - chars, ' ') + std::string(display_value)
         : std::string(max_chars, '*');  
 }
 
@@ -82,6 +83,12 @@ std::string Currency::format_negative_string(std::string positiveString) const {
   }
   
   return negativeString;
+}
+
+std::string Currency::format_positive_string(std::string positiveString) const {
+  std::string returnString = positiveString;
+  if (negativeFormat_ == PARENTHESIS) { returnString += " "; }
+  return returnString;
 }
 
 bool Currency::operator<(const Element &rhs) const {

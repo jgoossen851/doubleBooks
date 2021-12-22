@@ -34,7 +34,7 @@ Table::Table(Database<A1> db) {
   header_   = db.header;
   // std::cout << "So far so good...  Size is " << db.body.size() <<  std::endl;
   for (unsigned int ii = 0; ii < db.body.size(); ii++) {
-    data_.push_back(db.body.at(ii).formatEntry());
+    data_.push_back(db.body.at(ii).formatEntry(widths_));
   }
 }
 

@@ -43,21 +43,23 @@ int main() {
 
   // Test setting and printing table elements
   Currency currency;
-  exitStatus |= testElementDisplay("Currency", &currency, "$0.00");
+  exitStatus |= testElementDisplay("Currency", &currency, "       $0.00");
   currency.setFromStr("$1.23");
-  exitStatus |= testElementDisplay("Currency", &currency, "$1.23");
+  exitStatus |= testElementDisplay("Currency", &currency, "       $1.23");
   currency.setFromStr("-4.56");
-  exitStatus |= testElementDisplay("Currency", &currency, "-$4.56");
+  exitStatus |= testElementDisplay("Currency", &currency, "-      $4.56");
   currency.setFromStr("");
-  exitStatus |= testElementDisplay("Currency", &currency, "$0.00");
+  exitStatus |= testElementDisplay("Currency", &currency, "       $0.00");
   currency.setFromStr("0");
-  exitStatus |= testElementDisplay("Currency", &currency, "$0.00");
+  exitStatus |= testElementDisplay("Currency", &currency, "       $0.00");
   Currency currencyParen(PARENTHESIS);
+  currencyParen.setFromStr("$44.44");
+  exitStatus |= testElementDisplay("Currency", &currencyParen, "     $44.44 ");
   currencyParen.setFromStr("-5.67");
-  exitStatus |= testElementDisplay("Currency", &currencyParen, "($5.67)");
+  exitStatus |= testElementDisplay("Currency", &currencyParen, "(     $5.67)");
   Currency currencyRed(RED_COLOR);
   currencyRed.setFromStr("-6.78");
-  exitStatus |= testElementDisplay("Currency", &currencyRed, ansi::SAVE_ATTRIBUTES + ansi::RED + "$6.78" + ansi::RESTORE_ATTRIBUTES);
+  exitStatus |= testElementDisplay("Currency", &currencyRed, ansi::SAVE_ATTRIBUTES + ansi::RED + "       $6.78" + ansi::RESTORE_ATTRIBUTES);
   
 
 
