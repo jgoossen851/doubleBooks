@@ -12,7 +12,6 @@
 
 #include <ctime>
 
-// Placeholder
 class Date : public Element {
   struct std::tm  date_;
   int             sortValue_;

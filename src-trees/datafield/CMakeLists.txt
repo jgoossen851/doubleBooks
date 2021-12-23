@@ -14,6 +14,7 @@ set(SOURCE_FILES
     src/category.cpp 
     src/currency.cpp 
     src/date.cpp
+    src/datafield.cpp
 )
 
 set(INCLUDE_FILES
@@ -22,6 +23,7 @@ set(INCLUDE_FILES
     include/currency.h
     include/date.h
     include/element.h
+    include/datafield.h
 )
 
 # Create a new target with the source and header files as dependencies

@@ -12,6 +12,7 @@
 #include "date.h"
 #include "category.h"
 #include "account.h"
+#include "datafield.h"
 
 #include <iostream>
 
@@ -42,6 +43,29 @@ int main() {
   int exitStatus = EXIT_SUCCESS;
 
   // Test setting and printing table elements
+  UintField uintfield;
+  exitStatus |= testElementDisplay("Uint", &uintfield, "4294967295");
+  uintfield.setFromStr("Text");
+  exitStatus |= testElementDisplay("Uint", &uintfield, "4294967295");
+  uintfield.setFromStr("95");
+  exitStatus |= testElementDisplay("Uint", &uintfield, "95");
+
+  BoolField boolfield;
+  exitStatus |= testElementDisplay("Bool", &boolfield, "0");
+  boolfield.setFromStr("1");
+  exitStatus |= testElementDisplay("Bool", &boolfield, "1");
+  boolfield.setFromStr("0");
+  exitStatus |= testElementDisplay("Bool", &boolfield, "0");
+  boolfield.setFromStr("Text");
+  exitStatus |= testElementDisplay("Bool", &boolfield, "1");
+
+  StringField stringfield;
+  exitStatus |= testElementDisplay("Period", &stringfield, "");
+  stringfield.setFromStr("Q1");
+  exitStatus |= testElementDisplay("Period", &stringfield, "Q1");
+  stringfield.setFromStr("2101");
+  exitStatus |= testElementDisplay("Period", &stringfield, "2101");
+
   Currency currency;
   exitStatus |= testElementDisplay("Currency", &currency, "       $0.00");
   currency.setFromStr("$1.23");
