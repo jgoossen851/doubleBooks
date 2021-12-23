@@ -1,0 +1,26 @@
+Format:	1B											
+												
+		Transactions List										
+												
+1B Format:												
+Document		Must have �1B� in the second cell (row 1, column 2)										
+Header		Must have �ID� in first row										
+Field Width		The number signs (#) below the header determine										
+		the number of characters to display										
+Transactions		Must have integer ID to be processed										
+							To		From			
+ID	Parent ID	Entry Title	Entry Period	Entry Date	Vendor	Transaction Amount	Debit Account	Debit Note	Credit Account	Credit Note	Memo	Statement
+######	######	###########################	####	########	##########	########	#########################				#################################################################	#
+1		Income Taxes	2101	01/01/2021		122.56	26	Exp:Taxes	40	Assets:Cash	Sample note on the taxes paid	0
+2		Gadget	2101	01/10/2021	Widgets, Inc.	12.36	17	Exp:Household	40	Assets:Cash	Some household gadget that was not needed, and probably serves no purpose whatsoever	1
+3		Car Insurance	2102	02/05/2021		53.21	18	Exp:Insurance	40	Assets:Cash		0
+4		Thingy	2102	02/15/2021		8.25	17	Exp:Household	40	Assets:Cash	A small thing	1
+5		Paycheck	2102	02/28/2021		2568.25	40	Assets:Cash	33	Income:Wages		0
+6		Other Taxes	2102	02/28/2021	Sheriff of Nottingham	223.67	26	Exp:Taxes	40	Assets:Cash	I don't know why there are so many taxes.�Probably to see how multi-line memos work, and how they should be processed.�Follow this format.	0
+11		Transaction with odd ID	2102	03/01/2021		0.01	20	Exp:Miscellaneous	40	Assets:Cash	This transaction has an ID that does not sequentially follow the previous. That is OK.	1
+8		Previous Transaction	2102	03/01/2021		-2.15	20	Exp:Miscellaneous	40	Assets:Cash	This transaction has an ID that is before the previous. That is OK as long as all Ids are unique.	0
+12		General Store Transaction	2103	03/03/2021	General Store							0
+13	12	Food				35.65	13	Exp:Groceries	40	Assets:Cash		
+14	12	Supplies				12.5	17	Exp:Household	40	Assets:Cash	Table�Chairs (beneath the table)	
+15	12	Pharmacy				42.21	48	Exp:Medications	40	Assets:Cash	Snake Oil	
+16											Not a lot of info on this one...	

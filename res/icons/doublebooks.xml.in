@@ -2,10 +2,12 @@
 <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
 	<mime-type type="@MIME_TYPE_I@/@MIME_SUBTYPE_I@">
 		<comment>@MIME_COMMENT_I@</comment>
+		<sub-class-of type="text/csv"/>
 		<glob pattern="*@MIME_EXTENSION_I@"/>
 	</mime-type>
 	<mime-type type="@MIME_TYPE_II@/@MIME_SUBTYPE_II@">
 		<comment>@MIME_COMMENT_II@</comment>
+		<sub-class-of type="text/csv"/>
 		<glob pattern="*@MIME_EXTENSION_II@"/>
 	</mime-type>
 </mime-info>
