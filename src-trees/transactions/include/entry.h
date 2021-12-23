@@ -25,9 +25,9 @@ class Entry {
   virtual std::string getName() const =0;
   virtual void setName(std::string name) =0;
   virtual std::string getMemo() const =0;
-  virtual void getMemo(std::string memo) =0;
+  virtual void setMemo(std::string memo) =0;
   virtual std::string getPeriod() const =0;
-  virtual void getPeriod(std::string period) =0;
+  virtual void setPeriod(std::string period) =0;
   virtual Date getDate() const =0;
   virtual void setDate(Date date) =0;
   virtual std::string getVendor() const =0;

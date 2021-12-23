@@ -35,7 +35,7 @@ target_include_directories("${TARGET_NAME}"
 
 # Specify libraries or flags to use when linking a given target and/or its dependents
 target_link_libraries("${TARGET_NAME}"
-    PUBLIC Transactions Ansi AccountList
+    PUBLIC Transactions Ansi AccountList Csv
 )
 
 # Add build-in self test to test list

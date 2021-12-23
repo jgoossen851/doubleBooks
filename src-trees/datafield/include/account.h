@@ -42,6 +42,10 @@ class Account : public Element {
   }
   const void* value_ptr(void) const override {return nullptr;} // Placeholder
   bool operator<(const Element &rhs) const override;
+
+  unsigned int getAccountInd(void) const {
+    return acctListInd_;
+  };
 };
 
 #endif // ACCOUNT_H_
