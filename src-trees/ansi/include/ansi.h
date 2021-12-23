@@ -82,8 +82,8 @@ namespace ansi{
   const std::string GREEN     = SGR_(32);
   const std::string YELLOW    = SGR_(33);
   const std::string BLUE       = SGR_(34);
-  const std::string CYAN       = SGR_(35);
-  const std::string MAGENTA    = SGR_(36);
+  const std::string MAGENTA       = SGR_(35);
+  const std::string CYAN    = SGR_(36);
   const std::string WHITE      = SGR_(37);
   const std::string DEFAULT    = SGR_(39);
                        
@@ -93,8 +93,8 @@ namespace ansi{
   const std::string GREEN_BG     = SGR_(42);
   const std::string YELLOW_BG    = SGR_(43);
   const std::string BLUE_BG    = SGR_(44);
-  const std::string CYAN_BG    = SGR_(45);
-  const std::string MAGENTA_BG  = SGR_(46);
+  const std::string MAGENTA_BG    = SGR_(45);
+  const std::string CYAN_BG  = SGR_(46);
   const std::string WHITE_BG    = SGR_(47);
   const std::string DEFAULT_BG  = SGR_(49);
                        
