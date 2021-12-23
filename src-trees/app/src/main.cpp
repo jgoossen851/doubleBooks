@@ -9,7 +9,7 @@
 #include "csv.h"
 #include "table.h"
 #include "currency.h"
-#include "transaction.h"
+#include "transaction_old.h"
 
 #include <iostream>
 

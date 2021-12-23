@@ -12,14 +12,14 @@ set(TARGET_NAME Misc)
 set(SOURCE_FILES
     src/database.cpp
     src/table.cpp
-    src/transaction.cpp
+    src/transaction_old.cpp
 )
 
 set(INCLUDE_FILES
     include/database.h
     include/format.h
     include/table.h
-    include/transaction.h
+    include/transaction_old.h
 )
 
 # Create a new target with the source and header files as dependencies
