@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=@PROGRAM_DISPLAY_NAME@
+Comment=@PROGRAM_COMMENT@
+Exec=bash -c '@PROGRAM_NAME@ %f;$SHELL'
+Icon=@PROG_ICON_PATH@/@PROGRAM_ICON_FILE@
+Terminal=true
+MimeType=@MIME_TYPE_I@/@MIME_SUBTYPE_I@;@MIME_TYPE_II@/@MIME_SUBTYPE_II@

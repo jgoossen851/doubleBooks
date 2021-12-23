@@ -1,23 +1,33 @@
 cmake_minimum_required(VERSION 3.7.1)
 
+
+## PROGRAM #1 ##
+
 # Set properties for installed program
-set(PROGRAM_DISPLAY_NAME "Budgeting")
-set(PROGRAM_COMMENT "A Short Description of the Budget Program")
-set(PROGRAM_ICON "1059389_wallet_cash_coin_money_pay_icon.svg")
+set(PROGRAM_DISPLAY_NAME "DoubleBooks")
+set(PROGRAM_COMMENT "Double-entry Bookkeeping")
+set(PROGRAM_ICON "doubleBooks-gray.svg")
 
 # Set properties for associated MIME types
-set(MIME_TYPE "application")
-set(MIME_SUBTYPE "csv-data-table")
-set(MIME_COMMENT "Data Table for budget program")
-set(MIME_EXTENSION ".tab")
-set(MIME_ICON "Gthumb.svg")
+set(MIME_TYPE_I "application")
+set(MIME_SUBTYPE_I "doublebooks-tx-list")
+set(MIME_COMMENT_I "DoubleBooks Transactions List")
+set(MIME_EXTENSION_I ".2bklist")
+set(MIME_ICON_I "doubleBooks-receipt.svg")
+
+set(MIME_TYPE_II "application")
+set(MIME_SUBTYPE_II "doublebooks-config")
+set(MIME_COMMENT_II "DoubleBooks Configuration File")
+set(MIME_EXTENSION_II ".2bkcfg")
+set(MIME_ICON_II "doubleBooks-green.svg")
 
 # Set installed file names
 get_target_property(PROGRAM_NAME ${PROJECT_NAME} OUTPUT_NAME)
 set(DESKTOP_FILE "${PROGRAM_NAME}.desktop")
 set(MIME_TYPE_FILE "${PROGRAM_NAME}.xml")
 set(PROGRAM_ICON_FILE "${PROGRAM_NAME}.svg")
-set(ICON_RESOURCE_I "${MIME_TYPE}-${MIME_SUBTYPE}.svg")
+set(ICON_RESOURCE_I "${MIME_TYPE_I}-${MIME_SUBTYPE_I}.svg")
+set(ICON_RESOURCE_II "${MIME_TYPE_II}-${MIME_SUBTYPE_II}.svg")
 
 # Add option for local installation
 option(LocalInstall "Install locally without root privledges" OFF)
@@ -56,10 +66,10 @@ set(PROG_ICON_PATH "${SHARE_DIR}/icons/hicolor/scalable/apps")
 
 # Configure resource files
 message(STATUS "Configuring Desktop entry")
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/target.desktop.in ${PROJECT_BINARY_DIR}/res/target.desktop)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/doublebooks.desktop.in ${PROJECT_BINARY_DIR}/res/doublebooks.desktop)
 
 message(STATUS "Configuring MIME type definition")
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/target.xml.in ${PROJECT_BINARY_DIR}/res/target.xml)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/doublebooks.xml.in ${PROJECT_BINARY_DIR}/res/doublebooks.xml)
 
 
 # TODO:
@@ -70,13 +80,14 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/target.xml.in ${PROJECT_BINARY_DIR}/r
 
 # Install icons
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${PROGRAM_ICON} DESTINATION ${PROG_ICON_PATH} RENAME ${PROGRAM_ICON_FILE})
-INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${MIME_ICON} DESTINATION ${ICON_PATH} RENAME ${ICON_RESOURCE_I})
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${MIME_ICON_I} DESTINATION ${ICON_PATH} RENAME ${ICON_RESOURCE_I})
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${MIME_ICON_II} DESTINATION ${ICON_PATH} RENAME ${ICON_RESOURCE_II})
 
 # Generate Desktop Entry File
-INSTALL(FILES ${PROJECT_BINARY_DIR}/res/target.desktop DESTINATION ${DESKTOP_PATH} RENAME ${DESKTOP_FILE})
+INSTALL(FILES ${PROJECT_BINARY_DIR}/res/doublebooks.desktop DESTINATION ${DESKTOP_PATH} RENAME ${DESKTOP_FILE})
 
 # Generate MIME XML File
-INSTALL(FILES ${PROJECT_BINARY_DIR}/res/target.xml DESTINATION ${MIME_TYPE_PATH} RENAME ${MIME_TYPE_FILE})
+INSTALL(FILES ${PROJECT_BINARY_DIR}/res/doublebooks.xml DESTINATION ${MIME_TYPE_PATH} RENAME ${MIME_TYPE_FILE})
 
 # TODO:
 # Append default application for extensions
@@ -89,6 +100,48 @@ INSTALL(FILES ${PROJECT_BINARY_DIR}/res/target.xml DESTINATION ${MIME_TYPE_PATH}
 # For uninstall target, remove default application for exension
 #$DO sed -i "\|^$UI_FILE_I_MIME_TYPE/$UI_FILE_I_MIME_SUBTYPE=$DESKTOP_FILE|d" $DESKTOP_PATH/defaults.list
 #$DO sed -i "\|^$UI_FILE_II_MIME_TYPE/$UI_FILE_II_MIME_SUBTYPE=$DESKTOP_FILE|d" $DESKTOP_PATH/defaults.list
+
+
+## PROGRAM #2 ##
+
+# Set properties for installed program
+set(PROGRAM_DISPLAY_NAME "DoubleBooks Report Viewer")
+set(PROGRAM_COMMENT "Utility for viewing real-time reports")
+set(PROGRAM_ICON "doubleBooks-report-gray.svg")
+
+# Set properties for associated MIME types
+set(MIME_TYPE_I "application")
+set(MIME_SUBTYPE_I "doublebooks-report")
+set(MIME_COMMENT_I "DoubleBooks Real Time Report")
+set(MIME_EXTENSION_I ".2bklog")
+set(MIME_ICON_I "doubleBooks-report-green.svg")
+
+# Set installed file names
+#get_target_property(PROGRAM_NAME ${PROJECT_NAME} OUTPUT_NAME)
+set(PROGRAM_NAME "${PROGRAM_NAME}-report")
+set(DESKTOP_FILE "${PROGRAM_NAME}.desktop")
+set(MIME_TYPE_FILE "${PROGRAM_NAME}.xml")
+set(PROGRAM_ICON_FILE "${PROGRAM_NAME}.svg")
+set(ICON_RESOURCE_I "${MIME_TYPE_I}-${MIME_SUBTYPE_I}.svg")
+set(ICON_RESOURCE_II "${MIME_TYPE_II}-${MIME_SUBTYPE_II}.svg")
+
+# Configure resource files
+message(STATUS "Configuring Desktop entry")
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/doublebooks-rpt.desktop.in ${PROJECT_BINARY_DIR}/res/doublebooks-rpt.desktop)
+
+message(STATUS "Configuring MIME type definition")
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/doublebooks-rpt.xml.in ${PROJECT_BINARY_DIR}/res/doublebooks-rpt.xml)
+
+# Install icons
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${PROGRAM_ICON} DESTINATION ${PROG_ICON_PATH} RENAME ${PROGRAM_ICON_FILE})
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${MIME_ICON_I} DESTINATION ${ICON_PATH} RENAME ${ICON_RESOURCE_I})
+
+# Generate Desktop Entry File
+INSTALL(FILES ${PROJECT_BINARY_DIR}/res/doublebooks-rpt.desktop DESTINATION ${DESKTOP_PATH} RENAME ${DESKTOP_FILE})
+
+# Generate MIME XML File
+INSTALL(FILES ${PROJECT_BINARY_DIR}/res/doublebooks-rpt.xml DESTINATION ${MIME_TYPE_PATH} RENAME ${MIME_TYPE_FILE})
+
 
 # Update Resources
 find_program(UPDATE-MIME-DATABASE_EXECUTABLE update-mime-database)

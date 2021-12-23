@@ -23,7 +23,7 @@ set(INCLUDE_FILES
 add_executable("${TARGET_NAME}" ${SOURCE_FILES} ${INCLUDE_FILES})
 
 # Set the output name of the binary executable
-set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "budget")
+set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "doublebooks")
 
 # The keywords PUBLIC, PRIVATE, and INTERFACE are used for both Include
 # Directories and Link Libraries.

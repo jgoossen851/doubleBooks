@@ -8,7 +8,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Set the project name and version
-project (Budget VERSION 1.0.1)
+project (DoubleBooks VERSION 1.0.1)
 
 # Set platform independent compiler/linker flags
 #   C++ Standard
