@@ -14,6 +14,7 @@
 #include "currency.h"
 
 class Entry {
+ protected:
   std::string name_;
   std::string memo_;
   std::string period_;

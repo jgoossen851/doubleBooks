@@ -16,27 +16,27 @@ class Transaction;
 
 class Split : public Entry {
   unsigned int id_;
-  Transaction *pParent_;
+  Transaction *pParent_ = nullptr;
   Currency amount_;
   Account debitAccount_;
   Account creditAccount_;
 
  public:
   
-  std::string getName() const override { return ""; };
-  void setName(std::string name) override {};
-  std::string getMemo() const override { return ""; };
-  void setMemo(std::string memo) override {};
-  std::string getPeriod() const override { return ""; };
-  void setPeriod(std::string period) override {};
-  Date getDate() const override { return Date(); };
-  void setDate(Date date) override {};
-  std::string getVendor() const override { return ""; };
-  void setVendor(std::string vendor) override {};
-  Currency getAmount() const { return Currency(); };
-  void setAmount(Currency amount) {};
-  unsigned int getId() const { return 0; };
-  void setId(unsigned int id) {};
+  std::string getName() const override;
+  void setName(std::string name) override { name_ = name; };
+  std::string getMemo() const override;
+  void setMemo(std::string memo) override { memo_ = memo; };
+  std::string getPeriod() const override;
+  void setPeriod(std::string period) override { period_ = period; };
+  Date getDate() const override;
+  void setDate(Date date) override { date_ = date; };
+  std::string getVendor() const override;
+  void setVendor(std::string vendor) override { vendor_ = vendor; };
+  Currency getAmount() const { return amount_; };
+  void setAmount(Currency amount) { amount_ = amount; };
+  unsigned int getId() const { return id_; };
+  void setId(unsigned int id) { id_ = id; };
 
 
   Currency getDebitSum() const override { return Currency(); };
@@ -49,7 +49,9 @@ class Split : public Entry {
   };
   void setDebitAccount(unsigned int acctNum) {};
   void setCreditAccount(unsigned int acctNum) {};
-  void setParentTransaction(Transaction *testTransaction) {};
+  void setParentTransaction(Transaction *testTransaction) {
+    pParent_ = testTransaction;
+  };
 
 };
 
