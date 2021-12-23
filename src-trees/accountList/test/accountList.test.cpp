@@ -20,15 +20,20 @@
 #include <vector>
 
 
-int failTest() {
-  std::cout << ansi::RED << "  ^ Test Failed!" << ansi::RESET << std::endl;
+int failTest( std::string testName,
+              std::string ansString,
+              std::string resultString) {
+  std::cout << ansi::RED << "Test Failed: " << ansi::RESET;
+  std::cout << "Test " << testName << " should be [" << ansString 
+            << "] but was [" << resultString << "]" << std::endl;
   return EXIT_FAILURE;
 }
 
 int testStrings(std::string testString,
                 std::string ansString ) {
-  std::cout << "Compare Strings: \"" << testString << "\"" << std::endl;
-  if( ansString.compare(testString) != 0) return failTest();
+  if( ansString.compare(testString) != 0) {
+    return failTest("Compare", ansString, testString);
+  }
   return EXIT_SUCCESS;
 }
 

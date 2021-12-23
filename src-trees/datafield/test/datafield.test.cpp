@@ -17,23 +17,29 @@
 #include <iostream>
 
 
-int failTest() {
-  std::cout << ansi::RED << "  ^ Test Failed!" << ansi::RESET << std::endl;
+int failTest( std::string testName,
+              std::string ansString,
+              std::string resultString) {
+  std::cout << ansi::RED << "Test Failed: " << ansi::RESET;
+  std::cout << "Test " << testName << " should be [" << ansString 
+            << "] but was [" << resultString << "]" << std::endl;
   return EXIT_FAILURE;
 }
 
 int testElementDisplay(std::string testName,
                        Element     *elementUnderTest,
                        std::string ansString ) {
-  std::cout << testName << " displays as " << elementUnderTest->str(12) << std::endl;
-  if( ansString.compare(elementUnderTest->str(12)) != 0) return failTest();
+  if( ansString.compare(elementUnderTest->str(12)) != 0) {
+    return failTest(testName, ansString, elementUnderTest->str(12));
+  }
   return EXIT_SUCCESS;
 }
 
 int testStrings(std::string testString,
                 std::string ansString ) {
-  std::cout << "Compare Strings: \"" << testString << "\"" << std::endl;
-  if( ansString.compare(testString) != 0) return failTest();
+  if( ansString.compare(testString) != 0) {
+    return failTest("Compare", ansString, testString);
+  }
   return EXIT_SUCCESS;
 }
 
