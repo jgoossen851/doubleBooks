@@ -38,6 +38,8 @@ endif()
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")
 
+# Enable tests to be added in subdirectories
+include(CTest)
 
 # # add the external library subdirectories
 # add_subdirectory(exogenous)
@@ -64,7 +66,6 @@ endif()
 
 
 ## TESTING ##
-include(CTest)
 
 # # does the application run?
 # add_test(NAME Runs COMMAND Budget 25)

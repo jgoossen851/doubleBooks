@@ -23,6 +23,10 @@ unsigned long toInteger(const std::string str) {
   return isInteger(str) ? std::stoul(str, nullptr) : (unsigned long)(-1);
 }
 
+bool          toBool(const std::string str) {
+  return (str == "" || str == "0") ? false : true;
+}
+
 float         toFloat(const std::string str){
   return (str == "") ? 0.0 : std::stof(str, nullptr);
 }

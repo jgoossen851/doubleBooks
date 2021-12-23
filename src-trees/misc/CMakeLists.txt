@@ -10,18 +10,14 @@ cmake_minimum_required(VERSION 3.5.1)
 set(TARGET_NAME Misc)
 
 set(SOURCE_FILES
-    src/csv.cpp
     src/database.cpp
-    src/strings.cpp
     src/table.cpp
     src/transaction.cpp
 )
 
 set(INCLUDE_FILES
-    include/csv.h
     include/database.h
     include/format.h
-    include/strings.h
     include/table.h
     include/transaction.h
 )
@@ -45,7 +41,7 @@ target_include_directories("${TARGET_NAME}"
 
 # Specify libraries or flags to use when linking a given target and/or its dependents
 target_link_libraries("${TARGET_NAME}"
-    PUBLIC Datafield
+    PUBLIC Datafield Csv
     PRIVATE Ansi
 )
 

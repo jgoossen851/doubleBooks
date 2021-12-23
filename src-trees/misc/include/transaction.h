@@ -22,7 +22,7 @@ class Entry {
   
  public:
   /// @brief Function to format the entry as a vector of strings
-  virtual std::vector<std::string> formatEntry() const =0;
+  virtual std::vector<std::string> formatEntry(std::vector<unsigned int> vWidths) const =0;
   
   bool operator<(const Entry &rhs) const;
 };
@@ -61,7 +61,7 @@ class Record : public Entry {
                   );
 
 
-  std::vector<std::string> formatEntry() const override;
+  std::vector<std::string> formatEntry(std::vector<unsigned int> vWidths) const override;
 
   unsigned int        getId()           const {return id_;}
   std::string         getTitle()        const {return title_;}
@@ -97,7 +97,7 @@ class Transaction : public Entry {
   Transaction()  {};
   Transaction(const std::vector<std::string> strVec);
 
-  std::vector<std::string> formatEntry() const override;
+  std::vector<std::string> formatEntry(std::vector<unsigned int> vWidths) const override;
 
   bool addRecord(const std::vector<std::string> strVec);
   

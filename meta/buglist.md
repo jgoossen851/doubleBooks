@@ -23,7 +23,10 @@
 
 * [ ] The command that removes the Install Manifest should be removed from the `uninstall` target. It was added because the Install Manifest required elevated privileges to remove when created with `sudo`, but it does not cause issues for local installations.
 
+* [ ] The files `account.*` should actually be `accountList.*` located in the AccountList library. These files deal with reading avaliable accounts from a CSV and setting up a vector of available accounts. In the Datafields library, there should be `account.*` files that read info from a transactions file (this is why the `setFromStr()` function is needed) and save an iterator to the appropriate account in the AccountList.
+
 # Needed Features
 
 * [ ] Create a Windows installer
+* [ ] Allow CSV data table to be delimited by commas (or other punctuation of user's choice). Pass as optional parameter to the function.
 

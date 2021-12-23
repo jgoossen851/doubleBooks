@@ -50,15 +50,15 @@ Record::Record( const unsigned int    id,
   isBalanced_ = isBalanced;
 }
 
-std::vector<std::string> Record::formatEntry() const {
+std::vector<std::string> Record::formatEntry(std::vector<unsigned int> vWidths) const {
   std::vector<std::string> strVec;
   strVec.push_back(std::to_string(id_));                      // ID
   strVec.push_back("");         // Parent
   strVec.push_back(title_);                                   // Title
   strVec.push_back(std::to_string(period_));                  // Period
-  strVec.push_back(date_.str());                              // Date
+  strVec.push_back(date_.str(vWidths.at(4)));                              // Date
   strVec.push_back(category_.getName());                      // Category
-  strVec.push_back(amount_.str());                            // Amount
+  strVec.push_back(amount_.str(vWidths.at(6)));                            // Amount
   strVec.push_back(vendor_);                     // Vendor
   strVec.push_back(memo_);                                    // Memo
   strVec.push_back(std::to_string(isBalanced_)); // Balanced
@@ -96,21 +96,21 @@ bool Transaction::addRecord(const std::vector<std::string> strVec) {
   return true;
 }
 
-std::vector<std::string> Transaction::formatEntry() const {
+std::vector<std::string> Transaction::formatEntry(std::vector<unsigned int> vWidths) const {
   std::vector<std::string> strVec;
   const int numRecords = records_.size();
   if (numRecords == 1) {
-    strVec = records_.at(0).formatEntry();
+    strVec = records_.at(0).formatEntry(vWidths);
     assert(strVec.size() == Format<A1>::columns() && "Vector does not contain enought elements after formatting Transaction with single Record");
   } else {
-    strVec.push_back(std::to_string(id_));      // ID
-    strVec.push_back("");                       // Parent
-    strVec.push_back(vendor_ + " Transaction"); // Title
-    strVec.push_back("");                       // Period
-    strVec.push_back(date_.str());              // Date
-    strVec.push_back("");                       // Category
-    strVec.push_back(getAmount().str());        // Amount
-    strVec.push_back("");                       // Vendor
+    strVec.push_back(std::to_string(id_));            // ID
+    strVec.push_back("");                             // Parent
+    strVec.push_back(vendor_ + " Transaction");       // Title
+    strVec.push_back("");                             // Period
+    strVec.push_back(date_.str(vWidths.at(4)));       // Date
+    strVec.push_back("");                             // Category
+    strVec.push_back(getAmount().str(vWidths.at(6))); // Amount
+    strVec.push_back("");                             // Vendor
     strVec.push_back("Containing " + std::to_string(numRecords) + " records"); // Memo
     strVec.push_back(std::to_string(isBalanced_)); // Balanced
     assert(strVec.size() == Format<A1>::columns() && "Vector does not contain enought elements after formatting Transaction with multiple Record");
