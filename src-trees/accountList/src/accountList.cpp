@@ -98,7 +98,7 @@ void AccountList::load(const char *accountsCsv){
 
   // Clear and place invalid entry at position 0 in vector of account entries
   vAcctEntries_.clear();
-  vAcctEntries_.push_back(AccountEntry(-1, "Undefined", UNDEFINED, UNDEFINED));
+  vAcctEntries_.push_back(AccountEntry(-1, "", UNDEFINED, UNDEFINED));
 
   // Load data into vector of Account Entries
   std::vector<int> vAcctIds;

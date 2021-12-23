@@ -108,11 +108,11 @@ int main() {
 
   AccountList accountList("../../../../res/data/Accounts.2bkcfg");
   Account account(&accountList);
-  exitStatus |= testElementDisplay("Account", &account, "Undefined");
+  exitStatus |= testElementDisplay("Account", &account, "");
   account.setFromStr("42");
   exitStatus |= testElementDisplay("Account", &account, "sets:Savings");
   account.setFromStr("Fortytwo");
-  exitStatus |= testElementDisplay("Account", &account, "Undefined");
+  exitStatus |= testElementDisplay("Account", &account, "");
 
 
   // Display Test Status

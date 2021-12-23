@@ -128,14 +128,6 @@ int main() {
     bool isTransaction = vStrings.at(PARENT_ID) == "" ? true : false;
     bool isSplit = vStrings.at(DEBIT_ACCOUNT) == "" && vStrings.at(CREDIT_ACCOUNT) == "" ? false : true;
 
-    // Print entire line
-    std::cout << (isTransaction ? ansi::CYAN : "");
-    std::cout << (isSplit ? ansi::BOLD : "");
-    for (unsigned int jj = 0; jj < vStrings.size(); jj++) {
-      std::cout << vStrings.at(jj) << "  ";
-    }
-    std::cout << ansi::RESET << std::endl;
-
     // Load transactions
     if (isTransaction) {
       vTransaction.push_back(Transaction());
@@ -199,8 +191,8 @@ int main() {
               << vSplit.at(iSplit).getDate().str(10) << "\033[48G"
               << vSplit.at(iSplit).getVendor().str(10) << "\033[60G"
               << vSplit.at(iSplit).getAmount().str(10) << "\033[72G"
-              << vSplit.at(iSplit).getDebitAccountInd() << "\033[76G"
-              << vSplit.at(iSplit).getCreditAccountInd() << "\033[80G"
+              << vSplit.at(iSplit).getDebitAccount().str(15) << "\033[89G"
+              << vSplit.at(iSplit).getCreditAccount().str(15) << "\033[106G"
               << vSplit.at(iSplit).getMemo().str(20) << std::endl;
   }
 

@@ -54,9 +54,11 @@ class Split : public Entry {
   unsigned int getCreditAccountInd() const {
     return creditAccount_.getAccountInd();
   };
+  Account getDebitAccount() const { return debitAccount_; };
   void setDebitAccount(std::string acctNum) {
     debitAccount_.setFromStr(acctNum);
   };
+  Account getCreditAccount() const { return creditAccount_; };
   void setCreditAccount(std::string acctNum) {
     creditAccount_.setFromStr(acctNum);
   };
