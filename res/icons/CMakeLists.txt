@@ -12,7 +12,7 @@ set(PROGRAM_ICON "doubleBooks-gray.svg")
 set(MIME_TYPE_I "application")
 set(MIME_SUBTYPE_I "doublebooks-tx-list")
 set(MIME_COMMENT_I "DoubleBooks Transactions List")
-set(MIME_EXTENSION_I ".2bklist")
+set(MIME_EXTENSION_I ".2bk")
 set(MIME_ICON_I "doubleBooks-receipt.svg")
 
 set(MIME_TYPE_II "application")
