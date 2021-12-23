@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+	<mime-type type="@MIME_TYPE_I@/@MIME_SUBTYPE_I@">
+		<comment>@MIME_COMMENT_I@</comment>
+		<glob pattern="*@MIME_EXTENSION_I@"/>
+	</mime-type>
+	<mime-type type="@MIME_TYPE_II@/@MIME_SUBTYPE_II@">
+		<comment>@MIME_COMMENT_II@</comment>
+		<glob pattern="*@MIME_EXTENSION_II@"/>
+	</mime-type>
+</mime-info>

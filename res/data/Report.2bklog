@@ -1,0 +1,13 @@
+This is a real-time report
+Run
+    tail -f Report.2bklog
+to see the contents of the report in real time.
+Changes to the file will be printed to the screen as they happen.
+Control characters may also affect the display.
+For instance, the ANSI sequence to clear the screen and move to origin is
+[0;0f[2J
+Text printed after the sequence is shown on a new screen.
+To exit the 'tail' program, press Ctrl+C.
+
+As lines are added to the file, they will also be shown on the screen.
+[33mOther control codes are also [1mpossible.[0m

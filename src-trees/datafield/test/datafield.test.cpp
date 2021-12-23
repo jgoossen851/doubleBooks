@@ -106,7 +106,7 @@ int main() {
   exitStatus |= testElementDisplay("Category", &category, "************");
 
 
-  AccountList accountList("../../../../res/data/Accounts.csv");
+  AccountList accountList("../../../../res/data/Accounts.2bkcfg");
   Account account(&accountList);
   exitStatus |= testElementDisplay("Account", &account, "Undefined");
   account.setFromStr("42");
