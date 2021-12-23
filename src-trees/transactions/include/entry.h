@@ -12,27 +12,28 @@
 
 #include "date.h"
 #include "currency.h"
+#include "datafield.h"
 
 class Entry {
  protected:
-  std::string name_;
-  std::string memo_;
-  std::string period_;
+  StringField name_;
+  StringField memo_;
+  StringField period_;
   Date date_;
-  std::string vendor_;
+  StringField vendor_;
   
  public:
   /// Getter/Setter Functions
-  virtual std::string getName() const =0;
-  virtual void setName(std::string name) =0;
-  virtual std::string getMemo() const =0;
-  virtual void setMemo(std::string memo) =0;
-  virtual std::string getPeriod() const =0;
-  virtual void setPeriod(std::string period) =0;
+  virtual StringField getName() const =0;
+  virtual void setName(const std::string name) =0;
+  virtual StringField getMemo() const =0;
+  virtual void setMemo(const std::string memo) =0;
+  virtual StringField getPeriod() const =0;
+  virtual void setPeriod(const std::string period) =0;
   virtual Date getDate() const =0;
-  virtual void setDate(Date date) =0;
-  virtual std::string getVendor() const =0;
-  virtual void setVendor(std::string vendor) =0;
+  virtual void setDate(const Date date) =0;
+  virtual StringField getVendor() const =0;
+  virtual void setVendor(const std::string vendor) =0;
 
   virtual Currency getDebitSum() const =0;
   virtual Currency getCreditSum() const =0;

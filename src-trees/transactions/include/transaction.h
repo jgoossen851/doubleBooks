@@ -19,18 +19,18 @@ class Transaction : public Entry {
   std::vector<Split*> vSplitAddr_;
 
  public:
-  std::string getName() const override { return name_; };
-  void setName(std::string name) override { name_ = name; };
-  std::string getMemo() const override { return memo_; };
-  void setMemo(std::string memo) override { memo_ = memo; };
-  std::string getPeriod() const override { return period_; };
-  void setPeriod(std::string period) override { period_ = period; };
+  StringField getName() const override { return name_; };
+  void setName(const std::string name) override { name_ = name; };
+  StringField getMemo() const override { return memo_; };
+  void setMemo(const std::string memo) override { memo_ = memo; };
+  StringField getPeriod() const override { return period_; };
+  void setPeriod(const std::string period) override { period_ = period; };
   Date getDate() const override { return date_; };
-  void setDate(Date date) override { date_ = date; };
-  std::string getVendor() const override { return vendor_; };
-  void setVendor(std::string vendor) override { vendor = vendor_; };
+  void setDate(const Date date) override { date_ = date; };
+  StringField getVendor() const override { return vendor_; };
+  void setVendor(const std::string vendor) override { vendor_ = vendor; };
   unsigned int getId() const { return id_; };
-  void setId(unsigned int id) { id_ = id; };
+  void setId(const unsigned int id) { id_ = id; };
 
   Currency getDebitSum() const override { return Currency(); };
   Currency getCreditSum() const override { return Currency(); };

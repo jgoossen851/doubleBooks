@@ -9,6 +9,7 @@
 #include "accountList.h"
 #include "csv.h"
 #include "currency.h"
+#include "datafield.h"
 #include "split.h"
 #include "transaction.h"
 
@@ -46,7 +47,6 @@ int main() {
 
   AccountList accountList("../../../../res/data/Accounts.2bkcfg");
 
-  
   // std::cout << "transactions" << std::endl;
   Transaction testTransaction;
   testTransaction.setId(1);
@@ -67,22 +67,22 @@ int main() {
   // Test output
   // std::cout << "output" << std::endl;
   unsigned int splitid = testSplit.getId();
-  std::string name = testSplit.getName();
-  std::string period = testSplit.getPeriod();
+  StringField name = testSplit.getName();
+  StringField period = testSplit.getPeriod();
   Date date = testSplit.getDate();
   Currency amount = testSplit.getAmount();
   unsigned int debitAccountInd = testSplit.getDebitAccountInd();
   unsigned int creditAccountInd = testSplit.getCreditAccountInd();
-  std::string memo = testSplit.getMemo();
+  StringField memo = testSplit.getMemo();
 
   exitStatus |= testStrings(std::to_string(splitid), "2");
-  exitStatus |= testStrings(name, "Transaction Name");
-  exitStatus |= testStrings(period, "Q1");
+  exitStatus |= testStrings(name.str(20), "Transaction Name");
+  exitStatus |= testStrings(period.str(), "Q1");
   exitStatus |= testStrings(date.str(), "10/11/12");
   exitStatus |= testStrings(amount.str(), "     $3.56");
   exitStatus |= testStrings(accountList.at(debitAccountInd).str(20), "Assets:Cash");
   exitStatus |= testStrings(accountList.at(creditAccountInd).str(20), "rsonal:Miscellaneous");
-  exitStatus |= testStrings(memo, "This is the memo");
+  exitStatus |= testStrings(memo.str(20), "This is the memo");
   
   
 
@@ -101,6 +101,14 @@ int main() {
   // create a vector of transactions and splits
   std::vector<Transaction>  vTransaction;
   std::vector<Split>        vSplit;
+  std::vector<unsigned int> vTransactionIds;
+  std::vector<Transaction*> vTransactionPtrs;
+
+  // Set capacity, as resizing a vector causes invalid pointers
+  vTransaction.reserve(numEntries);
+  vSplit.reserve(numEntries);
+  vTransactionIds.reserve(numEntries);
+  vTransactionPtrs.reserve(numEntries);
 
   for (unsigned int iElement = 0; iElement < numEntries; iElement++ ) {
     std::vector<std::string> vStrings = data.body.at(iElement);
@@ -115,7 +123,6 @@ int main() {
     const unsigned int DEBIT_ACCOUNT = 7;
     const unsigned int CREDIT_ACCOUNT = 9;
     const unsigned int MEMO = 11;
-    const unsigned int BALANCED = 12;
 
     // Is Transaction?
     bool isTransaction = vStrings.at(PARENT_ID) == "" ? true : false;
@@ -131,36 +138,71 @@ int main() {
 
     // Load transactions
     if (isTransaction) {
-      Transaction transaction;
-
+      vTransaction.push_back(Transaction());
       // Format transaction
       assert(Strings::isInteger(vStrings.at(ID)));
-      transaction.setId(Strings::toInteger(vStrings.at(ID)));
+      vTransaction.back().setId(Strings::toInteger(vStrings.at(ID)));
+      vTransaction.back().setName(vStrings.at(NAME));
+      vTransaction.back().setPeriod(vStrings.at(PERIOD));
+      vTransaction.back().setDate(Date(vStrings.at(DATE)));
+      vTransaction.back().setVendor(vStrings.at(VENDOR));
+      vTransaction.back().setMemo(vStrings.at(MEMO));
 
+      if (isSplit) {
+        vSplit.push_back(Split(&accountList));
 
+        vSplit.back().setParentTransaction(&vTransaction.back());
+        vSplit.back().setId(Strings::toInteger(vStrings.at(ID)));
+        vSplit.back().setAmount(Currency(vStrings.at(AMOUNT)));
+        vSplit.back().setDebitAccount(vStrings.at(DEBIT_ACCOUNT));
+        vSplit.back().setCreditAccount(vStrings.at(CREDIT_ACCOUNT));
+      } else {
+        // Save the transaction to allow splits to be added
+        vTransactionIds.push_back(Strings::toInteger(vStrings.at(ID)));
+        vTransactionPtrs.push_back(&vTransaction.back());
+      }
+    } else {
+      // If not a transaction
+      if (isSplit) {
+        vSplit.push_back(Split(&accountList));
 
-      vTransaction.push_back(transaction);
+        vSplit.back().setId(Strings::toInteger(vStrings.at(ID)));
+        vSplit.back().setAmount(Currency(vStrings.at(AMOUNT)));
+        vSplit.back().setDebitAccount(vStrings.at(DEBIT_ACCOUNT));
+        vSplit.back().setCreditAccount(vStrings.at(CREDIT_ACCOUNT));
+
+        // Potentially Overwrite values from transaction
+        vSplit.back().setName(vStrings.at(NAME));
+        vSplit.back().setPeriod(vStrings.at(PERIOD));
+        vSplit.back().setDate(Date(vStrings.at(DATE)));
+        vSplit.back().setVendor(vStrings.at(VENDOR));
+        vSplit.back().setMemo(vStrings.at(MEMO));
+
+        // Look for parent transaction
+        unsigned int parentId = Strings::toInteger(vStrings.at(PARENT_ID));
+        auto parentTransactionInd = std::find(vTransactionIds.begin(), vTransactionIds.end(), parentId);
+        assert(parentTransactionInd != vTransactionIds.end());
+        int ParentIndex = std::distance(vTransactionIds.begin(), parentTransactionInd);
+        vSplit.back().setParentTransaction(vTransactionPtrs.at(ParentIndex));
+
+      } else {
+        std::cout << "If it not a transaction or a split, I don't know what it is!" << std::endl;
+      }
     }
-
-
-
-
   }
 
-
-  // Test several Account strings and properties
-  exitStatus |= testStrings(accountList.at(3).str(5) + " B[" + std::to_string(accountList.at(3).getIsBudgeted()) 
-                                                    + "] D[" + std::to_string(accountList.at(3).getIsDebitIncrease()) + "]",
-                            "quity B[0] D[0]");
-  exitStatus |= testStrings(accountList.at(13).str(40) + " B[" + std::to_string(accountList.at(13).getIsBudgeted()) 
-                                                    + "] D[" + std::to_string(accountList.at(13).getIsDebitIncrease()) + "]",
-                            "Expenses:Food:Groceries B[1] D[1]");
-  exitStatus |= testStrings(accountList.at(41).str() + " B[" + std::to_string(accountList.at(41).getIsBudgeted()) 
-                                                    + "] D[" + std::to_string(accountList.at(41).getIsDebitIncrease()) + "]",
-                            "ets:Checking B[0] D[1]");
-  exitStatus |= testStrings(accountList.at().str() + " B[" + std::to_string(accountList.at().getIsBudgeted()) 
-                                                    + "] D[" + std::to_string(accountList.at().getIsDebitIncrease()) + "]",
-                            "Undefined B[3] D[3]");
+  // Now print all splits:
+  for (uint iSplit = 0; iSplit < vSplit.size(); iSplit++) {
+    std::cout << vSplit.at(iSplit).getId() << "\t";
+    std::cout << vSplit.at(iSplit).getName().str(20) << "\033[30G"
+              << vSplit.at(iSplit).getPeriod().str(4) << "\033[36G"
+              << vSplit.at(iSplit).getDate().str(10) << "\033[48G"
+              << vSplit.at(iSplit).getVendor().str(10) << "\033[60G"
+              << vSplit.at(iSplit).getAmount().str(10) << "\033[72G"
+              << vSplit.at(iSplit).getDebitAccountInd() << "\033[76G"
+              << vSplit.at(iSplit).getCreditAccountInd() << "\033[80G"
+              << vSplit.at(iSplit).getMemo().str(20) << std::endl;
+  }
 
   // Display Test Status
   std::cout << (exitStatus ? ansi::RED : ansi::GREEN)

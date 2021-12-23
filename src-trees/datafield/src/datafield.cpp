@@ -21,7 +21,7 @@ StringField::StringField(std::string str){
 }
 
 std::string StringField::str(const unsigned int &max_characters) const {
-  return (str_.size() <= max_characters) ? str_ : std::string(max_characters, '*');
+  return (str_.size() <= max_characters) ? str_ : str_.substr(0, max_characters - 1) + "\u2026";
 }
 
 void StringField::setFromStr(std::string str) {

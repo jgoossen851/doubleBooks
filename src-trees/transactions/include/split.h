@@ -30,20 +30,20 @@ class Split : public Entry {
         creditAccount_(pAcctList_)
       {};
   
-  std::string getName() const override;
-  void setName(std::string name) override { name_ = name; };
-  std::string getMemo() const override;
-  void setMemo(std::string memo) override { memo_ = memo; };
-  std::string getPeriod() const override;
-  void setPeriod(std::string period) override { period_ = period; };
+  StringField getName() const override;
+  void setName(const std::string name) override { name_ = name; };
+  StringField getMemo() const override;
+  void setMemo(const std::string memo) override { memo_ = memo; };
+  StringField getPeriod() const override;
+  void setPeriod(const std::string period) override { period_ = period; };
   Date getDate() const override;
-  void setDate(Date date) override { date_ = date; };
-  std::string getVendor() const override;
-  void setVendor(std::string vendor) override { vendor_ = vendor; };
+  void setDate(const Date date) override { date_ = date; };
+  StringField getVendor() const override;
+  void setVendor(const std::string vendor) override { vendor_ = vendor; };
   Currency getAmount() const { return amount_; };
-  void setAmount(Currency amount) { amount_ = amount; };
+  void setAmount(const Currency amount) { amount_ = amount; };
   unsigned int getId() const { return id_; };
-  void setId(unsigned int id) { id_ = id; };
+  void setId(const unsigned int id) { id_ = id; };
 
 
   Currency getDebitSum() const override { return Currency(); };

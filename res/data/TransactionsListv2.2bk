@@ -24,3 +24,9 @@ ID	Parent ID	Entry Title	Entry Period	Entry Date	Vendor	Transaction Amount	Debit
 14	12	Supplies				12.5	17	Exp:Household	40	Assets:Cash	Table�Chairs (beneath the table)	
 15	12	Pharmacy				42.21	48	Exp:Medications	40	Assets:Cash	Snake Oil	
 16											Not a lot of info on this one...	
+17		Split Transaction	2104	04/03/21	The Shop							
+18	17	More Snake Oil				42.21	48	Exp:Medications			Finest Quality	
+19	17	Flour				5.23	13	Exp:Groceries				
+20	17					20			40	Assets:Cash		
+21	17					27.44			43	Liabilities:Credit	Used card to cover the rest of transaction.	0
+22		Desk	2104	04/04/21	Furniture, Inc.	68.13	17	Exp:Household	43	Liabilities:Credit		0
