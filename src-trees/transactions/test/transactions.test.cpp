@@ -33,6 +33,7 @@ int failTest( std::string testName,
 
 int testStrings(std::string testString,
                 std::string ansString ) {
+  // std::cout << testString << std::endl;
   if( ansString.compare(testString) != 0) {
     return failTest("Compare", ansString, testString);
   }
@@ -46,23 +47,25 @@ int main() {
   AccountList accountList("../../../../res/data/Accounts.2bkcfg");
 
   
-
+  // std::cout << "transactions" << std::endl;
   Transaction testTransaction;
   testTransaction.setId(1);
   testTransaction.setName("Transaction Name");
   testTransaction.setDate(Date("10/11/12"));
   testTransaction.setVendor("General Store");
 
-  Split testSplit;
+  // std::cout << "splits" << std::endl;
+  Split testSplit(&accountList);
   testSplit.setId(2);
   testSplit.setPeriod("Q1");
   testSplit.setAmount(Currency("3.56"));
-  testSplit.setDebitAccount(40);
-  testSplit.setCreditAccount(20);
+  testSplit.setDebitAccount("40");
+  testSplit.setCreditAccount("20");
   testSplit.setMemo("This is the memo");
   testSplit.setParentTransaction(&testTransaction);
 
   // Test output
+  // std::cout << "output" << std::endl;
   unsigned int splitid = testSplit.getId();
   std::string name = testSplit.getName();
   std::string period = testSplit.getPeriod();
@@ -77,8 +80,8 @@ int main() {
   exitStatus |= testStrings(period, "Q1");
   exitStatus |= testStrings(date.str(), "10/11/12");
   exitStatus |= testStrings(amount.str(), "     $3.56");
-  exitStatus |= testStrings(accountList.at(debitAccountInd).str(10), "DebitAcct");
-  exitStatus |= testStrings(accountList.at(creditAccountInd).str(10), "CreditAcct");
+  exitStatus |= testStrings(accountList.at(debitAccountInd).str(20), "Assets:Cash");
+  exitStatus |= testStrings(accountList.at(creditAccountInd).str(20), "rsonal:Miscellaneous");
   exitStatus |= testStrings(memo, "This is the memo");
   
   

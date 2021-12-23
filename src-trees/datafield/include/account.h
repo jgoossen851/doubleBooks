@@ -28,8 +28,8 @@ class Account : public Element {
     {}
 
   /// Parameterized constructor functions
-  Account(AccountList *pAcctList);
-  Account(AccountList *pAcctList, std::string str);
+  Account(const AccountList *pAcctList);
+  Account(const AccountList *pAcctList, std::string str);
  
   // Override inherited functions
   std::string str(const unsigned int &max_characters = 12) const override {

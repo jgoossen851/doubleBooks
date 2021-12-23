@@ -13,11 +13,11 @@ bool Account::operator<(const Element &rhs) const {
 
 
 /// Parameterized constructor functions
-  Account::Account(AccountList *pAcctList)
+  Account::Account(const AccountList *pAcctList)
       : pAcctList_(pAcctList)
       {}
 
-  Account::Account(AccountList *pAcctList, std::string str)
+  Account::Account(const AccountList *pAcctList, std::string str)
       : pAcctList_(pAcctList)
       {
     setFromStr(str);

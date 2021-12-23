@@ -18,10 +18,17 @@ class Split : public Entry {
   unsigned int id_;
   Transaction *pParent_ = nullptr;
   Currency amount_;
+  const AccountList *pAcctList_;
   Account debitAccount_;
   Account creditAccount_;
 
  public:
+
+  Split(AccountList *pAcctList)
+      : pAcctList_(pAcctList),
+        debitAccount_(pAcctList_),
+        creditAccount_(pAcctList_)
+      {};
   
   std::string getName() const override;
   void setName(std::string name) override { name_ = name; };
@@ -45,10 +52,15 @@ class Split : public Entry {
     return debitAccount_.getAccountInd();
   };
   unsigned int getCreditAccountInd() const {
-    return creditAccount_.getAccountInd();;
+    return creditAccount_.getAccountInd();
   };
-  void setDebitAccount(unsigned int acctNum) {};
-  void setCreditAccount(unsigned int acctNum) {};
+  void setDebitAccount(std::string acctNum) {
+    debitAccount_.setFromStr(acctNum);
+  };
+  void setCreditAccount(std::string acctNum) {
+    creditAccount_.setFromStr(acctNum);
+  };
+
   void setParentTransaction(Transaction *testTransaction) {
     pParent_ = testTransaction;
   };
