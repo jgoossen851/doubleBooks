@@ -31,6 +31,8 @@ class Register {
  private:
   /// @brief Function to print either vector of transactions or splits
   void printEntry(const Entry *entry) const;
+  void printHeader() const;
+  void printElement(std::string str, uint width, uint space) const;
 };
 
 #endif // REGISTER_H_

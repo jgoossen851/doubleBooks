@@ -7,10 +7,14 @@
  
 #include "register.h"
 #include "csv.h"
+#include "ansi.h"
+
 #include <cassert>
 #include <iostream>
 #include <ostream>
 #include <algorithm>
+#include <cstdio>
+#include <string>
 
 enum TransactionColumns {
   ID,
@@ -113,6 +117,7 @@ Register::Register(StringDatabase data, const char *accountListFile)
 void Register::printSplits(void) const {
   /// @todo pass a parameter to sort by. Then create a copy of the vector vSplit_ that is sorted, and print this.
 
+  printHeader();
   for (uint iSplit = 0; iSplit < vSplit_.size(); iSplit++) {
     printEntry(&vSplit_.at(iSplit));
   }
@@ -121,19 +126,58 @@ void Register::printSplits(void) const {
 void Register::printTransactions(void) const {
   /// @todo pass a parameter to sort by. Then create a copy of the vector vSplit_ that is sorted, and print this.
 
+  printHeader();
   for (uint iTransaction = 0; iTransaction < vTransaction_.size(); iTransaction++) {
     printEntry(&vTransaction_.at(iTransaction));
   }
 }
 
 void Register::printEntry(const Entry *entry) const {
+    /// @note Using fprint here doen't allow formatting in strings.
+    // printElement(std::to_string(entry->getId()), vColumnWidth_.at(ID), 2);
+    // printElement(entry->getName().str(vColumnWidth_.at(NAME)), vColumnWidth_.at(NAME), 2);
+    // printElement(entry->getPeriod().str(vColumnWidth_.at(PERIOD)), vColumnWidth_.at(PERIOD), 2);
+    // printElement(entry->getDate().str(vColumnWidth_.at(DATE)), vColumnWidth_.at(DATE), 2);
+    // printElement(entry->getVendor().str(vColumnWidth_.at(VENDOR)), vColumnWidth_.at(VENDOR), 2);
+    // printElement(entry->getAmount().str(vColumnWidth_.at(AMOUNT)), vColumnWidth_.at(AMOUNT), 2);
+    // printElement(entry->getDebitAccount().str(vColumnWidth_.at(DEBIT_ACCOUNT)), vColumnWidth_.at(DEBIT_ACCOUNT), 2);
+    // printElement(entry->getCreditAccount().str(vColumnWidth_.at(CREDIT_ACCOUNT)), vColumnWidth_.at(CREDIT_ACCOUNT), 2);
+    // printElement(entry->getMemo().str(vColumnWidth_.at(MEMO)), vColumnWidth_.at(MEMO), 2);
+    // std::cout << std::endl;
+
     std::cout << entry->getId() << "\t";
-    std::cout << entry->getName().str(vColumnWidth_.at(NAME)) << "\033[30G"
-              << entry->getPeriod().str(vColumnWidth_.at(PERIOD)) << "\033[36G"
-              << entry->getDate().str(vColumnWidth_.at(DATE)) << "\033[48G"
-              << entry->getVendor().str(vColumnWidth_.at(VENDOR)) << "\033[60G"
-              << entry->getAmount().str(vColumnWidth_.at(AMOUNT)) << "\033[72G"
-              << entry->getDebitAccount().str(vColumnWidth_.at(DEBIT_ACCOUNT)) << "\033[89G"
-              << entry->getCreditAccount().str(vColumnWidth_.at(CREDIT_ACCOUNT)) << "\033[106G"
+    std::cout << entry->getName().str(vColumnWidth_.at(NAME)) << "\033[31G"
+              << entry->getPeriod().str(vColumnWidth_.at(PERIOD)) << "\033[37G"
+              << entry->getDate().str(vColumnWidth_.at(DATE)) << "\033[47G"
+              << entry->getVendor().str(vColumnWidth_.at(VENDOR)) << "\033[59G"
+              << entry->getAmount().str(vColumnWidth_.at(AMOUNT)) << "\033[71G"
+              << entry->getDebitAccount().str(vColumnWidth_.at(DEBIT_ACCOUNT)) << "\033[88G"
+              << entry->getCreditAccount().str(vColumnWidth_.at(CREDIT_ACCOUNT)) << "\033[105G"
               << entry->getMemo().str(vColumnWidth_.at(MEMO)) << std::endl;
+}
+
+void Register::printHeader() const {
+
+  std::vector<TransactionColumns> columnsToPrint;
+  columnsToPrint.push_back(ID);
+  columnsToPrint.push_back(NAME);
+  columnsToPrint.push_back(PERIOD);
+  columnsToPrint.push_back(DATE);
+  columnsToPrint.push_back(VENDOR);
+  columnsToPrint.push_back(AMOUNT);
+  columnsToPrint.push_back(DEBIT_ACCOUNT);
+  columnsToPrint.push_back(CREDIT_ACCOUNT);
+  columnsToPrint.push_back(MEMO);
+
+  std::cout << ansi::BOLD + ansi::UNDERLINE + ansi::OVERLINE;
+  for (uint ii = 0; ii < columnsToPrint.size(); ii++) {
+    printElement(vHeader_.at(columnsToPrint.at(ii)),
+                 vColumnWidth_.at(columnsToPrint.at(ii)), 2);
+  }
+  std::cout << ansi::RESET << std::endl;
+}
+
+void Register::printElement(std::string str, uint width, uint space) const {
+  printf("%-*.*s", width, width, str.c_str());
+  printf("%*s", space, "");
 }
