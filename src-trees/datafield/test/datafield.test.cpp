@@ -106,7 +106,7 @@ int main() {
   exitStatus |= testElementDisplay("Category", &category, "************");
 
 
-  AccountList accountList("../../../../res/data/Accounts.2bkcfg");
+  AccountList accountList("../../../../res/data/Accounts.dbkcfg");
   Account account(&accountList);
   exitStatus |= testElementDisplay("Account", &account, "");
   account.setFromStr("42");

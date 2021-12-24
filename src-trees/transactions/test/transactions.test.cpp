@@ -46,7 +46,7 @@ int main() {
   // Initialize exit status
   int exitStatus = EXIT_SUCCESS;
 
-  AccountList accountList("../../../../res/data/Accounts.2bkcfg");
+  AccountList accountList("../../../../res/data/Accounts.dbkcfg");
 
   // std::cout << "transactions" << std::endl;
   Transaction testTransaction;
@@ -87,11 +87,11 @@ int main() {
   
   
   // Read transactions CSV
-  Csv transactionsList("../../../../res/data/TransactionsListv2.2bk");
+  Csv transactionsList("../../../../res/data/TransactionsListv2.dbk");
   StringDatabase data = transactionsList.load();
   std::cout << "Database loaded." << std::endl;
 
-  Register reg(data, "../../../../res/data/Accounts.2bkcfg");
+  Register reg(data, "../../../../res/data/Accounts.dbkcfg");
 
   std::cout << "SPLITS:" << std::endl;
   reg.printSplits();

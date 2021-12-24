@@ -42,7 +42,7 @@ int main() {
   // Initialize exit status
   int exitStatus = EXIT_SUCCESS;
 
-  AccountList accountList("../../../../res/data/Accounts.2bkcfg");
+  AccountList accountList("../../../../res/data/Accounts.dbkcfg");
 
   // Test several Account strings and properties
   exitStatus |= testStrings(accountList.at(3).str(5) + " B[" + std::to_string(accountList.at(3).getIsBudgeted()) 

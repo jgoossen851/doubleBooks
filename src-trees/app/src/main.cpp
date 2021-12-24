@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
   std::cout << "CSV opened." << std::endl;
   
   // Load database
-  Register reg(transactionsList.load(), "../res/data/Accounts.2bkcfg");
+  Register reg(transactionsList.load(), "../res/data/Accounts.dbkcfg");
   std::cout << "Database loaded." << std::endl;
   
   // Print Table

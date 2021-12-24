@@ -12,13 +12,13 @@ set(PROGRAM_ICON "doubleBooks-gray.svg")
 set(MIME_TYPE_I "application")
 set(MIME_SUBTYPE_I "doublebooks-tx-list")
 set(MIME_COMMENT_I "DoubleBooks Transactions List")
-set(MIME_EXTENSION_I ".2bk")
+set(MIME_EXTENSION_I ".dbk")
 set(MIME_ICON_I "doubleBooks-receipt.svg")
 
 set(MIME_TYPE_II "application")
 set(MIME_SUBTYPE_II "doublebooks-config")
 set(MIME_COMMENT_II "DoubleBooks Configuration File")
-set(MIME_EXTENSION_II ".2bkcfg")
+set(MIME_EXTENSION_II ".dbkcfg")
 set(MIME_ICON_II "doubleBooks-green.svg")
 
 # Set installed file names
@@ -113,7 +113,7 @@ set(PROGRAM_ICON "doubleBooks-report-gray.svg")
 set(MIME_TYPE_I "application")
 set(MIME_SUBTYPE_I "doublebooks-report")
 set(MIME_COMMENT_I "DoubleBooks Real Time Report")
-set(MIME_EXTENSION_I ".2bklog")
+set(MIME_EXTENSION_I ".dbklog")
 set(MIME_ICON_I "doubleBooks-report-green.svg")
 
 # Set installed file names
