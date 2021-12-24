@@ -9,7 +9,7 @@
             "type": "lldb",
             "request": "launch",
             "program": "${workspaceFolder}/build/bin/doublebooks",
-            "args": ["./res/data/TransactionsList.2bk"],
+            "args": ["./res/data/TransactionsListv2.dbk"],
             "stopOnEntry": false,
             "cwd": "${workspaceFolder}",
             "preLaunchTask": "cmake build active file",

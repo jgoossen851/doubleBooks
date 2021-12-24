@@ -29,6 +29,8 @@ else()
     add_compile_options(-Wall -Wextra -pedantic)
     # All warnings as errors
     #add_compile_options(-Werror)
+    # Debug flags
+    add_compile_options(-g)
 endif()
 
 # After a normal build, we can specify the location of various outputs of the

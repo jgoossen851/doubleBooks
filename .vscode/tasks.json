@@ -5,7 +5,7 @@
         "type": "shell",
         "label": "cmake build active file",
         "command": "/usr/bin/cmake",
-        "args": ["-V", "--build", "${workspaceFolder}/build"],
+        "args": ["-DCMAKE_BUILD_TYPE=Debug", "-V", "--build", "${workspaceFolder}/build"],
         "options": {
           "cwd": "/usr/bin"
         },

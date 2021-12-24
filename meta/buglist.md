@@ -27,6 +27,8 @@
 
 * [ ] With the new extensions, it appears that the files are no longer recognized as CSVs. LibreOffice Calc will no longer open `.2bk` files, instead opening them in LibreOffice Writer. Change file extension to `.csv` to edit data, then change back.
 
+* [ ] In the top-level CMakeLists file, only set debug flags (`-g`) for `Debug` releases.
+
 # Needed Features
 
 * [ ] Create a Windows installer
