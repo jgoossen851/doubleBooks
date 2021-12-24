@@ -5,8 +5,8 @@
  * Copyright (c) 2021, Jeremy Goossen jeremyg995@gmail.com
  */
  
-#ifndef TRANSACTION_H_
-#define TRANSACTION_H_
+#ifndef TRANSACTION2_H_
+#define TRANSACTION2_H_
 
 #include <string>
 #include <vector>
@@ -16,7 +16,7 @@
 #include "date.h"
 #include "category.h"
 
-class Entry {
+class Entry2 {
  private:
   virtual int getSortValue() const =0;
   
@@ -24,13 +24,13 @@ class Entry {
   /// @brief Function to format the entry as a vector of strings
   virtual std::vector<std::string> formatEntry(std::vector<unsigned int> vWidths) const =0;
   
-  bool operator<(const Entry &rhs) const;
+  bool operator<(const Entry2 &rhs) const;
 };
 
 // Forward declare classes
-class Transaction;
+class Transaction2;
 
-class Record : public Entry {
+class Record : public Entry2 {
  private:
   unsigned int        id_;
   // Transaction &       parent_;
@@ -80,7 +80,7 @@ class Record : public Entry {
 };
 
 
-class Transaction : public Entry {
+class Transaction2 : public Entry2 {
  private:
   unsigned int  id_;
   Date          date_;
@@ -94,8 +94,8 @@ class Transaction : public Entry {
   }
   
  public:
-  Transaction()  {};
-  Transaction(const std::vector<std::string> strVec);
+  Transaction2()  {};
+  Transaction2(const std::vector<std::string> strVec);
 
   std::vector<std::string> formatEntry(std::vector<unsigned int> vWidths) const override;
 

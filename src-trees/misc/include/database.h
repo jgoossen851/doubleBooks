@@ -24,7 +24,7 @@ struct Database{
   const std::vector<std::string>::size_type number_of_columns;
   const std::vector<std::string>            header;
   const std::vector<unsigned int>           column_width; // in characters
-  std::vector<Transaction>                  body;
+  std::vector<Transaction2>                  body;
   
  private:
   bool formatData_(const std::vector<std::vector<std::string>> &data_str);

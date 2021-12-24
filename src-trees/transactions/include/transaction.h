@@ -13,7 +13,7 @@
 #include "currency.h"
 #include "split.h"
 #include "entry.h"
-
+#include "account.h"
 
 class Transaction : public Entry {
   unsigned int id_;
@@ -33,30 +33,14 @@ class Transaction : public Entry {
   unsigned int getId() const { return id_; };
   void setId(const unsigned int id) { id_ = id; };
 
-  Currency getDebitSum() const override { 
-    Currency sum(0);
-    for (uint ii = 0; ii < vSplitAddr_.size(); ii++) {
-      sum += vSplitAddr_.at(ii)->getDebitSum();
-    }
-    return sum;
-  };
-  Currency getCreditSum() const override { 
-    Currency sum(0);
-    for (uint ii = 0; ii < vSplitAddr_.size(); ii++) {
-      sum += vSplitAddr_.at(ii)->getCreditSum();
-    }
-    return sum;
-  };
+  Currency getDebitSum() const override;
+  Currency getCreditSum() const override;
   Currency getAmount() const {
     // Get sum of all debits (since debits and credits should be equal across transaction)
     return getDebitSum();
   }
-  Account getCreditAccount(void) const {
-    return vSplitAddr_.size() == 1 ? vSplitAddr_.at(0)->getCreditAccount() : Account();
-  };
-  Account getDebitAccount(void) const {
-    return vSplitAddr_.size() == 1 ? vSplitAddr_.at(0)->getDebitAccount() : Account();
-  };
+  Account getCreditAccount(void) const;
+  Account getDebitAccount(void) const;
 
   void addChildSplit(Split* child){
     vSplitAddr_.push_back(child);

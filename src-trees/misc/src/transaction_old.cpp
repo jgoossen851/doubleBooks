@@ -15,7 +15,7 @@
 
 // ENTRY
 
-bool Entry::operator<(const Entry &rhs) const {
+bool Entry2::operator<(const Entry2 &rhs) const {
   return (*this).getSortValue() < rhs.getSortValue();
 }
 
@@ -73,7 +73,7 @@ std::string Record::getVendor()       const {return vendor_;}
 
 // TRANSACTION
 
-Transaction::Transaction(const std::vector<std::string> strVec){
+Transaction2::Transaction2(const std::vector<std::string> strVec){
   id_         = Strings::toInteger(strVec.at(DB_ID));
   vendor_     = strVec.at(DB_VENDOR);
   isBalanced_ = Strings::toInteger(strVec.at(DB_STATEMENT));
@@ -82,7 +82,7 @@ Transaction::Transaction(const std::vector<std::string> strVec){
   addRecord(strVec);
 }
 
-bool Transaction::addRecord(const std::vector<std::string> strVec) {
+bool Transaction2::addRecord(const std::vector<std::string> strVec) {
   Record new_record(id_, 
                     strVec.at(DB_TITLE), 
                     Strings::toInteger(strVec.at(DB_PERIOD)), 
@@ -96,7 +96,7 @@ bool Transaction::addRecord(const std::vector<std::string> strVec) {
   return true;
 }
 
-std::vector<std::string> Transaction::formatEntry(std::vector<unsigned int> vWidths) const {
+std::vector<std::string> Transaction2::formatEntry(std::vector<unsigned int> vWidths) const {
   std::vector<std::string> strVec;
   const int numRecords = records_.size();
   if (numRecords == 1) {

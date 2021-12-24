@@ -6,3 +6,28 @@
  */
  
 #include "transaction.h"
+#include "split.h"
+
+Currency Transaction::getDebitSum() const { 
+  Currency sum(0);
+  for (uint ii = 0; ii < vSplitAddr_.size(); ii++) {
+    sum += vSplitAddr_.at(ii)->getDebitSum();
+  }
+  return sum;
+}
+
+Currency Transaction::getCreditSum() const { 
+  Currency sum(0);
+  for (uint ii = 0; ii < vSplitAddr_.size(); ii++) {
+    sum += vSplitAddr_.at(ii)->getCreditSum();
+  }
+  return sum;
+}
+
+Account Transaction::getCreditAccount(void) const {
+  return vSplitAddr_.size() == 1 ? vSplitAddr_.at(0)->getCreditAccount() : Account();
+}
+
+Account Transaction::getDebitAccount(void) const {
+  return vSplitAddr_.size() == 1 ? vSplitAddr_.at(0)->getDebitAccount() : Account();
+}

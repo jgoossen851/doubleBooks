@@ -33,7 +33,7 @@ bool Database<VER>::formatData_(const std::vector<std::vector<std::string>> &dat
     // Create a new transaction if the Parent is self-referring or empty
     if (currentEntry.at(DB_ID) == currentEntry.at(DB_PARENT) || currentEntry.at(DB_PARENT) == "") {
       // std::cout << "Make a new transaction." << std::endl;
-      Transaction new_transaction(currentEntry);
+      Transaction2 new_transaction(currentEntry);
       body.push_back(new_transaction);
 
     } else {

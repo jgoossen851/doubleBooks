@@ -42,7 +42,7 @@ target_include_directories("${TARGET_NAME}"
 
 # Specify libraries or flags to use when linking a given target and/or its dependents
 target_link_libraries("${TARGET_NAME}"
-    PRIVATE Datafield Ansi Misc
+    PRIVATE Datafield Ansi Misc Transactions
 )
 
 # If install target is built, create a local installation of target
