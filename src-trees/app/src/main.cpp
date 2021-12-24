@@ -11,6 +11,7 @@
 #include "register.h"
 
 #include <iostream>
+#include <cstdlib>
 
 int main(int argc, char* argv[]) {
 
@@ -24,9 +25,15 @@ int main(int argc, char* argv[]) {
   // Set up files
   Csv transactionsList(argv[1]);
   std::cout << "CSV opened." << std::endl;
-  
+
+  // Get installed location of configuration file
+  char *env_home;
+  env_home = getenv("HOME");
+  std::string pathStr = env_home;
+  pathStr.append("/.local/share/doublebooks/Accounts.dbkcfg");
+
   // Load database
-  Register reg(transactionsList.load(), "../res/data/Accounts.dbkcfg");
+  Register reg(transactionsList.load(), pathStr.c_str());
   std::cout << "Database loaded." << std::endl;
   
   // Print Table

@@ -37,8 +37,8 @@ set(SHARE_DIR "${CMAKE_INSTALL_PREFIX}/share")
 
 # TODO:
 # Keep CPack from installing the icon resources to the system when creating install targets for package
-# Only set the installation location if not given with the --prefix command (CMake 3.15)
-if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+# # Only set the installation location if not given with the --prefix command (CMake 3.15)
+# if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   if(LocalInstall)
     message(STATUS "Configured for Local installation")
     # Change default install location to a local directory not requiring root privledges
@@ -55,7 +55,7 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
       set(SHARE_DIR "${CMAKE_INSTALL_PREFIX}/../share")
     # ENDIF()
   endif()
-endif()
+# endif()
 message(STATUS "Configured for installation at ${CMAKE_INSTALL_PREFIX}")
 
 # Name paths (could be distro-dependent)

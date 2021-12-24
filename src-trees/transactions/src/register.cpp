@@ -135,27 +135,28 @@ void Register::printTransactions(void) const {
 
 void Register::printEntry(const Entry *entry) const {
     /// @note Using fprint here doen't allow formatting in strings.
-    // printElement(std::to_string(entry->getId()), vColumnWidth_.at(ID), 2);
-    // printElement(entry->getName().str(vColumnWidth_.at(NAME)), vColumnWidth_.at(NAME), 2);
-    // printElement(entry->getPeriod().str(vColumnWidth_.at(PERIOD)), vColumnWidth_.at(PERIOD), 2);
-    // printElement(entry->getDate().str(vColumnWidth_.at(DATE)), vColumnWidth_.at(DATE), 2);
-    // printElement(entry->getVendor().str(vColumnWidth_.at(VENDOR)), vColumnWidth_.at(VENDOR), 2);
-    // printElement(entry->getAmount().str(vColumnWidth_.at(AMOUNT)), vColumnWidth_.at(AMOUNT), 2);
-    // printElement(entry->getDebitAccount().str(vColumnWidth_.at(DEBIT_ACCOUNT)), vColumnWidth_.at(DEBIT_ACCOUNT), 2);
-    // printElement(entry->getCreditAccount().str(vColumnWidth_.at(CREDIT_ACCOUNT)), vColumnWidth_.at(CREDIT_ACCOUNT), 2);
-    // printElement(entry->getMemo().str(vColumnWidth_.at(MEMO)), vColumnWidth_.at(MEMO), 2);
-    // std::cout << std::endl;
+    printElement(std::to_string(entry->getId()), vColumnWidth_.at(ID), 2);
+    printElement(entry->getName().str(vColumnWidth_.at(NAME)), vColumnWidth_.at(NAME), 2);
+    printElement(entry->getPeriod().str(vColumnWidth_.at(PERIOD)), vColumnWidth_.at(PERIOD), 2);
+    printElement(entry->getDate().str(vColumnWidth_.at(DATE)), vColumnWidth_.at(DATE), 2);
+    printElement(entry->getVendor().str(vColumnWidth_.at(VENDOR)), vColumnWidth_.at(VENDOR), 2);
+    printElement(entry->getAmount().str(vColumnWidth_.at(AMOUNT)), vColumnWidth_.at(AMOUNT), 2);
+    printElement(entry->getDebitAccount().str(vColumnWidth_.at(DEBIT_ACCOUNT)), vColumnWidth_.at(DEBIT_ACCOUNT), 2);
+    printElement(entry->getCreditAccount().str(vColumnWidth_.at(CREDIT_ACCOUNT)), vColumnWidth_.at(CREDIT_ACCOUNT), 2);
+    printElement(entry->getMemo().str(vColumnWidth_.at(MEMO)), vColumnWidth_.at(MEMO), 2);
+    std::cout << std::endl;
 
-    std::cout << ansi::CLEAR_LINE << ansi::RESET_LINE;
-    std::cout << UintField(entry->getId()).str(vColumnWidth_.at(ID)) << ansi::COLUMN(6);
-    std::cout << entry->getName().str(vColumnWidth_.at(NAME)) << ansi::COLUMN(28)
-              << entry->getPeriod().str(vColumnWidth_.at(PERIOD)) << ansi::COLUMN(34)
-              << entry->getDate().str(vColumnWidth_.at(DATE)) << ansi::COLUMN(44)
-              << entry->getVendor().str(vColumnWidth_.at(VENDOR)) << ansi::COLUMN(56)
-              << entry->getAmount().str(vColumnWidth_.at(AMOUNT)) << ansi::COLUMN(68)
-              << entry->getDebitAccount().str(vColumnWidth_.at(DEBIT_ACCOUNT)) << ansi::COLUMN(85)
-              << entry->getCreditAccount().str(vColumnWidth_.at(CREDIT_ACCOUNT)) << ansi::COLUMN(102)
-              << entry->getMemo().str(vColumnWidth_.at(MEMO)) << std::endl;
+    /// @note This way, however, get messed up when the window resizes.
+    // std::cout << ansi::CLEAR_LINE << ansi::RESET_LINE;
+    // std::cout << UintField(entry->getId()).str(vColumnWidth_.at(ID)) << ansi::COLUMN(6);
+    // std::cout << entry->getName().str(vColumnWidth_.at(NAME)) << ansi::COLUMN(28)
+    //           << entry->getPeriod().str(vColumnWidth_.at(PERIOD)) << ansi::COLUMN(34)
+    //           << entry->getDate().str(vColumnWidth_.at(DATE)) << ansi::COLUMN(44)
+    //           << entry->getVendor().str(vColumnWidth_.at(VENDOR)) << ansi::COLUMN(56)
+    //           << entry->getAmount().str(vColumnWidth_.at(AMOUNT)) << ansi::COLUMN(68)
+    //           << entry->getDebitAccount().str(vColumnWidth_.at(DEBIT_ACCOUNT)) << ansi::COLUMN(85)
+    //           << entry->getCreditAccount().str(vColumnWidth_.at(CREDIT_ACCOUNT)) << ansi::COLUMN(102)
+    //           << entry->getMemo().str(vColumnWidth_.at(MEMO)) << std::endl;
 }
 
 void Register::printHeader() const {

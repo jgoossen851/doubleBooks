@@ -49,3 +49,7 @@ target_link_libraries("${TARGET_NAME}"
 install(TARGETS "${TARGET_NAME}" DESTINATION bin)
 # install(FILES ${PATH_TO_INCLUDE_FILES}
 #         DESTINATION include)
+
+# Install the configuration file in a local config folder
+get_target_property(PROGRAM_NAME ${PROJECT_NAME} OUTPUT_NAME)
+INSTALL(FILES ${PROJECT_SOURCE_DIR}/res/data/Accounts.dbkcfg DESTINATION $ENV{HOME}/.local/share/${PROGRAM_NAME}/ )
