@@ -13,6 +13,7 @@
 #include "date.h"
 #include "currency.h"
 #include "datafield.h"
+#include "account.h"
 
 class Entry {
  protected:
@@ -24,6 +25,7 @@ class Entry {
   
  public:
   /// Getter/Setter Functions
+  virtual uint getId() const =0;
   virtual StringField getName() const =0;
   virtual void setName(const std::string name) =0;
   virtual StringField getMemo() const =0;
@@ -34,6 +36,9 @@ class Entry {
   virtual void setDate(const Date date) =0;
   virtual StringField getVendor() const =0;
   virtual void setVendor(const std::string vendor) =0;
+  virtual Currency getAmount(void) const =0;
+  virtual Account getDebitAccount(void) const =0;
+  virtual Account getCreditAccount(void) const =0;
 
   virtual Currency getDebitSum() const =0;
   virtual Currency getCreditSum() const =0;

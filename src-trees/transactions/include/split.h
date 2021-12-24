@@ -40,9 +40,9 @@ class Split : public Entry {
   void setDate(const Date date) override { date_ = date; };
   StringField getVendor() const override;
   void setVendor(const std::string vendor) override { vendor_ = vendor; };
-  Currency getAmount() const { return amount_; };
+  Currency getAmount() const override { return amount_; };
   void setAmount(const Currency amount) { amount_ = amount; };
-  unsigned int getId() const { return id_; };
+  uint getId() const override { return id_; };
   void setId(const unsigned int id) { id_ = id; };
 
 
@@ -58,11 +58,11 @@ class Split : public Entry {
   unsigned int getCreditAccountInd() const {
     return creditAccount_.getAccountInd();
   };
-  Account getDebitAccount() const { return debitAccount_; };
+  Account getDebitAccount() const override { return debitAccount_; };
   void setDebitAccount(std::string acctNum) {
     debitAccount_.setFromStr(acctNum);
   };
-  Account getCreditAccount() const { return creditAccount_; };
+  Account getCreditAccount() const override { return creditAccount_; };
   void setCreditAccount(std::string acctNum) {
     creditAccount_.setFromStr(acctNum);
   };

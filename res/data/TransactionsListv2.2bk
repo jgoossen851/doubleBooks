@@ -10,7 +10,7 @@ Field Width		The number signs (#) below the header determine
 Transactions		Must have integer ID to be processed										
 							To		From			
 ID	Parent ID	Entry Title	Entry Period	Entry Date	Vendor	Transaction Amount	Debit Account	Debit Note	Credit Account	Credit Note	Memo	Statement
-######	######	###########################	####	########	##########	########	#########################				#################################################################	#
+###	#	####################	####	########	##########	##########	###############	##########	###############	##########	##############################	#
 1		Income Taxes	2101	01/01/2021		122.56	26	Exp:Taxes	40	Assets:Cash	Sample note on the taxes paid	0
 2		Gadget	2101	01/10/2021	Widgets, Inc.	12.36	17	Exp:Household	40	Assets:Cash	Some household gadget that was not needed, and probably serves no purpose whatsoever	1
 3		Car Insurance	2102	02/05/2021		53.21	18	Exp:Insurance	40	Assets:Cash		0

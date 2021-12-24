@@ -11,23 +11,26 @@
 #include "csv.h"
 #include "transaction.h"
 #include "split.h"
+#include "entry.h"
 
 #include <vector>
 #include <string>
 
 class Register {
-  const AccountList         accountList_;
-  std::vector<Transaction>  vTransaction_;
-  std::vector<Split>        vSplit_;
-  uint                      numColumns_;
-  std::vector<std::string>  vHeader_;
-  std::vector<uint>         columnWidth_; //!< in characters
+  const AccountList               accountList_;
+  const uint                      numColumns_;
+  const std::vector<std::string>  vHeader_;
+  const std::vector<uint>         vColumnWidth_; //!< in characters
+  std::vector<Transaction>        vTransaction_;
+  std::vector<Split>              vSplit_;
 
  public:
   Register(StringDatabase data, const char *accountListFile);
   void printSplits(void) const;
   void printTransactions(void) const;
-
+ private:
+  /// @brief Function to print either vector of transactions or splits
+  void printEntry(const Entry *entry) const;
 };
 
 #endif // REGISTER_H_

@@ -30,17 +30,17 @@ class Transaction : public Entry {
   void setDate(const Date date) override { date_ = date; };
   StringField getVendor() const override { return vendor_; };
   void setVendor(const std::string vendor) override { vendor_ = vendor; };
-  unsigned int getId() const { return id_; };
+  uint getId() const override { return id_; };
   void setId(const unsigned int id) { id_ = id; };
 
   Currency getDebitSum() const override;
   Currency getCreditSum() const override;
-  Currency getAmount() const {
+  Currency getAmount() const override {
     // Get sum of all debits (since debits and credits should be equal across transaction)
     return getDebitSum();
   }
-  Account getCreditAccount(void) const;
-  Account getDebitAccount(void) const;
+  Account getCreditAccount(void) const override;
+  Account getDebitAccount(void) const override;
 
   void addChildSplit(Split* child){
     vSplitAddr_.push_back(child);
