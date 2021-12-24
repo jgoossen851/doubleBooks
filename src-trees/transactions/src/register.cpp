@@ -8,6 +8,7 @@
 #include "register.h"
 #include "csv.h"
 #include "ansi.h"
+#include "datafield.h"
 
 #include <cassert>
 #include <iostream>
@@ -145,14 +146,15 @@ void Register::printEntry(const Entry *entry) const {
     // printElement(entry->getMemo().str(vColumnWidth_.at(MEMO)), vColumnWidth_.at(MEMO), 2);
     // std::cout << std::endl;
 
-    std::cout << entry->getId() << "\t";
-    std::cout << entry->getName().str(vColumnWidth_.at(NAME)) << "\033[31G"
-              << entry->getPeriod().str(vColumnWidth_.at(PERIOD)) << "\033[37G"
-              << entry->getDate().str(vColumnWidth_.at(DATE)) << "\033[47G"
-              << entry->getVendor().str(vColumnWidth_.at(VENDOR)) << "\033[59G"
-              << entry->getAmount().str(vColumnWidth_.at(AMOUNT)) << "\033[71G"
-              << entry->getDebitAccount().str(vColumnWidth_.at(DEBIT_ACCOUNT)) << "\033[88G"
-              << entry->getCreditAccount().str(vColumnWidth_.at(CREDIT_ACCOUNT)) << "\033[105G"
+    std::cout << ansi::CLEAR_LINE << ansi::RESET_LINE;
+    std::cout << UintField(entry->getId()).str(vColumnWidth_.at(ID)) << ansi::COLUMN(6);
+    std::cout << entry->getName().str(vColumnWidth_.at(NAME)) << ansi::COLUMN(28)
+              << entry->getPeriod().str(vColumnWidth_.at(PERIOD)) << ansi::COLUMN(34)
+              << entry->getDate().str(vColumnWidth_.at(DATE)) << ansi::COLUMN(44)
+              << entry->getVendor().str(vColumnWidth_.at(VENDOR)) << ansi::COLUMN(56)
+              << entry->getAmount().str(vColumnWidth_.at(AMOUNT)) << ansi::COLUMN(68)
+              << entry->getDebitAccount().str(vColumnWidth_.at(DEBIT_ACCOUNT)) << ansi::COLUMN(85)
+              << entry->getCreditAccount().str(vColumnWidth_.at(CREDIT_ACCOUNT)) << ansi::COLUMN(102)
               << entry->getMemo().str(vColumnWidth_.at(MEMO)) << std::endl;
 }
 
@@ -169,6 +171,7 @@ void Register::printHeader() const {
   columnsToPrint.push_back(CREDIT_ACCOUNT);
   columnsToPrint.push_back(MEMO);
 
+  std::cout << ansi::CLEAR_LINE << ansi::RESET_LINE;
   std::cout << ansi::BOLD + ansi::UNDERLINE + ansi::OVERLINE;
   for (uint ii = 0; ii < columnsToPrint.size(); ii++) {
     printElement(vHeader_.at(columnsToPrint.at(ii)),

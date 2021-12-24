@@ -7,9 +7,7 @@
 
 #include "version.h"
 #include "csv.h"
-#include "table.h"
 #include "currency.h"
-#include "transaction_old.h"
 #include "register.h"
 
 #include <iostream>
@@ -28,17 +26,11 @@ int main(int argc, char* argv[]) {
   std::cout << "CSV opened." << std::endl;
   
   // Load database
-  // Database<A1> data = transactionsList.load();
   Register reg(transactionsList.load(), "../res/data/Accounts.2bkcfg");
   std::cout << "Database loaded." << std::endl;
   
   // Print Table
   reg.printSplits();
-  // Table table(data);
-  // std::cout << "Table constructed." << std::endl;
-  // table.print();
-  
-  
-  
+
   return 0;
 }

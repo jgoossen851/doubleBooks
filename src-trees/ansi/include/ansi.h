@@ -49,6 +49,10 @@ namespace ansi{
   const std::string DELETE_SCROLLBACK = CSI_('J', 3);
   const std::string SAVE_CURSOR     = CSI_('s');
   const std::string RESTORE_CURSOR   = CSI_('u');
+  const std::string CLEAR_LINE = CSI_('K', 2);
+  const std::string RESET_LINE = CSI_('G', 0);
+  template<typename T>
+  std::string COLUMN(const T &code);
 
   /// @todo Figure out a way to scoll up the terminal to save the entire scrollback with CLEAR
   const std::string CLEAR     = ERASE + RESET_CURSOR;

@@ -45,6 +45,10 @@ UintField::UintField(std::string str){
   setFromStr(str);
 }
 
+UintField::UintField(uint val){
+  uint_ = val;
+}
+
 std::string UintField::str(const unsigned int &max_characters) const {
   std::string idStr = std::to_string(uint_);
   return (idStr.size() <= max_characters) ? idStr : std::string(max_characters, '*');

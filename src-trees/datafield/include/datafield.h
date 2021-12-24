@@ -36,6 +36,7 @@ class UintField : public Element {
   UintField();
   /// Parameterized Constructor Function
   UintField(std::string str);
+  UintField(uint val);
 
   /// Function Overrides from Element
   std::string str(const unsigned int &max_characters = 3) const override;
