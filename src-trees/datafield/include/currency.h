@@ -44,6 +44,14 @@ class Currency : public Element {
   Currency operator-() const {
     return Currency(-cents_, negativeFormat_);
   }
+
+  Currency& operator+=(const Currency &rhs) {
+    cents_ += rhs.cents_;
+    return *this;
+  }
+  const Currency operator+(const Currency &rhs) const {
+    return Currency(*this) += rhs;
+  }
   
  private:  
   std::string display_magnitude(const int &max_characters) const;

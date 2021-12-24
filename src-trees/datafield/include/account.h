@@ -32,9 +32,7 @@ class Account : public Element {
   Account(const AccountList *pAcctList, std::string str);
  
   // Override inherited functions
-  std::string str(const unsigned int &max_characters = 12) const override {
-    return pAcctList_->at(acctListInd_).str(max_characters);
-  }
+  std::string str(const unsigned int &max_characters = 12) const override;
   void setFromStr(std::string str) override {
     unsigned int index = Strings::toInteger(str);
     acctListInd_ = index < pAcctList_->size() ? index : 0;

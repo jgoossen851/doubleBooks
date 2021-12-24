@@ -24,7 +24,7 @@ class Split : public Entry {
 
  public:
 
-  Split(AccountList *pAcctList)
+  Split(const AccountList *pAcctList)
       : pAcctList_(pAcctList),
         debitAccount_(pAcctList_),
         creditAccount_(pAcctList_)
@@ -46,8 +46,12 @@ class Split : public Entry {
   void setId(const unsigned int id) { id_ = id; };
 
 
-  Currency getDebitSum() const override { return Currency(); };
-  Currency getCreditSum() const override { return Currency(); };
+  Currency getDebitSum() const override {
+    return getDebitAccountInd() == 0 ? Currency() : amount_;
+  };
+  Currency getCreditSum() const override {
+    return getCreditAccountInd() == 0 ? Currency() : amount_;
+  };
   unsigned int getDebitAccountInd() const {
     return debitAccount_.getAccountInd();
   };
@@ -63,9 +67,7 @@ class Split : public Entry {
     creditAccount_.setFromStr(acctNum);
   };
 
-  void setParentTransaction(Transaction *testTransaction) {
-    pParent_ = testTransaction;
-  };
+  void setParentTransaction(Transaction *testTransaction);
 
 };
 

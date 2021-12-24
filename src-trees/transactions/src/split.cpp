@@ -36,3 +36,7 @@ StringField Split::getVendor() const {
   return vendor_.str() == "" ? (pParent_->getVendor()) : vendor_;
 }
 
+void Split::setParentTransaction(Transaction *testTransaction) {
+  pParent_ = testTransaction;
+  pParent_->addChildSplit(this);
+}
