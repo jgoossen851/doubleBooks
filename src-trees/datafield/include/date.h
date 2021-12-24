@@ -28,11 +28,17 @@ class Date : public Element {
   const void* value_ptr(void) const override;
   bool operator<(const Element &rhs) const override;
 
+  bool operator==(const Date &rhs) const {
+    return sortValue_ == rhs.sortValue_;
+  }
+
  private:
   bool isDateValid() const;
   std::string getDateStr(const char * format) const;
   void invalidateDate();
   void setDaysSinceJan1();
+
+
 };
 
 #endif

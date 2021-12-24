@@ -7,23 +7,17 @@
 cmake_minimum_required(VERSION 3.5.1)
 
 # Set the CMake target name and files for this subdirectory
-set(TARGET_NAME ${PROJECT_NAME})
+set(TARGET_NAME Transactions-Test)
 
 set(SOURCE_FILES
-    src/main.cpp
+    transactions.test.cpp
 )
 
-configure_file(include/version.h.in ${PROJECT_BINARY_DIR}/include/version.h)
-
 set(INCLUDE_FILES
-    ${PROJECT_BINARY_DIR}/include/version.h
 )
 
 # Create a new target with the source and header files as dependencies
 add_executable("${TARGET_NAME}" ${SOURCE_FILES} ${INCLUDE_FILES})
-
-# Set the output name of the binary executable
-set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "doublebooks")
 
 # The keywords PUBLIC, PRIVATE, and INTERFACE are used for both Include
 # Directories and Link Libraries.
@@ -36,20 +30,13 @@ set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "doublebooks")
 
 # Specify include directories to use when compiling the given target
 target_include_directories("${TARGET_NAME}"
-    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-    PRIVATE ${PROJECT_BINARY_DIR}/include
+    PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
 # Specify libraries or flags to use when linking a given target and/or its dependents
 target_link_libraries("${TARGET_NAME}"
-    PRIVATE Datafield Ansi Transactions
+    PUBLIC Transactions Ansi AccountList Csv
 )
 
-# If install target is built, create a local installation of target
-install(TARGETS "${TARGET_NAME}" DESTINATION bin)
-# install(FILES ${PATH_TO_INCLUDE_FILES}
-#         DESTINATION include)
-
-# Install the configuration file in a local config folder
-get_target_property(PROGRAM_NAME ${PROJECT_NAME} OUTPUT_NAME)
-INSTALL(FILES ${PROJECT_SOURCE_DIR}/res/data/Accounts.dbkcfg DESTINATION $ENV{HOME}/.local/share/${PROGRAM_NAME}/ )
+# Add build-in self test to test list
+add_test(NAME "${TARGET_NAME}" COMMAND "${TARGET_NAME}")

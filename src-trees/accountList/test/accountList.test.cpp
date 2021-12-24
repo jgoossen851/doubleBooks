@@ -42,7 +42,7 @@ int main() {
   // Initialize exit status
   int exitStatus = EXIT_SUCCESS;
 
-  AccountList accountList("../../../../res/data/Accounts.2bkcfg");
+  AccountList accountList("../../../../res/data/Accounts.dbkcfg");
 
   // Test several Account strings and properties
   exitStatus |= testStrings(accountList.at(3).str(5) + " B[" + std::to_string(accountList.at(3).getIsBudgeted()) 
@@ -56,7 +56,7 @@ int main() {
                             "ets:Checking B[0] D[1]");
   exitStatus |= testStrings(accountList.at().str() + " B[" + std::to_string(accountList.at().getIsBudgeted()) 
                                                     + "] D[" + std::to_string(accountList.at().getIsDebitIncrease()) + "]",
-                            "Undefined B[3] D[3]");
+                            " B[3] D[3]");
 
   // Display Test Status
   std::cout << (exitStatus ? ansi::RED : ansi::GREEN)

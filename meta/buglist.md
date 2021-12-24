@@ -25,6 +25,8 @@
 
 * [ ] The files `account.*` should actually be `accountList.*` located in the AccountList library. These files deal with reading avaliable accounts from a CSV and setting up a vector of available accounts. In the Datafields library, there should be `account.*` files that read info from a transactions file (this is why the `setFromStr()` function is needed) and save an iterator to the appropriate account in the AccountList.
 
+* [ ] With the new extensions, it appears that the files are no longer recognized as CSVs. LibreOffice Calc will no longer open `.2bk` files, instead opening them in LibreOffice Writer. Change file extension to `.csv` to edit data, then change back.
+
 # Needed Features
 
 * [ ] Create a Windows installer

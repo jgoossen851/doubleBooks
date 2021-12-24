@@ -10,7 +10,7 @@ add_subdirectory(ansi)
 add_subdirectory(csv)
 add_subdirectory(datafield)
 # add_subdirectory(fileio)
-add_subdirectory(misc)
+add_subdirectory(transactions)
 
 # Add the executable subdirectory
 add_subdirectory(app)

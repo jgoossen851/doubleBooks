@@ -6,6 +6,11 @@
  */
  
 template<typename T>
-std::string ansi::SGR_(const T &code){
+std::string ansi::SGR_(const T &code) {
   return ansi::CSI_('m', code);
+}
+
+template<typename T>
+std::string ansi::COLUMN(const T &code) {
+  return ansi::CSI_('G', code);
 }

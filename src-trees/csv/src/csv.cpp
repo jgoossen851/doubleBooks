@@ -69,6 +69,7 @@ StringDatabase Csv::load(){
       process_widths = true;
     } else if (process_widths) {
       // Then, process the field widths for each column
+      /// @todo Get column widths from config file rather than transactions list.
       std::vector<std::string> widths = delimitString_(line);
       for (unsigned int ii = 0; ii < widths.size(); ii++) {
         db.column_width.push_back(widths.at(ii).size());

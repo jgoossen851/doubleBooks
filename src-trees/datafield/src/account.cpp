@@ -7,18 +7,25 @@
  
 #include "account.h"
 
+#include "ansi.h"
+
 bool Account::operator<(const Element &rhs) const {
   return *(static_cast<const int*>(this->value_ptr())) < *(static_cast<const int*>(rhs.value_ptr()));
 }
 
 
 /// Parameterized constructor functions
-  Account::Account(AccountList *pAcctList)
+  Account::Account(const AccountList *pAcctList)
       : pAcctList_(pAcctList)
       {}
 
-  Account::Account(AccountList *pAcctList, std::string str)
+  Account::Account(const AccountList *pAcctList, std::string str)
       : pAcctList_(pAcctList)
       {
     setFromStr(str);
   }
+
+std::string Account::str(const unsigned int &max_characters) const {
+  return pAcctList_ == nullptr ? ansi::DIM + "Undefined" + ansi::NORMAL
+                                : pAcctList_->at(acctListInd_).str(max_characters);
+}
