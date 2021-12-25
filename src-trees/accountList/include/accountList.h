@@ -8,6 +8,7 @@
 #ifndef ACCOUNTLIST_H_
 #define ACCOUNTLIST_H_
 
+#include <cassert>
 #include <string>
 #include <vector>
 
@@ -37,12 +38,65 @@ class AccountEntry {
               InheritBool   isDebitIncrease,
               AccountEntry  *pParent = nullptr
               );
+
+  /// Copy Constructor
+  AccountEntry(const AccountEntry& rhs) = delete;
+
+  /// Move Constructor
+  AccountEntry(AccountEntry&& rvalue)
+      : pParent_(rvalue.pParent_)
+      , sortOrder_(rvalue.sortOrder_)
+      , name_(rvalue.name_)
+      , isBudgeted_(rvalue.isBudgeted_)
+      , isDebitIncrease_(rvalue.isDebitIncrease_) {
+
+    // Let children know I've moved. This also updates this->vpChildren
+    for (auto itr = vpChildren_.begin(); itr < vpChildren_.end(); itr++) {
+      (*itr)->setParentEntry(this);
+    }
+
+    // Clear rvalue resources
+    rvalue.pParent_ = nullptr;
+    rvalue.isBudgeted_ = UNDEFINED;
+    rvalue.isDebitIncrease_ = UNDEFINED;
+  }
+
+  /// Move Assignment Operator
+  AccountEntry& operator=(AccountEntry&& rvalue) {
+
+    assert(false && "I don't think I use this function. Remove Assertion if I do.");
+
+    if (this != &rvalue) { // Prevent self-assignment
+
+      // Do shallow copy (I'm assuming Move Constructor will be called to set consts.)
+      pParent_ = rvalue.pParent_;
+      // sortOrder_ = rvalue.sortOrder_;
+      // name_ = rvalue.name_;
+      isBudgeted_ = rvalue.isBudgeted_;
+      isDebitIncrease_ = rvalue.isDebitIncrease_;
+
+      // Let children know I've moved. This also updates this->vpChildren
+      for (auto itr = vpChildren_.begin(); itr < vpChildren_.end(); itr++) {
+        (*itr)->setParentEntry(this);
+      }
+
+      // Clear rvalue resources
+      rvalue.pParent_ = nullptr;
+      rvalue.isBudgeted_ = UNDEFINED;
+      rvalue.isDebitIncrease_ = UNDEFINED;
+
+      return *this;
+    }
+  }
+
+  /// Copy Assignment Operator [deleted]
+  AccountEntry& operator=(const AccountEntry&) = delete;
  
   std::string str(const unsigned int &max_characters = 12) const;
 
   // Getter and Setter Functions
-  InheritBool getIsBudgeted(void);
-  InheritBool getIsDebitIncrease(void);
+  InheritBool getIsBudgeted(void) const;
+  InheritBool getIsDebitIncrease(void) const;
   void setIsBudgeted(const InheritBool isBudgeted);
   void setIsDebitIncrease(const InheritBool isDebitIncrease);
   void setParentEntry(AccountEntry *pParent);
@@ -64,7 +118,7 @@ class AccountList {
 
   void load(const char *accountsCsv);
 
-  AccountEntry at(unsigned int ind = 0) const;
+  const AccountEntry& at(unsigned int ind = 0) const;
   unsigned int size(void) const;
 };
 

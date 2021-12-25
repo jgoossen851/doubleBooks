@@ -58,6 +58,10 @@ int main() {
                                                     + "] D[" + std::to_string(accountList.at().getIsDebitIncrease()) + "]",
                             " B[3] D[3]");
 
+  // Test Move Constructor
+  AccountEntry newAcct(AccountEntry(1, "Default", TRUE, TRUE, nullptr));
+  exitStatus |= testStrings(newAcct.str(), "Default");
+
   // Display Test Status
   std::cout << (exitStatus ? ansi::RED : ansi::GREEN)
             << std::string(15, '#')

@@ -54,10 +54,10 @@ std::string AccountEntry::str(const unsigned int &max_characters) const {
 }
 
 // Getter and Setter Functions
-InheritBool AccountEntry::getIsBudgeted(void) {
+InheritBool AccountEntry::getIsBudgeted(void) const {
   return isBudgeted_ == INHERITED ? pParent_->getIsBudgeted() : isBudgeted_;
 }
-InheritBool AccountEntry::getIsDebitIncrease(void) {
+InheritBool AccountEntry::getIsDebitIncrease(void) const {
   return isDebitIncrease_ == INHERITED ? pParent_->getIsDebitIncrease() : isDebitIncrease_;
 }
 
@@ -69,8 +69,11 @@ void AccountEntry::setIsDebitIncrease(const InheritBool isDebitIncrease) {
 }
 
 void AccountEntry::setParentEntry(AccountEntry *pParent) {
+  // Set parent even if nullptr to trigger comparisons with nullptr later.
   pParent_ = pParent;
-  pParent_->addChildEntry(this);
+  if(pParent != nullptr) {
+    pParent_->addChildEntry(this);
+  }
 }
 
 void AccountEntry::addChildEntry(AccountEntry *pChild) {
@@ -141,7 +144,7 @@ void AccountList::load(const char *accountsCsv){
   }
 }
 
-AccountEntry AccountList::at(unsigned int ind) const {
+const AccountEntry& AccountList::at(unsigned int ind) const {
   return vAcctEntries_.at(ind);
 }
 
