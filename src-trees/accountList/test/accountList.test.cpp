@@ -58,9 +58,14 @@ int main() {
                                                     + "] D[" + std::to_string(accountList.at().getIsDebitIncrease()) + "]",
                             " B[3] D[3]");
 
-  // Test Move Constructor
-  AccountEntry newAcct(AccountEntry(1, "Default", TRUE, TRUE, nullptr));
-  exitStatus |= testStrings(newAcct.str(), "Default");
+  // Test Move Assignment Operator
+  AccountEntry newAcct;
+  {
+    AccountEntry tempAcct(1, "TempAcct", TRUE, TRUE, nullptr);
+    newAcct = std::move(tempAcct);
+  }
+  exitStatus |= testStrings(newAcct.str(), "TempAcct");
+
 
   // Display Test Status
   std::cout << (exitStatus ? ansi::RED : ansi::GREEN)

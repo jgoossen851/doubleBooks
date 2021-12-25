@@ -20,10 +20,10 @@ enum InheritBool{
 };
 
 class AccountEntry {
-  AccountEntry                *pParent_;
+  AccountEntry                *pParent_; //!< @todo Change to Smart pointers?
   std::vector<AccountEntry*>  vpChildren_;
-  const unsigned int          sortOrder_;
-  const std::string           name_;
+  unsigned int                sortOrder_;
+  std::string                 name_;
   InheritBool                 isBudgeted_;
   InheritBool                 isDebitIncrease_;
 
@@ -64,14 +64,12 @@ class AccountEntry {
   /// Move Assignment Operator
   AccountEntry& operator=(AccountEntry&& rvalue) {
 
-    assert(false && "I don't think I use this function. Remove Assertion if I do.");
-
     if (this != &rvalue) { // Prevent self-assignment
 
       // Do shallow copy (I'm assuming Move Constructor will be called to set consts.)
       pParent_ = rvalue.pParent_;
-      // sortOrder_ = rvalue.sortOrder_;
-      // name_ = rvalue.name_;
+      sortOrder_ = rvalue.sortOrder_;
+      name_ = rvalue.name_;
       isBudgeted_ = rvalue.isBudgeted_;
       isDebitIncrease_ = rvalue.isDebitIncrease_;
 
@@ -85,8 +83,9 @@ class AccountEntry {
       rvalue.isBudgeted_ = UNDEFINED;
       rvalue.isDebitIncrease_ = UNDEFINED;
 
-      return *this;
     }
+
+    return *this;
   }
 
   /// Copy Assignment Operator [deleted]
