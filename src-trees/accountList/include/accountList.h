@@ -19,11 +19,12 @@ enum InheritBool{
 };
 
 class AccountEntry {
-  AccountEntry        *pParent_;
-  const unsigned int  sortOrder_;
-  const std::string   name_;
-  InheritBool         isBudgeted_;
-  InheritBool         isDebitIncrease_;
+  AccountEntry                *pParent_;
+  std::vector<AccountEntry*>  vpChildren_;
+  const unsigned int          sortOrder_;
+  const std::string           name_;
+  InheritBool                 isBudgeted_;
+  InheritBool                 isDebitIncrease_;
 
  public:
   /// Default constructor function
@@ -42,9 +43,13 @@ class AccountEntry {
   // Getter and Setter Functions
   InheritBool getIsBudgeted(void);
   InheritBool getIsDebitIncrease(void);
-  void setParent(AccountEntry *pParent = nullptr);
   void setIsBudgeted(const InheritBool isBudgeted);
   void setIsDebitIncrease(const InheritBool isDebitIncrease);
+  void setParentEntry(AccountEntry *pParent);
+
+ private:
+  void addChildEntry(AccountEntry *pChild);
+
 };
 
 

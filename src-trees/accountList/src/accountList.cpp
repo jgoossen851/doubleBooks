@@ -29,14 +29,13 @@ AccountEntry::AccountEntry( unsigned int  sortOrder,
                             std::string   name,
                             InheritBool   isBudgeted,
                             InheritBool   isDebitIncrease,
-                            AccountEntry  *pParent
-                            )
-    : pParent_(pParent),
-      sortOrder_(sortOrder),
+                            AccountEntry  *pParent)
+    : sortOrder_(sortOrder),
       name_(name),
       isBudgeted_(isBudgeted),
-      isDebitIncrease_(isDebitIncrease)
-    {}
+      isDebitIncrease_(isDebitIncrease) {
+  setParentEntry(pParent);
+}
  
 std::string AccountEntry::str(const unsigned int &max_characters) const {
   // Recursively find name:
@@ -61,10 +60,7 @@ InheritBool AccountEntry::getIsBudgeted(void) {
 InheritBool AccountEntry::getIsDebitIncrease(void) {
   return isDebitIncrease_ == INHERITED ? pParent_->getIsDebitIncrease() : isDebitIncrease_;
 }
-void AccountEntry::setParent(AccountEntry *pParent) {
-  pParent_ = pParent;
-  return;
-}
+
 void AccountEntry::setIsBudgeted(const InheritBool isBudgeted) {
   isBudgeted_ = isBudgeted;
 }
@@ -72,6 +68,14 @@ void AccountEntry::setIsDebitIncrease(const InheritBool isDebitIncrease) {
   isDebitIncrease_ = isDebitIncrease;
 }
 
+void AccountEntry::setParentEntry(AccountEntry *pParent) {
+  pParent_ = pParent;
+  pParent_->addChildEntry(this);
+}
+
+void AccountEntry::addChildEntry(AccountEntry *pChild) {
+  vpChildren_.push_back(pChild);
+}
 
 
 // Default Constructor Function
@@ -130,7 +134,7 @@ void AccountList::load(const char *accountsCsv){
       // Account's parent found
       int ParentIndex = std::distance(vAcctIds.begin(), parentInd);
       // Note vAcctEntries_ has one extra element at the beginning
-      vAcctEntries_.at(iAct+1).setParent(&vAcctEntries_.at(ParentIndex+1));
+      vAcctEntries_.at(iAct+1).setParentEntry(&vAcctEntries_.at(ParentIndex+1));
       if (vAcctEntries_.at(iAct+1).getIsBudgeted() == UNDEFINED) { vAcctEntries_.at(iAct+1).setIsBudgeted(INHERITED); }
       if (vAcctEntries_.at(iAct+1).getIsDebitIncrease() == UNDEFINED) { vAcctEntries_.at(iAct+1).setIsDebitIncrease(INHERITED); }
     }
