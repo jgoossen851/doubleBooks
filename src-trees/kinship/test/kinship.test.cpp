@@ -8,6 +8,7 @@
 #include "ansi.h"
 
 #include "parentAddress.h"
+#include "childAddress.h"
 
 #include <algorithm>
 #include <iostream>
@@ -62,10 +63,10 @@ int main() {
   std::string parentObject = "Parent";
   parentAddress<std::string> parAddr2(nullptr, &parentObject);
 
-  // Test Dereference Constructor
+  // Test Dereference
   exitStatus |= testStrings(*parAddr2, parentObject);
 
-  // Test Structure Dereference Constructor
+  // Test Structure Dereference
   exitStatus |= testStrings(std::to_string(parAddr2->size()),
                             std::to_string(parentObject.size()));
 
@@ -84,6 +85,50 @@ int main() {
   parAddr4 = std::move(parAddr2);
   exitStatus |= testStrings(*parAddr4, newParent);
 
+
+  // ****** TEST CHILDADDRESS CLASS ****** //
+
+  // Default Construction
+  // childAddress<int> c4; // Error
+
+  // Test Param Constructor
+  childAddress<int> chiAddr(nullptr);
+
+  // Copy Construction
+  // childAddress<int> c5(chiAddr); // Error
+
+  // Move Construction
+  // childAddress<int> c6(std::move(chiAddr)); // Error
+
+  // Test Param Constructor
+  std::string childObject = "Child1";
+  childAddress<std::string> chiAddr2(nullptr, &childObject);
+
+  // Test Dereference
+  exitStatus |= testStrings(chiAddr2.dereference(0), childObject);
+
+  // Test Child Addition
+  std::string Child2 = "Child2";
+  chiAddr2.notifyAddition(&Child2);
+  exitStatus |= testStrings(chiAddr2.dereference(0) + chiAddr2.dereference(1),
+                            childObject + Child2);
+
+  // Test Move Notification
+  std::string Child3 = "Child3";
+  chiAddr2.notifyMove(&childObject, &Child3);
+  exitStatus |= testStrings(chiAddr2.dereference(0) + chiAddr2.dereference(1),
+                            Child3 + Child2);
+
+  // Test Copy Assignement Operator
+  childAddress<std::string> chiAddr3(nullptr);
+  // chiAddr3 = chiAddr2; // Error
+
+  // Test Move Assignement Operator
+  chiAddr3 = std::move(chiAddr2);
+  exitStatus |= testStrings(chiAddr3.dereference(0) + chiAddr3.dereference(1),
+                            Child3 + Child2);
+
+  // ****** CLEAN UP ****** //
 
   // Display Test Status
   std::cout << (exitStatus ? ansi::RED : ansi::GREEN)

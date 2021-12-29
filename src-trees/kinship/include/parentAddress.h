@@ -8,6 +8,10 @@
 #ifndef PARENTADDRESS_H_
 #define PARENTADDRESS_H_
 
+#include <cassert>
+#include <iostream>
+#include <string>
+
 /**
  * @brief Class to manage the address of the object with the parent relationship
  *
@@ -16,15 +20,10 @@
  * 
  * @tparam T  The type of the parent object
  */
-#include <cassert>
-#include <iostream>
-#include <string>
 template<typename T>
 class parentAddress {
   const void  *pTop_;     //!< Pointer to the class containing this class
   T           *pParent_;  //!< Pointer to the parent object under the managed relationship
- public:
-  std::string name = "ParentAddress Class";
 
  public:
   // Define the 6 special member functions
@@ -60,6 +59,7 @@ class parentAddress {
 
   /// Move Assignement Operator
   parentAddress& operator=(parentAddress&& other) = default;
+
 
   // Parameterized Constructors
   /**
