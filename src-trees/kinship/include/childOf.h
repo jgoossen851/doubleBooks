@@ -8,6 +8,23 @@
 #ifndef CHILDOF_H_
 #define CHILDOF_H_
 
+class childOf {
 
+ public:
+  // Define the 6 special member functions
+  /// Default Constructor Function
+  childOf() = default;
+  /// Destructor function
+  ~childOf() = default;
+  /// Copy Constructor Function
+  childOf(const childOf& other) = default;
+  /// Copy Assignment Operator
+  childOf& operator=(const childOf& other) = default;
+  /// Move Constructor Function
+  childOf(childOf&& other) = default;
+  /// Move Assignement Operator
+  childOf& operator=(childOf&& other) = default;
+
+};
 
 #endif // CHILDOF_H_

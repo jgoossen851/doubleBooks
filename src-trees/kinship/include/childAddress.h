@@ -8,6 +8,23 @@
 #ifndef CHILDADDRESS_H_
 #define CHILDADDRESS_H_
 
+class childAddress {
 
+ public:
+  // Define the 6 special member functions
+  /// Default Constructor Function
+  childAddress() = default;
+  /// Destructor function
+  ~childAddress() = default;
+  /// Copy Constructor Function
+  childAddress(const childAddress& other) = default;
+  /// Copy Assignment Operator
+  childAddress& operator=(const childAddress& other) = default;
+  /// Move Constructor Function
+  childAddress(childAddress&& other) = default;
+  /// Move Assignement Operator
+  childAddress& operator=(childAddress&& other) = default;
+
+};
 
 #endif // CHILDADDRESS_H_

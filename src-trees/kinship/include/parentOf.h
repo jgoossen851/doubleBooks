@@ -8,6 +8,23 @@
 #ifndef PARENTOF_H_
 #define PARENTOF_H_
 
+class parentOf {
 
+ public:
+  // Define the 6 special member functions
+  /// Default Constructor Function
+  parentOf() = default;
+  /// Destructor function
+  ~parentOf() = default;
+  /// Copy Constructor Function
+  parentOf(const parentOf& other) = default;
+  /// Copy Assignment Operator
+  parentOf& operator=(const parentOf& other) = default;
+  /// Move Constructor Function
+  parentOf(parentOf&& other) = default;
+  /// Move Assignement Operator
+  parentOf& operator=(parentOf&& other) = default;
+
+};
 
 #endif // PARENTOF_H_

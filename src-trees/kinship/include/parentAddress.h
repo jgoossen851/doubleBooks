@@ -8,6 +8,23 @@
 #ifndef PARENTADDRESS_H_
 #define PARENTADDRESS_H_
 
+class parentAddress {
 
+ public:
+  // Define the 6 special member functions
+  /// Default Constructor Function
+  parentAddress() = default;
+  /// Destructor function
+  ~parentAddress() = default;
+  /// Copy Constructor Function
+  parentAddress(const parentAddress& other) = default;
+  /// Copy Assignment Operator
+  parentAddress& operator=(const parentAddress& other) = default;
+  /// Move Constructor Function
+  parentAddress(parentAddress&& other) = default;
+  /// Move Assignement Operator
+  parentAddress& operator=(parentAddress&& other) = default;
+
+};
 
 #endif // PARENTADDRESS_H_
