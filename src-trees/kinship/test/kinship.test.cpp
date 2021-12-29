@@ -7,6 +7,9 @@
 
 #include "ansi.h"
 
+#include "parentAddress.h"
+
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -28,12 +31,59 @@ int testStrings(std::string testString,
   return EXIT_SUCCESS;
 }
 
+// // Declare parent class
+// class ParentClass;
+
+// // Define child class
+// class ChildClass<ParentClass> {
+
+// }
+
 int main() {
 
   // Initialize exit status
   int exitStatus = EXIT_SUCCESS;
+  
+  // ****** TEST PARENTADDRESS CLASS ****** //
 
-  exitStatus |= testStrings("Yes", "Yes");
+  // Default Construction
+  // parentAddress<int> c1; // Error
+
+  // Test Param Constructor
+  parentAddress<int> parAddr(nullptr);
+
+  // Copy Construction
+  // parentAddress<int> c2(parAddr); // Error
+
+  // Move Construction
+  // parentAddress<int> c3(std::move(parAddr)); // Error
+
+  // Test Param Constructor
+  std::string parentObject = "Parent";
+  parentAddress<std::string> parAddr2(nullptr, &parentObject);
+
+  // Test Dereference Constructor
+  exitStatus |= testStrings(*parAddr2, parentObject);
+
+  // Test Structure Dereference Constructor
+  exitStatus |= testStrings(std::to_string(parAddr2->size()),
+                            std::to_string(parentObject.size()));
+
+  // Test Move Notification
+  std::string newParent = "New Parent";
+  parAddr2.notifyMove(&parentObject, &newParent);
+  exitStatus |= testStrings(*parAddr2, newParent);
+
+  // Test Copy Assignement Operator
+  parentAddress<std::string> parAddr3(nullptr);
+  parAddr3 = parAddr2;
+  exitStatus |= testStrings(*parAddr3, newParent);
+
+  // Test Move Assignement Operator
+  parentAddress<std::string> parAddr4(nullptr);
+  parAddr4 = std::move(parAddr2);
+  exitStatus |= testStrings(*parAddr4, newParent);
+
 
   // Display Test Status
   std::cout << (exitStatus ? ansi::RED : ansi::GREEN)
