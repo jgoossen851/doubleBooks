@@ -68,7 +68,6 @@ class parentAddress {
   /// Move Assignement Operator
   parentAddress& operator=(parentAddress&& other) {
     replaceParent(other.pParent_);
-    T *origPParent = pParent_;
     if (! pParent_->isContainsChild(static_cast<const Child*>(pTop_))) {
       pParent_->addChild(static_cast<Child*>(pTop_));
     }

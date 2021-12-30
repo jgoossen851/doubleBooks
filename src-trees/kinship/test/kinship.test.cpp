@@ -219,6 +219,23 @@ int main() {
     exitStatus |= testStrings(std::to_string(ParentObj.getNumChildren()), "2");
   }
 
+  {
+    DerivedParent NewParent;
+    NewParent.name = "New Parent";
+    DerivedChild NewChild;
+    NewChild.name = "New Child 1";
+    ChildObj.setParent(&ParentObj);
+
+    // Test Move Assignment of Parent
+    ParentObj = std::move(NewParent);
+  }
+  exitStatus |= testStrings(ParentObj.name,
+                            "New Parent");
+  exitStatus |= testStrings(std::to_string(ParentObj.getNumChildren()), "1");
+  exitStatus |= testStrings(ParentObj.getChildPtr(0)->name,
+                            "New Child 1");
+  exitStatus |= testStrings(ParentObj.getChildPtr(0)->getParentPtr()->name,
+                            "New Parent");
 
 
   // ****** CLEAN UP ****** //

@@ -25,7 +25,7 @@
  */
 template<typename T>
 class childAddress {
-  const void      *pTop_;      //!< Pointer to the class containing this class
+  void            *pTop_;      //!< Pointer to the class containing this class
   std::vector<T*> vpChildren_; //!< Vector of pointer to the children objects under the managed relationship
 
  public:
@@ -68,7 +68,20 @@ class childAddress {
   childAddress(childAddress&& other) = delete;
 
   /// Move Assignement Operator
-  childAddress& operator=(childAddress&& other) = default;
+  childAddress& operator=(childAddress&& other) {
+    // Move the internal memory
+    vpChildren_ = std::move(other.vpChildren_);
+    /// @todo Check if these should use the notify functions from 'parentAddress'
+    // For each child, update the parent.
+    for (auto itr = vpChildren_.begin(); itr < vpChildren_.end(); itr++) {
+      if (*itr != nullptr) {
+        // (*itr)->replaceParent(static_cast<Parent*>(pTop_));
+        uint ind = std::distance(vpChildren_.begin(), itr);
+        vpChildren_.at(ind)->replaceParent(static_cast<Parent*>(pTop_));
+      }
+    }
+    return *this;
+  };
 
 
   // Parameterized Constructors
