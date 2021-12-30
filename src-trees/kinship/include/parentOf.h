@@ -10,7 +10,6 @@
 
 #include "childAddress.h"
 #include "kinship.h"
-#include <iostream>
 
 /**
  * @brief Class that contains references to children objects
@@ -49,7 +48,6 @@ class parentOf : public Parent {
   }
 
   T* getChildPtr(const uint iChild) {
-    std::cout << "Accessing element " << iChild << " and vector is size " << mChildAddr_.vectorSize() << std::endl;
     return &(mChildAddr_.dereference(iChild));
   }
 

@@ -58,8 +58,7 @@ int main() {
   // Initialize exit status
   int exitStatus = EXIT_SUCCESS;
 
-  
-  
+
   // ****** TEST PARENTADDRESS CLASS ****** //
   {
     // Default Construction
@@ -151,46 +150,44 @@ int main() {
 
   // ****** TEST DERIVED CLASSES OF PARENTOF AND CHILDOF ****** //
   {
-    {
-      DerivedParent ParentObj;
-      DerivedChild ChildObj1;
-      exitStatus |= testStrings(ParentObj.getParentClassString(),
-                                "Parent Class");
-      exitStatus |= testStrings(ChildObj1.getChildClassString(),
-                                "Child Class");
-      DerivedChild ChildObj2;
-      ChildObj2.name = "Child2";
+    DerivedParent ParentObj;
+    DerivedChild ChildObj1;
+    exitStatus |= testStrings(ParentObj.getParentClassString(),
+                              "Parent Class");
+    exitStatus |= testStrings(ChildObj1.getChildClassString(),
+                              "Child Class");
+    DerivedChild ChildObj2;
+    ChildObj2.name = "Child2";
 
-      // Add a relationship between objects
-      ChildObj1.setParent(&ParentObj);
-      ChildObj2.setParent(&ParentObj);
+    // Add a relationship between objects
+    ChildObj1.setParent(&ParentObj);
+    ChildObj2.setParent(&ParentObj);
 
-      // Test Child to Parent Access
-      exitStatus |= testStrings(ChildObj1.getParentPtr()->name,
-                                "Parent Name");
-      // Test Parent to Child Access
-      exitStatus |= testStrings(ParentObj.getChildPtr(0)->name + ParentObj.getChildPtr(1)->name,
-                                "Child Name" "Child2");
-    }
+    // Test Child to Parent Access
+    exitStatus |= testStrings(ChildObj1.getParentPtr()->name,
+                              "Parent Name");
+    // Test Parent to Child Access
+    exitStatus |= testStrings(ParentObj.getChildPtr(0)->name + ParentObj.getChildPtr(1)->name,
+                              "Child Name" "Child2");
+  }
 
-    // Test adding relationship from parent
-    {
-      DerivedParent ParentObj;
-      DerivedChild ChildObj1;
-      DerivedChild ChildObj2;
-      ChildObj2.name = "Child2";
+  // Test adding relationship from parent
+  {
+    DerivedParent ParentObj;
+    DerivedChild ChildObj1;
+    DerivedChild ChildObj2;
+    ChildObj2.name = "Child2";
 
-      // Add a relationship between objects
-      ParentObj.addChild(&ChildObj1);
-      ParentObj.addChild(&ChildObj2);
+    // Add a relationship between objects
+    ParentObj.addChild(&ChildObj1);
+    ParentObj.addChild(&ChildObj2);
 
-      // Test Child to Parent Access
-      exitStatus |= testStrings(ChildObj1.getParentPtr()->name,
-                                "Parent Name");
-      // Test Parent to Child Access
-      exitStatus |= testStrings(ParentObj.getChildPtr(0)->name + ParentObj.getChildPtr(1)->name,
-                                "Child Name" "Child2");
-    }
+    // Test Child to Parent Access
+    exitStatus |= testStrings(ChildObj1.getParentPtr()->name,
+                              "Parent Name");
+    // Test Parent to Child Access
+    exitStatus |= testStrings(ParentObj.getChildPtr(0)->name + ParentObj.getChildPtr(1)->name,
+                              "Child Name" "Child2");
   }
 
   // ****** TEST MOVING AND COPYING PARENT/CHILD CLASSES ****** //
@@ -209,7 +206,7 @@ int main() {
                                 "Original Parent");
       exitStatus |= testStrings(ParentObj.getChildPtr(0)->name + ParentObj.getChildPtr(1)->name,
                                 "Original Child" "Original Child");
-    
+
       DerivedChild Child3;
       // Test Move Assignment of Child
       Child3 = std::move(ChildObj);

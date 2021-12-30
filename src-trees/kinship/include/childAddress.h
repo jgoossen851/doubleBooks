@@ -12,7 +12,6 @@
 
 #include <algorithm>
 #include <cassert>
-#include <iostream>
 #include <iterator>
 #include <vector>
 
@@ -41,7 +40,6 @@ class childAddress {
 
   /// Destructor function
   ~childAddress() {
-    std::cout << "Destructing Child" << std::endl;
     for (auto itr = vpChildren_.begin(); itr < vpChildren_.end(); itr++) {
       if (*itr != nullptr) {
         (*itr)->removeParent();
@@ -77,30 +75,15 @@ class childAddress {
 
   /// Move Assignement Operator
   childAddress& operator=(childAddress&& other) {
-    
-    std::cout << "Moving child address. Vector length was " << other.vpChildren_.size() << std::endl;
     // Move the internal memory
     vpChildren_ = std::move(other.vpChildren_);
     /// @todo Check if these should use the notify functions from 'parentAddress'
     // For each child, update the parent.
-    std::cout << "Moving child address. Vector length is " << vpChildren_.size() << std::endl;
     for (auto itr = vpChildren_.begin(); itr < vpChildren_.end(); itr++) {
       if (*itr != nullptr) {
         // (*itr)->replaceParent(static_cast<Parent*>(pTop_));
         uint ind = std::distance(vpChildren_.begin(), itr);
-
-        // std::cout << "vpChildren.at(ind) is " << vpChildren_.at(ind) == nullptr ? "NULLPTR" : *vpChildren_.at(ind) << std::endl;
-        std::cout << "vpChildren.at(ind) is " << vpChildren_.at(ind) << std::endl;
-
-        // vpChildren_.at(ind) == nullptr ? std::cout << "vpChildren.at(ind) is NULLPTR" << std::endl : std::cout << "ok" << std::endl;
-
-        std::cout << "Parent before: " << vpChildren_.at(ind)->getParentPtr();
-
-
         vpChildren_.at(ind)->replaceParent(static_cast<Parent*>(pTop_));
-
-
-        std::cout << "  Parent After: " << vpChildren_.at(ind)->getParentPtr();
       }
     }
     return *this;

@@ -57,21 +57,12 @@ class childOf : public Child {
   }
 
   void removeParent() override {
-    auto oldParetnAddr = &(*mParentAddr_);
-    mParentAddr_.removeParent();
-
-    if (oldParetnAddr != nullptr) {
-      if (oldParetnAddr->isContainsChild(this)) {
-        oldParetnAddr->removeChild(this);
+    if (mParentAddr_.isValid()) {
+      if (mParentAddr_->isContainsChild(this)) {
+        mParentAddr_->removeChild(this);
       }
     }
-
-    // if (mParentAddr_.isValid()) {
-    //   if (mParentAddr_->isContainsChild(this)) {
-    //     mParentAddr_->removeChild(this);
-    //   }
-    // }
-    
+    mParentAddr_.removeParent();
   }
 
   T* getParentPtr() const {

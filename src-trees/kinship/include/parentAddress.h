@@ -11,7 +11,6 @@
 #include "kinship.h"
 
 #include <cassert>
-#include <iostream>
 #include <string>
 
 /**
@@ -39,7 +38,6 @@ class parentAddress {
 
   /// Destructor function
   ~parentAddress() {
-    std::cout << "Destructing Parent" << std::endl;
     if (pParent_ != nullptr) {
       if ( pParent_->isContainsChild(static_cast<const Child*>(pTop_))) {
         pParent_->removeChild(static_cast<Child*>(pTop_));
