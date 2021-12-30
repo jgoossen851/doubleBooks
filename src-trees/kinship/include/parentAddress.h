@@ -66,7 +66,17 @@ class parentAddress {
   parentAddress(parentAddress&& other) = delete;
 
   /// Move Assignement Operator
-  parentAddress& operator=(parentAddress&& other) = default;
+  parentAddress& operator=(parentAddress&& other) {
+    replaceParent(other.pParent_);
+    T *origPParent = pParent_;
+    if (! pParent_->isContainsChild(static_cast<const Child*>(pTop_))) {
+      pParent_->addChild(static_cast<Child*>(pTop_));
+    }
+    if ( other.pParent_->isContainsChild(static_cast<const Child*>(other.pTop_))) {
+      other.pParent_->removeChild(static_cast<Child*>(other.pTop_));
+    }
+    return *this;
+  }
 
 
   // Parameterized Constructors

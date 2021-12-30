@@ -51,6 +51,10 @@ class parentOf : public Parent {
     return &(mChildAddr_.dereference(iChild));
   }
 
+  uint getNumChildren(void) const {
+    return mChildAddr_.vectorSize();
+  }
+
 };
 
 #endif // PARENTOF_H_

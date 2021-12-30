@@ -132,32 +132,44 @@ class childAddress {
       vpChildren_.at(ind) = pNewChild;
     }
     // Set the the child's parent to this object's container
-    vpChildren_.at(ind)->setParent(pParent);
+    if (vpChildren_.at(ind) != nullptr) {
+      vpChildren_.at(ind)->setParent(pParent);
+    }
   }
 
   void replaceChild(T* pOldChild, T* pNewChild, Parent* pParent) {
     uint ind = findChildInd(pOldChild);
-    assert(ind != vpChildren_.size());
+    if (vpChildren_.at(ind) != nullptr) {
+      assert(ind != vpChildren_.size());
+    }
     // Remove parent from old child
     vpChildren_.at(ind)->removeParent();
     vpChildren_.at(ind) = pNewChild;
     // Set parent of new child
-    vpChildren_.at(ind)->setParent(pParent);
+    if (vpChildren_.at(ind) != nullptr) {
+      vpChildren_.at(ind)->setParent(pParent);
+    }
   }
 
   void removeChild(T* pOldChild) {
     uint ind = findChildInd(pOldChild);
     assert(ind != vpChildren_.size());
-    // Remove parent from old child
-    vpChildren_.at(ind)->removeParent();
     // Replace the child to delete with the last child and delete last child
     vpChildren_.at(ind) = vpChildren_.back();
     vpChildren_.pop_back();
+    // Remove parent from old child
+    if (pOldChild != nullptr) {
+      pOldChild->removeParent();
+    }
   }
 
   bool isContainsChild(const T* pChild) const {
     auto itr = std::find(vpChildren_.begin(), vpChildren_.end(), pChild);
     return itr != vpChildren_.end();
+  }
+
+  uint vectorSize(void) const {
+    return vpChildren_.size();
   }
 
  private:

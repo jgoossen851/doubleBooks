@@ -207,15 +207,16 @@ int main() {
     exitStatus |= testStrings(ParentObj.getChildPtr(0)->name + ParentObj.getChildPtr(1)->name,
                               "Original Child" "Original Child");
   
-    // DerivedChild Child3;
-    // // Test Move Assignment of Child
-    // Child3 = std::move(ChildObj);
-    // exitStatus |= testStrings(Child3.getParentPtr()->name,
-    //                           "Original Parent");
-    // exitStatus |= testStrings(ParentObj.getChildPtr(0)->name + ParentObj.getChildPtr(1)->name,
-    //                           "Original Child" "Original Child");
-    // // Original Child should be in a valid, but default, state.
-    // exitStatus |= testStrings(ChildObj.name, "Child Name");
+    DerivedChild Child3;
+    // Test Move Assignment of Child
+    Child3 = std::move(ChildObj);
+    SecondChild.name = "Second Child";
+    exitStatus |= testStrings(Child3.getParentPtr()->name,
+                              "Original Parent");
+    exitStatus |= testStrings(ParentObj.getChildPtr(0)->name + ParentObj.getChildPtr(1)->name,
+                              "Original Child" "Second Child");
+    // Original Child should be in a valid, but default, state.
+    exitStatus |= testStrings(std::to_string(ParentObj.getNumChildren()), "2");
   }
 
 

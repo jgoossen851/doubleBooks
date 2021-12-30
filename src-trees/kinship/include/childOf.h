@@ -35,18 +35,24 @@ class childOf : public Child {
 
   void setParent(Parent* pNewParent) override {
     mParentAddr_.setParent(static_cast<T*>(pNewParent));
-    if (! mParentAddr_->isContainsChild(this)) {
-      mParentAddr_->addChild(this);
+    if (mParentAddr_.isValid()) {
+      if (! mParentAddr_->isContainsChild(this)) {
+        mParentAddr_->addChild(this);
+      }
     }
   }
 
   void replaceParent(Parent* pNewParent) override {
-    if (mParentAddr_->isContainsChild(this)) {
-      mParentAddr_->removeChild(this);
+    if (mParentAddr_.isValid()) {
+      if (mParentAddr_->isContainsChild(this)) {
+        mParentAddr_->removeChild(this);
+      }
     }
     mParentAddr_.replaceParent(static_cast<T*>(pNewParent));
-    if (! mParentAddr_->isContainsChild(this)) {
-      mParentAddr_->addChild(this);
+    if (mParentAddr_.isValid()) {
+      if (! mParentAddr_->isContainsChild(this)) {
+        mParentAddr_->addChild(this);
+      }
     }
   }
 
