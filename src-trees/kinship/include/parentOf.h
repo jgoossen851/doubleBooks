@@ -9,6 +9,7 @@
 #define PARENTOF_H_
 
 #include "childAddress.h"
+#include "kinship.h"
 
 /**
  * @brief Class that contains references to children objects
@@ -17,7 +18,7 @@
  * or move constructed due to the limitations of the member mChildAddr_.
  */
 template<typename T>
-class parentOf {
+class parentOf : public Parent {
   childAddress<T> mChildAddr_;
 
  public:
@@ -30,16 +31,16 @@ class parentOf {
   /// Move Assignement Operator
   parentOf& operator=(parentOf&& other) = default;
 
-  void addChild(T* pNewChild) {
-    mChildAddr_.addChild(pNewChild);
+  void addChild(Child* pNewChild) override {
+    mChildAddr_.addChild(static_cast<T*>(pNewChild));
   }
 
-  void replaceChild(T* pOldChild, T* pNewChild) {
-    mChildAddr_.replaceChild(pOldChild, pNewChild);
+  void replaceChild(Child* pOldChild, Child* pNewChild) override {
+    mChildAddr_.replaceChild(static_cast<T*>(pOldChild), static_cast<T*>(pNewChild));
   }
 
-  void removeChild(T* pOldChild) {
-    mChildAddr_.removeChild(pOldChild);
+  void removeChild(Child* pOldChild) override {
+    mChildAddr_.removeChild(static_cast<T*>(pOldChild));
   }
 
 };

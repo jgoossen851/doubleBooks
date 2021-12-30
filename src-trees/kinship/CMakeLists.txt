@@ -17,6 +17,7 @@ set(SOURCE_FILES
 )
 
 set(INCLUDE_FILES
+    include/kinship.h
     include/childAddress.h
     include/childOf.h
     include/parentAddress.h

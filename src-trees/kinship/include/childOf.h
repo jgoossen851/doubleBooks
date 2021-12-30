@@ -8,6 +8,7 @@
 #ifndef CHILDOF_H_
 #define CHILDOF_H_
 
+#include "kinship.h"
 #include "parentAddress.h"
 
 /**
@@ -17,7 +18,7 @@
  * or move constructed due to the limitations of the member mParentAddr_.
  */
 template<typename T>
-class childOf {
+class childOf : public Child {
   parentAddress<T> mParentAddr_;
 
  public:
@@ -32,15 +33,15 @@ class childOf {
   /// Move Assignement Operator
   childOf& operator=(childOf&& other) = default;
 
-  void setParent(T* pNewParent) {
-    mParentAddr_.setParent(pNewParent);    
+  void setParent(Parent* pNewParent) override {
+    mParentAddr_.setParent(static_cast<T*>(pNewParent));    
   }
 
-  void replaceParent(T* pNewParent) {
-    mParentAddr_.replaceParent(pNewParent);
+  void replaceParent(Parent* pNewParent) override {
+    mParentAddr_.replaceParent(static_cast<T*>(pNewParent));
   }
 
-  void removeParent() {
+  void removeParent() override {
     mParentAddr_.removeParent();
   }
 
