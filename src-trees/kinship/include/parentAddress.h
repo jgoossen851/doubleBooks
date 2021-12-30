@@ -38,7 +38,14 @@ class parentAddress {
   parentAddress() = delete;
 
   /// Destructor function
-  ~parentAddress() = default;
+  ~parentAddress() {
+    std::cout << "Destructing Parent" << std::endl;
+    if (pParent_ != nullptr) {
+      if ( pParent_->isContainsChild(static_cast<const Child*>(pTop_))) {
+        pParent_->removeChild(static_cast<Child*>(pTop_));
+      }
+    }
+  }
 
   /**
    * @brief Copy Constructor Function
