@@ -102,13 +102,13 @@ class parentAddress {
     pParent_ = pNew;
   }
 
-  void setParent(T& pNewParent) {
+  void setParent(T* pNewParent) {
     assert(pParent_ == nullptr);
-    pParent_ = &pNewParent;
+    pParent_ = pNewParent;
   }
 
-  void replaceParent(T& pNewParent) {
-    pParent_ = &pNewParent;
+  void replaceParent(T* pNewParent) {
+    pParent_ = pNewParent;
   }
 
   void removeParent() {

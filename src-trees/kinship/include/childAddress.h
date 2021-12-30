@@ -116,17 +116,17 @@ class childAddress {
     vpChildren_.push_back(pNew);
   }
 
-  void addChild(T& newChild) {
-    vpChildren_.push_back(*newChild);
+  void addChild(T* pNewChild) {
+    vpChildren_.push_back(pNewChild);
   }
 
-  void replaceChild(T& oldChild, T& newChild) {
-    uint ind = findChildInd(*oldChild);
-    vpChildren_.at(ind) = *newChild;
+  void replaceChild(T* pOldChild, T* pNewChild) {
+    uint ind = findChildInd(pOldChild);
+    vpChildren_.at(ind) = pNewChild;
   }
 
-  void removeChild(T& oldChild) {
-    uint ind = findChildInd(*oldChild);
+  void removeChild(T* pOldChild) {
+    uint ind = findChildInd(pOldChild);
     // Replace the child to delete with the last child and delete last child
     vpChildren_.at(ind) = vpChildren_.back();
     vpChildren_.pop_back();

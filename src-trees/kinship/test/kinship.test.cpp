@@ -150,8 +150,8 @@ int main() {
                             "Child Class");
 
   // Add a relationship between objects
-  ChildObj.setParent(ParentObj);
-  ParentObj.addChild(ChildObj);
+  ChildObj.setParent(&ParentObj);
+  ParentObj.addChild(&ChildObj);
   // TODO Make this automatic, where the child calls the parent to add itself.
   // TODO This requires the []Address classes to know something about the T return types.
 

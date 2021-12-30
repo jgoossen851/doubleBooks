@@ -30,16 +30,16 @@ class parentOf {
   /// Move Assignement Operator
   parentOf& operator=(parentOf&& other) = default;
 
-  void addChild(T& newChild) {
-    mChildAddr_.addChild(newChild);
+  void addChild(T* pNewChild) {
+    mChildAddr_.addChild(pNewChild);
   }
 
-  void replaceChild(T& oldChild, T& newChild) {
-    mChildAddr_.replaceChild(oldChild, newChild);
+  void replaceChild(T* pOldChild, T* pNewChild) {
+    mChildAddr_.replaceChild(pOldChild, pNewChild);
   }
 
-  void removeChild(T& oldChild) {
-    mChildAddr_.removeChild(oldChild);
+  void removeChild(T* pOldChild) {
+    mChildAddr_.removeChild(pOldChild);
   }
 
 };

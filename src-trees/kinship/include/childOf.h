@@ -32,12 +32,12 @@ class childOf {
   /// Move Assignement Operator
   childOf& operator=(childOf&& other) = default;
 
-  void setParent(T& newParent) {
-    mParentAddr_.setParent(newParent);    
+  void setParent(T* pNewParent) {
+    mParentAddr_.setParent(pNewParent);    
   }
 
-  void replaceParent(T& newParent) {
-    mParentAddr_.replaceParent(newParent);
+  void replaceParent(T* pNewParent) {
+    mParentAddr_.replaceParent(pNewParent);
   }
 
   void removeParent() {
