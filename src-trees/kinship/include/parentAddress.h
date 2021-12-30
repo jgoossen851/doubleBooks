@@ -10,6 +10,12 @@
 
 #include "kinship.h"
 
+#include <ostream>
+
+// Forward declare template friend functions
+template<typename T> class parentAddress; // pre-declare the template class itself
+template<typename T> std::ostream& operator<< (std::ostream& o, const parentAddress<T>& x);
+
 /**
  * @brief Class to manage the address of the object with the parent relationship
  *
@@ -103,6 +109,8 @@ class parentAddress {
   void removeParent();
 
   bool isValid() const;
+
+  friend std::ostream& operator<< <> (std::ostream& o, const parentAddress<T>& x);
 
 };
 

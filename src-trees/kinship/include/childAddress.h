@@ -10,7 +10,12 @@
 
 #include "kinship.h"
 
+#include <ostream>
 #include <vector>
+
+// Forward declare template friend functions
+template<typename T> class childAddress; // pre-declare the template class itself
+template<typename T> std::ostream& operator<< (std::ostream& o, const childAddress<T>& x);
 
 /**
  * @brief Class to manage the address of the object with the parent relationship
@@ -119,6 +124,8 @@ class childAddress {
   bool isContainsChild(const T* pChild) const;
 
   unsigned int vectorSize(void) const { return vpChildren_.size(); }
+
+  friend std::ostream& operator<< <> (std::ostream& o, const childAddress<T>& x);
 
  private:
   unsigned int findChildInd(const T* pChild) const;

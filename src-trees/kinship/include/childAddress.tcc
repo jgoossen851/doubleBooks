@@ -116,6 +116,16 @@ bool childAddress<T>::isContainsChild(const T* pChild) const {
 }
 
 template<typename T>
+std::ostream& operator<< (std::ostream& o, const childAddress<T>& x) {
+  o << "[";
+  for (auto itr = x.vpChildren_.begin(); itr < x.vpChildren_.end(); itr++) {
+    if (itr > x.vpChildren_.begin()) { o << ", "; }
+    o << *itr;
+  }
+  return o << "]";
+}
+
+template<typename T>
 uint childAddress<T>::findChildInd(const T* pChild) const {
   auto itr = std::find(vpChildren_.begin(), vpChildren_.end(), pChild);
   return std::distance(vpChildren_.begin(), itr);

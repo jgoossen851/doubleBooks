@@ -68,3 +68,8 @@ template<typename T>
 bool parentAddress<T>::isValid() const {
   return pParent_ != nullptr;
 }
+
+template<typename T>
+std::ostream& operator<< (std::ostream& o, const parentAddress<T>& x) {
+  return o << x.pParent_;
+}
