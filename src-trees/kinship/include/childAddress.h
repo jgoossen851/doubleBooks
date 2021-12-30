@@ -124,25 +124,37 @@ class childAddress {
   }
 
   void addChild(T* pNewChild) {
-    vpChildren_.push_back(pNewChild);
+    // Add a child, replacing nullptr if found
+    uint ind = findChildInd(nullptr);
+    if (ind == vpChildren_.size()) {
+      vpChildren_.push_back(pNewChild);
+    } else {
+      vpChildren_.at(ind) = pNewChild;
+    }
   }
 
   void replaceChild(T* pOldChild, T* pNewChild) {
     uint ind = findChildInd(pOldChild);
+    assert(ind != vpChildren_.size());
     vpChildren_.at(ind) = pNewChild;
   }
 
   void removeChild(T* pOldChild) {
     uint ind = findChildInd(pOldChild);
+    assert(ind != vpChildren_.size());
     // Replace the child to delete with the last child and delete last child
     vpChildren_.at(ind) = vpChildren_.back();
     vpChildren_.pop_back();
   }
 
- private:
-  uint findChildInd(T* pChild) {
+  bool isContainsChild(const T* pChild) const {
     auto itr = std::find(vpChildren_.begin(), vpChildren_.end(), pChild);
-    assert(itr != vpChildren_.end());
+    return itr != vpChildren_.end();
+  }
+
+ private:
+  uint findChildInd(const T* pChild) const {
+    auto itr = std::find(vpChildren_.begin(), vpChildren_.end(), pChild);
     return std::distance(vpChildren_.begin(), itr);
   }
 

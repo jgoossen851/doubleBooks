@@ -34,7 +34,10 @@ class childOf : public Child {
   childOf& operator=(childOf&& other) = default;
 
   void setParent(Parent* pNewParent) override {
-    mParentAddr_.setParent(static_cast<T*>(pNewParent));    
+    mParentAddr_.setParent(static_cast<T*>(pNewParent));
+    if (! mParentAddr_->isContainsChild(this)) {
+      mParentAddr_->addChild(this);
+    }
   }
 
   void replaceParent(Parent* pNewParent) override {

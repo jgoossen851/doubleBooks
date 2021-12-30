@@ -20,6 +20,7 @@ class Parent {
   virtual void addChild(Child* pNewChild) =0;
   virtual void replaceChild(Child* pOldChild, Child* pNewChild) =0;
   virtual void removeChild(Child* pOldChild) =0;
+  virtual bool isContainsChild(const Child* pChild) const =0;
 };
 
 #endif // KINSHIP_H_

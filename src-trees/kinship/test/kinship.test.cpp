@@ -149,19 +149,17 @@ int main() {
 
   // ****** TEST DERIVED CLASSES OF PARENTOF AND CHILDOF ****** //
 
-  DerivedParent ParentObj;
-  DerivedChild ChildObj;
-  exitStatus |= testStrings(ParentObj.getParentClassString(),
-                            "Parent Class");
-  exitStatus |= testStrings(ChildObj.getChildClassString(),
-                            "Child Class");
+  {
+    DerivedParent ParentObj;
+    DerivedChild ChildObj;
+    exitStatus |= testStrings(ParentObj.getParentClassString(),
+                              "Parent Class");
+    exitStatus |= testStrings(ChildObj.getChildClassString(),
+                              "Child Class");
 
-  // Add a relationship between objects
-  ChildObj.setParent(&ParentObj);
-  ParentObj.addChild(&ChildObj);
-  // TODO Make this automatic, where the child calls the parent to add itself.
-  // TODO This requires the []Address classes to know something about the T return types.
-
+    // Add a relationship between objects
+    ChildObj.setParent(&ParentObj);
+  }
 
   // ****** CLEAN UP ****** //
 

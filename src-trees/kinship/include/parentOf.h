@@ -43,6 +43,10 @@ class parentOf : public Parent {
     mChildAddr_.removeChild(static_cast<T*>(pOldChild));
   }
 
+  bool isContainsChild(const Child* pChild) const override {
+    return mChildAddr_.isContainsChild(static_cast<const T*>(pChild));
+  }
+
 };
 
 #endif // PARENTOF_H_
