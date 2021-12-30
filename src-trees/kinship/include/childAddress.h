@@ -8,6 +8,8 @@
 #ifndef CHILDADDRESS_H_
 #define CHILDADDRESS_H_
 
+#include "kinship.h"
+
 #include <algorithm>
 #include <cassert>
 #include <iterator>
@@ -94,6 +96,11 @@ class childAddress {
   T& dereference(uint ind) {
     assert(ind < vpChildren_.size());
     return *vpChildren_.at(ind);
+  }
+
+  /// Dereference to base class
+  Child& base_deref(uint ind) {
+    return dereference(ind);
   }
 
   /**

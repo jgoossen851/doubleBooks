@@ -8,6 +8,8 @@
 #ifndef PARENTADDRESS_H_
 #define PARENTADDRESS_H_
 
+#include "kinship.h"
+
 #include <cassert>
 #include <iostream>
 #include <string>
@@ -89,6 +91,11 @@ class parentAddress {
   /// Overload structure dereference operator
   T* operator->() const {
     return pParent_;
+  }
+
+  /// Dereference to base class
+  Parent& base_deref() {
+    return *this;
   }
 
   /**

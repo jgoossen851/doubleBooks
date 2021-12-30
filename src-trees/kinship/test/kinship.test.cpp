@@ -41,6 +41,7 @@ class DerivedParent;
 class DerivedChild : public childOf<DerivedParent> {
   std::string childClassString_ = "Child Class";
  public:
+  std::string name = "Child Name";
   std::string getChildClassString(void) const { return childClassString_; };
 };
 
@@ -48,6 +49,7 @@ class DerivedChild : public childOf<DerivedParent> {
 class DerivedParent : public parentOf<DerivedChild> {
   std::string parentClassString_ = "Parent Class";
  public:
+  std::string name = "Parent Name";
   std::string getParentClassString(void) const { return parentClassString_; };
 };
 
@@ -59,85 +61,90 @@ int main() {
   // ****** TEST PARENTADDRESS CLASS ****** //
 
   // Default Construction
-  // parentAddress<int> c1; // Error
+  // parentAddress<DerivedParent> c1; //! Error
 
   // Test Param Constructor
-  parentAddress<int> parAddr(nullptr);
+  parentAddress<DerivedParent> parAddr(nullptr);
 
   // Copy Construction
-  // parentAddress<int> c2(parAddr); // Error
+  // parentAddress<DerivedParent> c2(parAddr); //! Error
 
   // Move Construction
-  // parentAddress<int> c3(std::move(parAddr)); // Error
+  // parentAddress<DerivedParent> c3(std::move(parAddr)); //! Error
 
   // Test Param Constructor
-  std::string parentObject = "Parent";
-  parentAddress<std::string> parAddr2(nullptr, &parentObject);
+  DerivedParent parentObject;
+  parentObject.name = "Parent";
+  parentAddress<DerivedParent> parAddr2(nullptr, &parentObject);
 
   // Test Dereference
-  exitStatus |= testStrings(*parAddr2, parentObject);
+  exitStatus |= testStrings((*parAddr2).name, parentObject.name);
 
   // Test Structure Dereference
-  exitStatus |= testStrings(std::to_string(parAddr2->size()),
-                            std::to_string(parentObject.size()));
+  exitStatus |= testStrings(parAddr2->name,
+                            parentObject.name);
 
   // Test Move Notification
-  std::string newParent = "New Parent";
+  DerivedParent newParent;
+  newParent.name = "New Parent";
   parAddr2.notifyMove(&parentObject, &newParent);
-  exitStatus |= testStrings(*parAddr2, newParent);
+  exitStatus |= testStrings(parAddr2->name, newParent.name);
 
   // Test Copy Assignement Operator
-  parentAddress<std::string> parAddr3(nullptr);
+  parentAddress<DerivedParent> parAddr3(nullptr);
   parAddr3 = parAddr2;
-  exitStatus |= testStrings(*parAddr3, newParent);
+  exitStatus |= testStrings(parAddr3->name, newParent.name);
 
   // Test Move Assignement Operator
-  parentAddress<std::string> parAddr4(nullptr);
+  parentAddress<DerivedParent> parAddr4(nullptr);
   parAddr4 = std::move(parAddr2);
-  exitStatus |= testStrings(*parAddr4, newParent);
+  exitStatus |= testStrings(parAddr4->name, newParent.name);
 
 
   // ****** TEST CHILDADDRESS CLASS ****** //
 
   // Default Construction
-  // childAddress<int> c4; // Error
+  // childAddress<DerivedChild> c4; //! Error
 
   // Test Param Constructor
-  childAddress<int> chiAddr(nullptr);
+  childAddress<DerivedChild> chiAddr(nullptr);
 
   // Copy Construction
-  // childAddress<int> c5(chiAddr); // Error
+  // childAddress<DerivedChild> c5(chiAddr); //! Error
 
   // Move Construction
-  // childAddress<int> c6(std::move(chiAddr)); // Error
+  // childAddress<DerivedChild> c6(std::move(chiAddr)); //! Error
 
   // Test Param Constructor
-  std::string childObject = "Child1";
-  childAddress<std::string> chiAddr2(nullptr, &childObject);
+  DerivedChild childObject;
+  childObject.name = "Child1";
+  childAddress<DerivedChild> chiAddr2(nullptr, &childObject);
 
   // Test Dereference
-  exitStatus |= testStrings(chiAddr2.dereference(0), childObject);
+  exitStatus |= testStrings(chiAddr2.dereference(0).name, childObject.name);
 
   // Test Child Addition
-  std::string Child2 = "Child2";
+  DerivedChild Child2;
+  Child2.name = "Child2";
   chiAddr2.notifyAddition(&Child2);
-  exitStatus |= testStrings(chiAddr2.dereference(0) + chiAddr2.dereference(1),
-                            childObject + Child2);
+  exitStatus |= testStrings(chiAddr2.dereference(0).name + chiAddr2.dereference(1).name,
+                            childObject.name + Child2.name);
 
   // Test Move Notification
-  std::string Child3 = "Child3";
+  DerivedChild Child3;
+  Child3.name = "Child3";
   chiAddr2.notifyMove(&childObject, &Child3);
-  exitStatus |= testStrings(chiAddr2.dereference(0) + chiAddr2.dereference(1),
-                            Child3 + Child2);
+  exitStatus |= testStrings(chiAddr2.dereference(0).name + chiAddr2.dereference(1).name,
+                            Child3.name + Child2.name);
 
   // Test Copy Assignement Operator
-  childAddress<std::string> chiAddr3(nullptr);
-  // chiAddr3 = chiAddr2; // Error
+  childAddress<DerivedChild> chiAddr3(nullptr);
+  // chiAddr3 = chiAddr2; //! Error
 
   // Test Move Assignement Operator
   chiAddr3 = std::move(chiAddr2);
-  exitStatus |= testStrings(chiAddr3.dereference(0) + chiAddr3.dereference(1),
-                            Child3 + Child2);
+  exitStatus |= testStrings(chiAddr3.dereference(0).name + chiAddr3.dereference(1).name,
+                            Child3.name + Child2.name);
 
 
   // ****** TEST DERIVED CLASSES OF PARENTOF AND CHILDOF ****** //
