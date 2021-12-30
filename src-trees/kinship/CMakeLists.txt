@@ -10,22 +10,23 @@ cmake_minimum_required(VERSION 3.5.1)
 set(TARGET_NAME Kinship)
 
 set(SOURCE_FILES
-    src/childAddress.cpp
-    src/childOf.cpp
-    src/parentAddress.cpp
-    src/parentOf.cpp
 )
 
 set(INCLUDE_FILES
     include/kinship.h
     include/childAddress.h
+    include/childAddress.tcc
     include/childOf.h
+    include/childOf.tcc
     include/parentAddress.h
+    include/parentAddress.tcc
     include/parentOf.h
+    include/parentOf.tcc
 )
 
 # Create a new target with the source and header files as dependencies
 add_library("${TARGET_NAME}" STATIC "${SOURCE_FILES}" "${INCLUDE_FILES}")
+set_target_properties("${TARGET_NAME}" PROPERTIES LINKER_LANGUAGE CXX)
 
 # The keywords PUBLIC, PRIVATE, and INTERFACE are used for both Include
 # Directories and Link Libraries.

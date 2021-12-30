@@ -37,13 +37,7 @@ class parentAddress {
   parentAddress() = delete;
 
   /// Destructor function
-  ~parentAddress() {
-    if (pParent_ != nullptr) {
-      if ( pParent_->isContainsChild(static_cast<const Child*>(pTop_))) {
-        pParent_->removeChild(static_cast<Child*>(pTop_));
-      }
-    }
-  }
+  ~parentAddress();
 
   /**
    * @brief Copy Constructor Function
@@ -54,13 +48,7 @@ class parentAddress {
   parentAddress(const parentAddress& other) = delete;
 
   /// Copy Assignment Operator
-  parentAddress& operator=(const parentAddress& other) {
-    replaceParent(other.pParent_);
-    if (! pParent_->isContainsChild(static_cast<const Child*>(pTop_))) {
-      pParent_->addChild(static_cast<Child*>(pTop_));
-    }
-    return *this;
-  } //!< @todo Move this functionallity inside replaceParent(), along with functionallity from ChildOf class. Add an extra parameter for 'this' if necessary, and delete pTop_ if possible.
+  parentAddress& operator=(const parentAddress& other); //!< @todo Move this functionallity inside replaceParent(), along with functionallity from ChildOf class. Add an extra parameter for 'this' if necessary, and delete pTop_ if possible.
 
   /**
    * @brief Move Constructor Function
@@ -71,16 +59,7 @@ class parentAddress {
   parentAddress(parentAddress&& other) = delete;
 
   /// Move Assignement Operator
-  parentAddress& operator=(parentAddress&& other) {
-    replaceParent(other.pParent_);
-    if (! pParent_->isContainsChild(static_cast<const Child*>(pTop_))) {
-      pParent_->addChild(static_cast<Child*>(pTop_));
-    }
-    if ( other.pParent_->isContainsChild(static_cast<const Child*>(other.pTop_))) {
-      other.pParent_->removeChild(static_cast<Child*>(other.pTop_));
-    }
-    return *this;
-  }
+  parentAddress& operator=(parentAddress&& other);
 
 
   // Parameterized Constructors
@@ -104,19 +83,13 @@ class parentAddress {
 
 
   /// Overload dereference operator
-  T& operator*() const {
-    return *pParent_;
-  }
+  T& operator*() const { return *pParent_; }
 
   /// Overload structure dereference operator
-  T* operator->() const {
-    return pParent_;
-  }
+  T* operator->() const { return pParent_; }
 
   /// Dereference to base class
-  Parent& base_deref() {
-    return *this;
-  } //!< @todo Check if this function is still necessary
+  Parent& base_deref() { return *this; } //!< @todo Check if this function is still necessary
 
   /**
    * @brief Function to notifiy the managed resource that the parent object has moved
@@ -124,28 +97,20 @@ class parentAddress {
    * @param pOrig Pointer to the original parent object
    * @param pNew  Pointer to the new parent object
    */
-  void notifyMove(T *pOrig, T *pNew) {
-    assert(pParent_ == pOrig);
-    pParent_ = pNew;
-  } //!< @todo Check if this function is still necessary
+  void notifyMove(T *pOrig, T *pNew); //!< @todo Check if this function is still necessary
 
-  void setParent(T* pNewParent) {
-    assert(pParent_ == nullptr || pParent_ == pNewParent);
-    pParent_ = pNewParent;
-  } //!< @todo Use functionallity inside replaceParent
+  void setParent(T* pNewParent); //!< @todo Use functionallity inside replaceParent
 
-  void replaceParent(T* pNewParent) {
-    pParent_ = pNewParent;
-  }
+  void replaceParent(T* pNewParent);
 
-  void removeParent() {
-    pParent_ = nullptr;
-  }
+  void removeParent();
 
-  bool isValid() const {
-    return pParent_ != nullptr;
-  }
+  bool isValid() const;
 
 };
+
+#ifndef PARENTADDRESS_TCC_
+#include "parentAddress.tcc"
+#endif // PARENTADDRESS_TCC_
 
 #endif // PARENTADDRESS_H_

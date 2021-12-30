@@ -39,13 +39,7 @@ class childAddress {
   childAddress() = delete;
 
   /// Destructor function
-  ~childAddress() {
-    for (auto itr = vpChildren_.begin(); itr < vpChildren_.end(); itr++) {
-      if (*itr != nullptr) {
-        (*itr)->removeParent();
-      }
-    }
-  }
+  ~childAddress();
 
   /**
    * @brief Copy Constructor Function
@@ -74,20 +68,7 @@ class childAddress {
   childAddress(childAddress&& other) = delete;
 
   /// Move Assignement Operator
-  childAddress& operator=(childAddress&& other) {
-    // Move the internal memory
-    vpChildren_ = std::move(other.vpChildren_);
-    /// @todo Check if these should use the notify functions from 'parentAddress'
-    // For each child, update the parent.
-    for (auto itr = vpChildren_.begin(); itr < vpChildren_.end(); itr++) {
-      if (*itr != nullptr) {
-        // (*itr)->replaceParent(static_cast<Parent*>(pTop_));
-        uint ind = std::distance(vpChildren_.begin(), itr);
-        vpChildren_.at(ind)->replaceParent(static_cast<Parent*>(pTop_));
-      }
-    }
-    return *this;
-  };
+  childAddress& operator=(childAddress&& other);
 
 
   // Parameterized Constructors
@@ -112,16 +93,10 @@ class childAddress {
   };
 
   /// Indexed dereference operator
-  T& dereference(uint ind) {
-    assert(ind < vpChildren_.size());
-    assert(vpChildren_.at(ind) != nullptr);
-    return *vpChildren_.at(ind);
-  }
+  T& dereference(uint ind);
 
   /// Dereference to base class
-  Child& base_deref(uint ind) {
-    return dereference(ind);
-  }
+  Child& base_deref(uint ind);
 
   /**
    * @brief Function to notifiy the managed resource that a child object has moved
@@ -129,75 +104,32 @@ class childAddress {
    * @param pOrig Pointer to the original child object
    * @param pNew  Pointer to the new child object
    */
-  void notifyMove(T *pOrig, T *pNew) {
-    uint ind = findChildInd(pOrig);
-    vpChildren_.at(ind) = pNew;
-  } //!< @todo Check if this function is still necessary
+  void notifyMove(T *pOrig, T *pNew); //!< @todo Check if this function is still necessary
 
   /**
    * @brief Function to notifiy the managed resource that a child object has been added
    * 
    * @param pNew  Pointer to the new child object
    */
-  void notifyAddition(T *pNew) {
-    vpChildren_.push_back(pNew);
-  } //!< @todo Check if this function is still necessary
+  void notifyAddition(T *pNew); //!< @todo Check if this function is still necessary
 
-  void addChild(T* pNewChild, Parent* pParent) {
-    // Add a child, replacing nullptr if found
-    uint ind = findChildInd(nullptr);
-    if (ind == vpChildren_.size()) {
-      vpChildren_.push_back(pNewChild);
-    } else {
-      vpChildren_.at(ind) = pNewChild;
-    }
-    // Set the the child's parent to this object's container
-    if (vpChildren_.at(ind) != nullptr) {
-      vpChildren_.at(ind)->setParent(pParent);
-    }
-  }
+  void addChild(T* pNewChild, Parent* pParent);
 
-  void replaceChild(T* pOldChild, T* pNewChild, Parent* pParent) {
-    uint ind = findChildInd(pOldChild);
-    if (vpChildren_.at(ind) != nullptr) {
-      assert(ind != vpChildren_.size());
-    }
-    // Remove parent from old child
-    vpChildren_.at(ind)->removeParent();
-    vpChildren_.at(ind) = pNewChild;
-    // Set parent of new child
-    if (vpChildren_.at(ind) != nullptr) {
-      vpChildren_.at(ind)->setParent(pParent);
-    }
-  }
+  void replaceChild(T* pOldChild, T* pNewChild, Parent* pParent);
 
-  void removeChild(T* pOldChild) {
-    uint ind = findChildInd(pOldChild);
-    assert(ind != vpChildren_.size());
-    // Replace the child to delete with the last child and delete last child
-    vpChildren_.at(ind) = vpChildren_.back();
-    vpChildren_.pop_back();
-    // Remove parent from old child
-    if (pOldChild != nullptr) {
-      pOldChild->removeParent();
-    }
-  }
+  void removeChild(T* pOldChild);
 
-  bool isContainsChild(const T* pChild) const {
-    auto itr = std::find(vpChildren_.begin(), vpChildren_.end(), pChild);
-    return itr != vpChildren_.end();
-  }
+  bool isContainsChild(const T* pChild) const;
 
-  uint vectorSize(void) const {
-    return vpChildren_.size();
-  }
+  uint vectorSize(void) const { return vpChildren_.size(); }
 
  private:
-  uint findChildInd(const T* pChild) const {
-    auto itr = std::find(vpChildren_.begin(), vpChildren_.end(), pChild);
-    return std::distance(vpChildren_.begin(), itr);
-  }
+  uint findChildInd(const T* pChild) const;
 
 };
+
+#ifndef CHILDADDRESS_TCC_
+#include "childAddress.tcc"
+#endif // CHILDADDRESS_TCC_
 
 #endif // CHILDADDRESS_H_

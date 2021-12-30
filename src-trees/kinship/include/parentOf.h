@@ -31,30 +31,22 @@ class parentOf : public Parent {
   /// Move Assignement Operator
   parentOf& operator=(parentOf&& other) = default;
 
-  void addChild(Child* pNewChild) override {
-    mChildAddr_.addChild(static_cast<T*>(pNewChild), this);
-  }
+  void addChild(Child* pNewChild) override;
 
-  void replaceChild(Child* pOldChild, Child* pNewChild) override {
-    mChildAddr_.replaceChild(static_cast<T*>(pOldChild), static_cast<T*>(pNewChild), this);
-  }
+  void replaceChild(Child* pOldChild, Child* pNewChild) override;
 
-  void removeChild(Child* pOldChild) override {
-    mChildAddr_.removeChild(static_cast<T*>(pOldChild));
-  }
+  void removeChild(Child* pOldChild) override;
 
-  bool isContainsChild(const Child* pChild) const override {
-    return mChildAddr_.isContainsChild(static_cast<const T*>(pChild));
-  }
+  bool isContainsChild(const Child* pChild) const override;
 
-  T* getChildPtr(const uint iChild) {
-    return &(mChildAddr_.dereference(iChild));
-  }
+  T* getChildPtr(const uint iChild);
 
-  uint getNumChildren(void) const {
-    return mChildAddr_.vectorSize();
-  }
+  uint getNumChildren(void) const;
 
 };
+
+#ifndef PARENTOF_TCC_
+#include "parentOf.tcc"
+#endif // PARENTOF_TCC_
 
 #endif // PARENTOF_H_

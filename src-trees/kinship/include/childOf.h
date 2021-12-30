@@ -33,42 +33,18 @@ class childOf : public Child {
   /// Move Assignement Operator
   childOf& operator=(childOf&& other) = default;
 
-  void setParent(Parent* pNewParent) override {
-    mParentAddr_.setParent(static_cast<T*>(pNewParent));
-    if (mParentAddr_.isValid()) {
-      if (! mParentAddr_->isContainsChild(this)) {
-        mParentAddr_->addChild(this);
-      }
-    }
-  }
+  void setParent(Parent* pNewParent) override;
 
-  void replaceParent(Parent* pNewParent) override {
-    if (mParentAddr_.isValid()) {
-      if (mParentAddr_->isContainsChild(this)) {
-        mParentAddr_->removeChild(this);
-      }
-    }
-    mParentAddr_.replaceParent(static_cast<T*>(pNewParent));
-    if (mParentAddr_.isValid()) {
-      if (! mParentAddr_->isContainsChild(this)) {
-        mParentAddr_->addChild(this);
-      }
-    }
-  }
+  void replaceParent(Parent* pNewParent) override;
 
-  void removeParent() override {
-    if (mParentAddr_.isValid()) {
-      if (mParentAddr_->isContainsChild(this)) {
-        mParentAddr_->removeChild(this);
-      }
-    }
-    mParentAddr_.removeParent();
-  }
+  void removeParent() override;
 
-  T* getParentPtr() const {
-    return &(*mParentAddr_);
-  }
+  T* getParentPtr() const;
 
 };
+
+#ifndef CHILDOF_TCC_
+#include "childOf.tcc"
+#endif // CHILDOF_TCC_
 
 #endif // CHILDOF_H_
