@@ -103,9 +103,7 @@ class childAddress {
    * @param pNew  Pointer to the new child object
    */
   void notifyMove(T *pOrig, T *pNew) {
-    auto itr = std::find(vpChildren_.begin(), vpChildren_.end(), pOrig);
-    assert(itr != vpChildren_.end());
-    uint ind = std::distance(vpChildren_.begin(), itr);
+    uint ind = findChildInd(pOrig);
     vpChildren_.at(ind) = pNew;
   }
 
@@ -116,6 +114,29 @@ class childAddress {
    */
   void notifyAddition(T *pNew) {
     vpChildren_.push_back(pNew);
+  }
+
+  void addChild(T& newChild) {
+    vpChildren_.push_back(*newChild);
+  }
+
+  void replaceChild(T& oldChild, T& newChild) {
+    uint ind = findChildInd(*oldChild);
+    vpChildren_.at(ind) = *newChild;
+  }
+
+  void removeChild(T& oldChild) {
+    uint ind = findChildInd(*oldChild);
+    // Replace the child to delete with the last child and delete last child
+    vpChildren_.at(ind) = vpChildren_.back();
+    vpChildren_.pop_back();
+  }
+
+ private:
+  uint findChildInd(T* pChild) {
+    auto itr = std::find(vpChildren_.begin(), vpChildren_.end(), pChild);
+    assert(itr != vpChildren_.end());
+    return std::distance(vpChildren_.begin(), itr);
   }
 
 };

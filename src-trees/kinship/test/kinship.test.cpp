@@ -39,12 +39,16 @@ class DerivedParent;
 
 // Define derived child class
 class DerivedChild : public childOf<DerivedParent> {
-
+  std::string childClassString_ = "Child Class";
+ public:
+  std::string getChildClassString(void) const { return childClassString_; };
 };
 
 // Define derived parent class
 class DerivedParent : public parentOf<DerivedChild> {
-
+  std::string parentClassString_ = "Parent Class";
+ public:
+  std::string getParentClassString(void) const { return parentClassString_; };
 };
 
 int main() {
@@ -134,6 +138,23 @@ int main() {
   chiAddr3 = std::move(chiAddr2);
   exitStatus |= testStrings(chiAddr3.dereference(0) + chiAddr3.dereference(1),
                             Child3 + Child2);
+
+
+  // ****** TEST DERIVED CLASSES OF PARENTOF AND CHILDOF ****** //
+
+  DerivedParent ParentObj;
+  DerivedChild ChildObj;
+  exitStatus |= testStrings(ParentObj.getParentClassString(),
+                            "Parent Class");
+  exitStatus |= testStrings(ChildObj.getChildClassString(),
+                            "Child Class");
+
+  // Add a relationship between objects
+  ChildObj.setParent(ParentObj);
+  ParentObj.addChild(ChildObj);
+  // TODO Make this automatic, where the child calls the parent to add itself.
+  // TODO This requires the []Address classes to know something about the T return types.
+
 
   // ****** CLEAN UP ****** //
 

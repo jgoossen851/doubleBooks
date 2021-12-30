@@ -13,7 +13,7 @@
 /**
  * @brief Class that contains a reference to a parent
  * 
- * @note: The class cannot be default constructed, copy constructed,
+ * @note: The class cannot be copy constructed
  * or move constructed due to the limitations of the member mParentAddr_.
  */
 template<typename T>
@@ -22,12 +22,27 @@ class childOf {
 
  public:
   // Define the 6 special member functions
+  /// Default Constructor Function
+  childOf()
+      : mParentAddr_(this, nullptr) {};
   /// Destructor function
   ~childOf() = default;
   /// Copy Assignment Operator
   childOf& operator=(const childOf& other) = default;
   /// Move Assignement Operator
   childOf& operator=(childOf&& other) = default;
+
+  void setParent(T& newParent) {
+    mParentAddr_.setParent(newParent);    
+  }
+
+  void replaceParent(T& newParent) {
+    mParentAddr_.replaceParent(newParent);
+  }
+
+  void removeParent() {
+    mParentAddr_.removeParent();
+  }
 
 };
 

@@ -102,6 +102,19 @@ class parentAddress {
     pParent_ = pNew;
   }
 
+  void setParent(T& pNewParent) {
+    assert(pParent_ == nullptr);
+    pParent_ = &pNewParent;
+  }
+
+  void replaceParent(T& pNewParent) {
+    pParent_ = &pNewParent;
+  }
+
+  void removeParent() {
+    pParent_ = nullptr;
+  }
+
 };
 
 #endif // PARENTADDRESS_H_
