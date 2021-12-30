@@ -7,8 +7,10 @@
 
 #include "ansi.h"
 
+#include "childOf.h"
 #include "parentAddress.h"
 #include "childAddress.h"
+#include "parentOf.h"
 
 #include <algorithm>
 #include <iostream>
@@ -32,13 +34,18 @@ int testStrings(std::string testString,
   return EXIT_SUCCESS;
 }
 
-// // Declare parent class
-// class ParentClass;
+// Forward declare derived parent class
+class DerivedParent;
 
-// // Define child class
-// class ChildClass<ParentClass> {
+// Define derived child class
+class DerivedChild : public childOf<DerivedParent> {
 
-// }
+};
+
+// Define derived parent class
+class DerivedParent : public parentOf<DerivedChild> {
+
+};
 
 int main() {
 

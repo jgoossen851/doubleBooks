@@ -8,20 +8,24 @@
 #ifndef CHILDOF_H_
 #define CHILDOF_H_
 
+#include "parentAddress.h"
+
+/**
+ * @brief Class that contains a reference to a parent
+ * 
+ * @note: The class cannot be default constructed, copy constructed,
+ * or move constructed due to the limitations of the member mParentAddr_.
+ */
+template<typename T>
 class childOf {
+  parentAddress<T> mParentAddr_;
 
  public:
   // Define the 6 special member functions
-  /// Default Constructor Function
-  childOf() = default;
   /// Destructor function
   ~childOf() = default;
-  /// Copy Constructor Function
-  childOf(const childOf& other) = default;
   /// Copy Assignment Operator
   childOf& operator=(const childOf& other) = default;
-  /// Move Constructor Function
-  childOf(childOf&& other) = default;
   /// Move Assignement Operator
   childOf& operator=(childOf&& other) = default;
 
