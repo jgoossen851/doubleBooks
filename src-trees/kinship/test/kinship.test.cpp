@@ -151,37 +151,43 @@ int main() {
 
   {
     DerivedParent ParentObj;
-    DerivedChild ChildObj;
+    DerivedChild ChildObj1;
     exitStatus |= testStrings(ParentObj.getParentClassString(),
                               "Parent Class");
-    exitStatus |= testStrings(ChildObj.getChildClassString(),
+    exitStatus |= testStrings(ChildObj1.getChildClassString(),
                               "Child Class");
+    DerivedChild ChildObj2;
+    ChildObj2.name = "Child2";
 
     // Add a relationship between objects
-    ChildObj.setParent(&ParentObj);
+    ChildObj1.setParent(&ParentObj);
+    ChildObj2.setParent(&ParentObj);
 
     // Test Child to Parent Access
-    exitStatus |= testStrings(ChildObj.getParentPtr()->name,
+    exitStatus |= testStrings(ChildObj1.getParentPtr()->name,
                               "Parent Name");
     // Test Parent to Child Access
-    exitStatus |= testStrings(ParentObj.getChildPtr(0)->name,
-                              "Child Name");
+    exitStatus |= testStrings(ParentObj.getChildPtr(0)->name + ParentObj.getChildPtr(1)->name,
+                              "Child Name" "Child2");
   }
 
   // Test adding relationship from parent
   {
     DerivedParent ParentObj;
-    DerivedChild ChildObj;
+    DerivedChild ChildObj1;
+    DerivedChild ChildObj2;
+    ChildObj2.name = "Child2";
 
     // Add a relationship between objects
-    ParentObj.addChild(&ChildObj);
+    ParentObj.addChild(&ChildObj1);
+    ParentObj.addChild(&ChildObj2);
 
     // Test Child to Parent Access
-    exitStatus |= testStrings(ChildObj.getParentPtr()->name,
+    exitStatus |= testStrings(ChildObj1.getParentPtr()->name,
                               "Parent Name");
     // Test Parent to Child Access
-    exitStatus |= testStrings(ParentObj.getChildPtr(0)->name,
-                              "Child Name");
+    exitStatus |= testStrings(ParentObj.getChildPtr(0)->name + ParentObj.getChildPtr(1)->name,
+                              "Child Name" "Child2");
   }
 
 
