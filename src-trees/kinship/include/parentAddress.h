@@ -24,7 +24,7 @@
  */
 template<typename T>
 class parentAddress {
-  const void  *pTop_;     //!< Pointer to the class containing this class
+  void        *pTop_;     //!< Pointer to the class containing this class
   T           *pParent_;  //!< Pointer to the parent object under the managed relationship
 
  public:
@@ -49,7 +49,13 @@ class parentAddress {
   parentAddress(const parentAddress& other) = delete;
 
   /// Copy Assignment Operator
-  parentAddress& operator=(const parentAddress& other) = default;
+  parentAddress& operator=(const parentAddress& other) {
+    replaceParent(other.pParent_);
+    if (! pParent_->isContainsChild(static_cast<const Child*>(pTop_))) {
+      pParent_->addChild(static_cast<Child*>(pTop_));
+    }
+    return *this;
+  } //!< @todo Move this functionallity inside replaceParent(), along with functionallity from ChildOf class. Add an extra parameter for 'this' if necessary, and delete pTop_ if possible.
 
   /**
    * @brief Move Constructor Function
@@ -96,7 +102,7 @@ class parentAddress {
   /// Dereference to base class
   Parent& base_deref() {
     return *this;
-  }
+  } //!< @todo Check if this function is still necessary
 
   /**
    * @brief Function to notifiy the managed resource that the parent object has moved
@@ -107,12 +113,12 @@ class parentAddress {
   void notifyMove(T *pOrig, T *pNew) {
     assert(pParent_ == pOrig);
     pParent_ = pNew;
-  }
+  } //!< @todo Check if this function is still necessary
 
   void setParent(T* pNewParent) {
     assert(pParent_ == nullptr || pParent_ == pNewParent);
     pParent_ = pNewParent;
-  }
+  } //!< @todo Use functionallity inside replaceParent
 
   void replaceParent(T* pNewParent) {
     pParent_ = pNewParent;
@@ -120,6 +126,10 @@ class parentAddress {
 
   void removeParent() {
     pParent_ = nullptr;
+  }
+
+  bool isValid() const {
+    return pParent_ != nullptr;
   }
 
 };

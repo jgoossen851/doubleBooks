@@ -190,6 +190,35 @@ int main() {
                               "Child Name" "Child2");
   }
 
+  // ****** TEST MOVING AND COPYING PARENT/CHILD CLASSES ****** //
+
+  DerivedParent ParentObj;
+  ParentObj.name = "Original Parent";
+  DerivedChild ChildObj;
+  ChildObj.name = "Original Child";
+  ChildObj.setParent(&ParentObj);
+  {
+    DerivedChild SecondChild;
+    SecondChild.removeParent();
+    // Test Copy Assignment of Child
+    SecondChild = ChildObj;
+    exitStatus |= testStrings(SecondChild.getParentPtr()->name,
+                              "Original Parent");
+    exitStatus |= testStrings(ParentObj.getChildPtr(0)->name + ParentObj.getChildPtr(1)->name,
+                              "Original Child" "Original Child");
+  
+    // DerivedChild Child3;
+    // // Test Move Assignment of Child
+    // Child3 = std::move(ChildObj);
+    // exitStatus |= testStrings(Child3.getParentPtr()->name,
+    //                           "Original Parent");
+    // exitStatus |= testStrings(ParentObj.getChildPtr(0)->name + ParentObj.getChildPtr(1)->name,
+    //                           "Original Child" "Original Child");
+    // // Original Child should be in a valid, but default, state.
+    // exitStatus |= testStrings(ChildObj.name, "Child Name");
+  }
+
+
 
   // ****** CLEAN UP ****** //
 

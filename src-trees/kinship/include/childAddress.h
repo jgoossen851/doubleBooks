@@ -112,7 +112,7 @@ class childAddress {
   void notifyMove(T *pOrig, T *pNew) {
     uint ind = findChildInd(pOrig);
     vpChildren_.at(ind) = pNew;
-  }
+  } //!< @todo Check if this function is still necessary
 
   /**
    * @brief Function to notifiy the managed resource that a child object has been added
@@ -121,7 +121,7 @@ class childAddress {
    */
   void notifyAddition(T *pNew) {
     vpChildren_.push_back(pNew);
-  }
+  } //!< @todo Check if this function is still necessary
 
   void addChild(T* pNewChild, Parent* pParent) {
     // Add a child, replacing nullptr if found
