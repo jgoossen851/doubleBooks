@@ -12,7 +12,6 @@
 
 #include <algorithm>
 #include <cassert>
-#include <iterator>
 #include <vector>
 
 /// Destructor function

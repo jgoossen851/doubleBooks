@@ -10,9 +10,6 @@
 
 #include "kinship.h"
 
-#include <cassert>
-#include <string>
-
 /**
  * @brief Class to manage the address of the object with the parent relationship
  *

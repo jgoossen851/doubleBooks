@@ -10,9 +10,6 @@
 
 #include "kinship.h"
 
-#include <algorithm>
-#include <cassert>
-#include <iterator>
 #include <vector>
 
 /**
@@ -93,10 +90,10 @@ class childAddress {
   };
 
   /// Indexed dereference operator
-  T& dereference(uint ind);
-
+  T& dereference(unsigned int ind);
+  
   /// Dereference to base class
-  Child& base_deref(uint ind);
+  Child& base_deref(unsigned int ind);
 
   /**
    * @brief Function to notifiy the managed resource that a child object has moved
@@ -121,10 +118,10 @@ class childAddress {
 
   bool isContainsChild(const T* pChild) const;
 
-  uint vectorSize(void) const { return vpChildren_.size(); }
+  unsigned int vectorSize(void) const { return vpChildren_.size(); }
 
  private:
-  uint findChildInd(const T* pChild) const;
+  unsigned int findChildInd(const T* pChild) const;
 
 };
 

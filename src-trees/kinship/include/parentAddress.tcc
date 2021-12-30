@@ -11,7 +11,6 @@
 #include "kinship.h"
 
 #include <cassert>
-#include <string>
 
 template<typename T>
 parentAddress<T>::~parentAddress() {
