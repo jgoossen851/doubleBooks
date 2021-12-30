@@ -57,6 +57,10 @@ class childOf : public Child {
     mParentAddr_.removeParent();
   }
 
+  T* getParentPtr() const {
+    return &(*mParentAddr_);
+  }
+
 };
 
 #endif // CHILDOF_H_

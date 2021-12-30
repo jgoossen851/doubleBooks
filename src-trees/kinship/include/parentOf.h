@@ -47,6 +47,10 @@ class parentOf : public Parent {
     return mChildAddr_.isContainsChild(static_cast<const T*>(pChild));
   }
 
+  T* getChildPtr(const uint iChild) {
+    return &(mChildAddr_.dereference(iChild));
+  }
+
 };
 
 #endif // PARENTOF_H_

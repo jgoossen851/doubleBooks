@@ -159,7 +159,31 @@ int main() {
 
     // Add a relationship between objects
     ChildObj.setParent(&ParentObj);
+
+    // Test Child to Parent Access
+    exitStatus |= testStrings(ChildObj.getParentPtr()->name,
+                              "Parent Name");
+    // Test Parent to Child Access
+    exitStatus |= testStrings(ParentObj.getChildPtr(0)->name,
+                              "Child Name");
   }
+
+  // Test adding relationship from parent
+  {
+    DerivedParent ParentObj;
+    DerivedChild ChildObj;
+
+    // Add a relationship between objects
+    ParentObj.addChild(&ChildObj);
+
+    // Test Child to Parent Access
+    exitStatus |= testStrings(ChildObj.getParentPtr()->name,
+                              "Parent Name");
+    // Test Parent to Child Access
+    exitStatus |= testStrings(ParentObj.getChildPtr(0)->name,
+                              "Child Name");
+  }
+
 
   // ****** CLEAN UP ****** //
 
