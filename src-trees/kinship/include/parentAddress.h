@@ -110,7 +110,7 @@ class parentAddress {
   }
 
   void setParent(T* pNewParent) {
-    assert(pParent_ == nullptr);
+    assert(pParent_ == nullptr || pParent_ == pNewParent);
     pParent_ = pNewParent;
   }
 

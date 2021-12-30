@@ -32,11 +32,11 @@ class parentOf : public Parent {
   parentOf& operator=(parentOf&& other) = default;
 
   void addChild(Child* pNewChild) override {
-    mChildAddr_.addChild(static_cast<T*>(pNewChild));
+    mChildAddr_.addChild(static_cast<T*>(pNewChild), this);
   }
 
   void replaceChild(Child* pOldChild, Child* pNewChild) override {
-    mChildAddr_.replaceChild(static_cast<T*>(pOldChild), static_cast<T*>(pNewChild));
+    mChildAddr_.replaceChild(static_cast<T*>(pOldChild), static_cast<T*>(pNewChild), this);
   }
 
   void removeChild(Child* pOldChild) override {

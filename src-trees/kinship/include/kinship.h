@@ -11,12 +11,14 @@
 class Parent;
 
 class Child {
+ public:
   virtual void setParent(Parent* pNewParent) =0;
   virtual void replaceParent(Parent* pNewParent) =0;
   virtual void removeParent(void) =0;
 };
 
 class Parent {
+ public:
   virtual void addChild(Child* pNewChild) =0;
   virtual void replaceChild(Child* pOldChild, Child* pNewChild) =0;
   virtual void removeChild(Child* pOldChild) =0;

@@ -123,7 +123,7 @@ class childAddress {
     vpChildren_.push_back(pNew);
   }
 
-  void addChild(T* pNewChild) {
+  void addChild(T* pNewChild, Parent* pParent) {
     // Add a child, replacing nullptr if found
     uint ind = findChildInd(nullptr);
     if (ind == vpChildren_.size()) {
@@ -131,17 +131,25 @@ class childAddress {
     } else {
       vpChildren_.at(ind) = pNewChild;
     }
+    // Set the the child's parent to this object's container
+    vpChildren_.at(ind)->setParent(pParent);
   }
 
-  void replaceChild(T* pOldChild, T* pNewChild) {
+  void replaceChild(T* pOldChild, T* pNewChild, Parent* pParent) {
     uint ind = findChildInd(pOldChild);
     assert(ind != vpChildren_.size());
+    // Remove parent from old child
+    vpChildren_.at(ind)->removeParent();
     vpChildren_.at(ind) = pNewChild;
+    // Set parent of new child
+    vpChildren_.at(ind)->setParent(pParent);
   }
 
   void removeChild(T* pOldChild) {
     uint ind = findChildInd(pOldChild);
     assert(ind != vpChildren_.size());
+    // Remove parent from old child
+    vpChildren_.at(ind)->removeParent();
     // Replace the child to delete with the last child and delete last child
     vpChildren_.at(ind) = vpChildren_.back();
     vpChildren_.pop_back();
