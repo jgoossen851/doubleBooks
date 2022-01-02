@@ -50,23 +50,6 @@ T& childAddress<T>::dereference(uint ind) {
   return *vpChildren_.at(ind);
 }
 
-/// Dereference to base class
-template<typename T>
-Child& childAddress<T>::base_deref(uint ind) {
-  return dereference(ind);
-}
-
-template<typename T>
-void childAddress<T>::notifyMove(T *pOrig, T *pNew) {
-  uint ind = findChildInd(pOrig);
-  vpChildren_.at(ind) = pNew;
-} //!< @todo Check if this function is still necessary
-
-template<typename T>
-void childAddress<T>::notifyAddition(T *pNew) {
-  vpChildren_.push_back(pNew);
-} //!< @todo Check if this function is still necessary
-
 template<typename T>
 void childAddress<T>::addChild(T* pNewChild, Parent* pParent) {
   // Add a child, replacing nullptr if found

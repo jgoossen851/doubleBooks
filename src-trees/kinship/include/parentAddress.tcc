@@ -50,12 +50,6 @@ parentAddress<T>& parentAddress<T>::operator=(parentAddress&& other) noexcept {
 }
 
 template<typename T>
-void parentAddress<T>::notifyMove(T *pOrig, T *pNew) {
-  assert(pParent_ == pOrig);
-  pParent_ = pNew;
-} //!< @todo Check if this function is still necessary
-
-template<typename T>
 void parentAddress<T>::setParent(T* pNewParent) {
   assert(pParent_ == nullptr || pParent_ == pNewParent);
   pParent_ = pNewParent;

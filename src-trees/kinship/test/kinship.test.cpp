@@ -14,6 +14,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -64,8 +65,8 @@ int main() {
   // Initialize exit status
   int exitStatus = EXIT_SUCCESS;
 
-  // exitStatus |= test_parentAddress_class();
-  // std::cout << "Done with parentAddress test." << std::endl;
+  exitStatus |= test_parentAddress_class();
+  std::cout << "Done with parentAddress test." << std::endl;
   exitStatus |= test_childAddress_class();
   std::cout << "Done with childAddress test." << std::endl;
   exitStatus |= test_derivedClass_Construction();
@@ -95,21 +96,29 @@ int test_parentAddress_class(){
   int exitStatus = EXIT_SUCCESS;
 
   // Default Construction
-  // parentAddress<DerivedParent> c1; //! Error
+  // parentAddress<DerivedParent> c1; //! Error: Deleted
 
-  // Test Param Constructor
+  // Test Param Constructor (single pointer)
   parentAddress<DerivedParent> parAddr(nullptr);
+  // Test validity check
+  exitStatus |= testStrings(std::to_string(parAddr.isValid()), "0");
+
+  // Test Destructor of empty address
+  {
+    parentAddress<DerivedParent> destruc(nullptr);
+  }
 
   // Copy Construction
-  // parentAddress<DerivedParent> c2(parAddr); //! Error
+  // parentAddress<DerivedParent> c2(parAddr); //! Error: Deleted
 
   // Move Construction
-  // parentAddress<DerivedParent> c3(std::move(parAddr)); //! Error
+  // parentAddress<DerivedParent> c3(std::move(parAddr)); //! Error: Deleted
 
-  // Test Param Constructor
+  // Test Param Constructor (double pointer)
   DerivedParent parentObject;
   parentObject.name = "Parent";
   parentAddress<DerivedParent> parAddr2(nullptr, &parentObject);
+  exitStatus |= testStrings(std::to_string(parAddr2.isValid()), "1");
 
   // Test Dereference
   exitStatus |= testStrings((*parAddr2).name, parentObject.name);
@@ -118,21 +127,43 @@ int test_parentAddress_class(){
   exitStatus |= testStrings(parAddr2->name,
                             parentObject.name);
 
-  // Test Move Notification
-  DerivedParent newParent;
-  newParent.name = "New Parent";
-  parAddr2.notifyMove(&parentObject, &newParent);
-  exitStatus |= testStrings(parAddr2->name, newParent.name);
-
   // Test Copy Assignement Operator
   parentAddress<DerivedParent> parAddr3(nullptr);
   parAddr3 = parAddr2;
-  exitStatus |= testStrings(parAddr3->name, newParent.name);
+  exitStatus |= testStrings(parAddr3->name, parentObject.name);
+  exitStatus |= testStrings(std::to_string(parAddr2.isValid()), "1");
+  exitStatus |= testStrings(std::to_string(parAddr3.isValid()), "1");
 
   // Test Move Assignement Operator
   parentAddress<DerivedParent> parAddr4(nullptr);
   parAddr4 = std::move(parAddr2);
-  exitStatus |= testStrings(parAddr4->name, newParent.name);
+  exitStatus |= testStrings(parAddr4->name, parentObject.name);
+  exitStatus |= testStrings(std::to_string(parAddr2.isValid()), "0");
+  exitStatus |= testStrings(std::to_string(parAddr3.isValid()), "1");
+  exitStatus |= testStrings(std::to_string(parAddr4.isValid()), "1");
+
+  // Test Set Parent Function
+  DerivedParent Parent1;
+  Parent1.name = "Parent 1";
+  parentAddress<DerivedParent> parAddrSet(nullptr);
+  parAddrSet.setParent(&Parent1);
+  exitStatus |= testStrings(parAddrSet->name, Parent1.name);
+
+  // Test Replace Parent function
+  DerivedParent Parent2;
+  Parent2.name = "Parent 2";
+  parAddrSet.replaceParent(&Parent2);
+  exitStatus |= testStrings(parAddrSet->name, Parent2.name);
+
+  // Test Remove Parent function
+  exitStatus |= testStrings(std::to_string(parAddrSet.isValid()), "1");
+  parAddrSet.removeParent();
+  exitStatus |= testStrings(std::to_string(parAddrSet.isValid()), "0");
+
+  // Verify parent has been removed and test ostring operator
+  std::ostringstream os;
+  os << parAddrSet;
+  exitStatus |= testStrings(os.str(), "0");
 
   return exitStatus;
 }
@@ -164,14 +195,14 @@ int test_childAddress_class(){
   // Test Child Addition
   DerivedChild Child2;
   Child2.name = "Child2";
-  chiAddr2.notifyAddition(&Child2);
+  // chiAddr2.notifyAddition(&Child2);
   exitStatus |= testStrings(chiAddr2.dereference(0).name + chiAddr2.dereference(1).name,
                             childObject.name + Child2.name);
 
   // Test Move Notification
   DerivedChild Child3;
   Child3.name = "Child3";
-  chiAddr2.notifyMove(&childObject, &Child3);
+  // chiAddr2.notifyMove(&childObject, &Child3);
   exitStatus |= testStrings(chiAddr2.dereference(0).name + chiAddr2.dereference(1).name,
                             Child3.name + Child2.name);
 
