@@ -31,7 +31,7 @@ parentAddress<T>& parentAddress<T>::operator=(const parentAddress& other) {
 } //!< @todo Move this functionallity inside replaceParent(), along with functionallity from ChildOf class. Add an extra parameter for 'this' if necessary, and delete pTop_ if possible.
 
 template<typename T>
-parentAddress<T>& parentAddress<T>::operator=(parentAddress&& other) {
+parentAddress<T>& parentAddress<T>::operator=(parentAddress&& other) noexcept {
   replaceParent(other.pParent_);
   if (! pParent_->isContainsChild(static_cast<const Child*>(pTop_))) {
     pParent_->addChild(static_cast<Child*>(pTop_));

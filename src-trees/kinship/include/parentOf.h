@@ -29,7 +29,15 @@ class parentOf : public Parent {
   /// Destructor function
   ~parentOf() = default;
   /// Move Assignement Operator
-  parentOf& operator=(parentOf&& other) = default;
+  parentOf& operator=(parentOf&& other) noexcept {
+    mChildAddr_ = std::move(other.mChildAddr_);
+    return *this;
+  }
+  /// Move Constructor
+  parentOf(parentOf&& other)
+      : mChildAddr_(this, nullptr) {
+    mChildAddr_ = std::move(other.mChildAddr_);
+  }
 
   void addChild(Child* pNewChild) override;
 

@@ -70,7 +70,7 @@ class childAddress {
   childAddress(childAddress&& other) = delete;
 
   /// Move Assignement Operator
-  childAddress& operator=(childAddress&& other);
+  childAddress& operator=(childAddress&& other) noexcept;
 
 
   // Parameterized Constructors

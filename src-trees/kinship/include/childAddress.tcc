@@ -26,7 +26,7 @@ childAddress<T>::~childAddress() {
 
 /// Move Assignement Operator
 template<typename T>
-childAddress<T>& childAddress<T>::operator=(childAddress&& other) {
+childAddress<T>& childAddress<T>::operator=(childAddress&& other) noexcept {
   // Move the internal memory
   vpChildren_ = std::move(other.vpChildren_);
   /// @todo Check if these should use the notify functions from 'parentAddress'

@@ -62,7 +62,7 @@ class parentAddress {
   parentAddress(parentAddress&& other) = delete;
 
   /// Move Assignement Operator
-  parentAddress& operator=(parentAddress&& other);
+  parentAddress& operator=(parentAddress&& other) noexcept;
 
 
   // Parameterized Constructors

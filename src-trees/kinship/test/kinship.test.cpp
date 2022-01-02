@@ -142,10 +142,10 @@ int main() {
     childAddress<DerivedChild> chiAddr3(nullptr);
     // chiAddr3 = chiAddr2; //! Error
 
-    // // Test Move Assignement Operator
-    // chiAddr3 = std::move(chiAddr2);
-    // exitStatus |= testStrings(chiAddr3.dereference(0).name + chiAddr3.dereference(1).name,
-    //                           Child3.name + Child2.name);
+    // Test Move Assignement Operator
+    chiAddr3 = std::move(chiAddr2);
+    exitStatus |= testStrings(chiAddr3.dereference(0).name + chiAddr3.dereference(1).name,
+                              Child3.name + Child2.name);
   }
 
   // ****** TEST DERIVED CLASSES OF PARENTOF AND CHILDOF ****** //

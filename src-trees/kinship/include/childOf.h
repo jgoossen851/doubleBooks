@@ -31,7 +31,20 @@ class childOf : public Child {
   /// Copy Assignment Operator
   childOf& operator=(const childOf& other) = default;
   /// Move Assignement Operator
-  childOf& operator=(childOf&& other) = default;
+  childOf& operator=(childOf&& other) noexcept {
+    mParentAddr_ = std::move(other.mParentAddr_);
+    return *this;
+  }
+  /// Move Constructor
+  childOf(childOf&& other) noexcept
+      : mParentAddr_(this, nullptr) {
+    mParentAddr_ = std::move(other.mParentAddr_);
+  };
+  /// Copy Constructor
+  childOf(const childOf& other)
+      : mParentAddr_(this, nullptr) {
+    mParentAddr_ = other.mParentAddr_;
+  };
 
   void setParent(Parent* pNewParent) override;
 
