@@ -217,6 +217,21 @@ int main() {
                                 "Original Child" "Second Child");
       // Original Child should be in a valid, but default, state.
       exitStatus |= testStrings(std::to_string(ParentObj.getNumChildren()), "2");
+
+      // Test Move Constructor
+      DerivedChild TempChild;
+      TempChild.name = "TempChild";
+      TempChild.setParent(&ParentObj);
+      DerivedChild Child4(std::move(Child3));
+
+
+      exitStatus |= testStrings(Child4.getParentPtr()->name,
+                                "Original Parent");
+      Child4.name = "This is Child4";
+      exitStatus |= testStrings(ParentObj.getChildPtr(0)->name + ParentObj.getChildPtr(1)->name,
+                                "This is Child4" "Second Child");
+      // Original Child should be in a valid, but default, state.
+      exitStatus |= testStrings(std::to_string(ParentObj.getNumChildren()), "2");
     }
 
     {
