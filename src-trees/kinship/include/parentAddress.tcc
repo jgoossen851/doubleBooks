@@ -24,8 +24,10 @@ parentAddress<T>::~parentAddress() {
 template<typename T>
 parentAddress<T>& parentAddress<T>::operator=(const parentAddress& other) {
   replaceParent(other.pParent_);
-  if (! pParent_->isContainsChild(static_cast<const Child*>(pTop_))) {
-    pParent_->addChild(static_cast<Child*>(pTop_));
+  if ( pParent_ != nullptr) {
+    if (! pParent_->isContainsChild(static_cast<const Child*>(pTop_))) {
+      pParent_->addChild(static_cast<Child*>(pTop_));
+    }
   }
   return *this;
 } //!< @todo Move this functionallity inside replaceParent(), along with functionallity from ChildOf class. Add an extra parameter for 'this' if necessary, and delete pTop_ if possible.
@@ -33,12 +35,17 @@ parentAddress<T>& parentAddress<T>::operator=(const parentAddress& other) {
 template<typename T>
 parentAddress<T>& parentAddress<T>::operator=(parentAddress&& other) noexcept {
   replaceParent(other.pParent_);
-  if (! pParent_->isContainsChild(static_cast<const Child*>(pTop_))) {
-    pParent_->addChild(static_cast<Child*>(pTop_));
+  if ( pParent_ != nullptr) {
+    if (! pParent_->isContainsChild(static_cast<const Child*>(pTop_))) {
+      pParent_->addChild(static_cast<Child*>(pTop_));
+    }
   }
-  if ( other.pParent_->isContainsChild(static_cast<const Child*>(other.pTop_))) {
-    other.pParent_->removeChild(static_cast<Child*>(other.pTop_));
+  if ( other.pParent_ != nullptr) {
+    if ( other.pParent_->isContainsChild(static_cast<const Child*>(other.pTop_))) {
+      other.pParent_->removeChild(static_cast<Child*>(other.pTop_));
+    }
   }
+  other.removeParent();
   return *this;
 }
 

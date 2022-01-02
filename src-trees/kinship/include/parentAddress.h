@@ -10,6 +10,7 @@
 
 #include "kinship.h"
 
+#include <cassert>
 #include <ostream>
 
 // Forward declare template friend functions
@@ -86,7 +87,7 @@ class parentAddress {
 
 
   /// Overload dereference operator
-  T& operator*() const { return *pParent_; }
+  T& operator*() const { assert(pParent_ != nullptr); return *pParent_; }
 
   /// Overload structure dereference operator
   T* operator->() const { return pParent_; }

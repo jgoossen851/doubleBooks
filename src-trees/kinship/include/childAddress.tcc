@@ -38,6 +38,7 @@ childAddress<T>& childAddress<T>::operator=(childAddress&& other) noexcept {
       vpChildren_.at(ind)->replaceParent(static_cast<Parent*>(pTop_));
     }
   }
+  other.vpChildren_ = std::vector<T*>();
   return *this;
 }
 
