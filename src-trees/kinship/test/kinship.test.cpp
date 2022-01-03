@@ -18,6 +18,8 @@
 #include <string>
 #include <vector>
 
+#define VERBOSE_DEBUG 0
+
 int test_parentAddress_class();
 int test_childAddress_class();
 int test_derivedClass_Construction();
@@ -35,6 +37,9 @@ int failTest( std::string testName,
 
 int testStrings(std::string testString,
                 std::string ansString ) {
+  #if VERBOSE_DEBUG
+    std::cout << "Testing: " << testString << "   Ans: " << ansString << std::endl;
+  #endif
   if( ansString.compare(testString) != 0) {
     return failTest("Compare", ansString, testString);
   }
@@ -66,15 +71,15 @@ int main() {
   int exitStatus = EXIT_SUCCESS;
 
   exitStatus |= test_parentAddress_class();
-  std::cout << "Done with parentAddress test." << std::endl;
+  std::cout << ansi::YELLOW << "Done with parentAddress test." << ansi::RESET << std::endl;
   exitStatus |= test_childAddress_class();
-  std::cout << "Done with childAddress test." << std::endl;
+  std::cout << ansi::YELLOW << "Done with childAddress test." << ansi::RESET << std::endl;
   exitStatus |= test_derivedClass_Construction();
-  std::cout << "Done with derived class construction test." << std::endl;
+  std::cout << ansi::YELLOW << "Done with derived class construction test." << ansi::RESET << std::endl;
   exitStatus |= test_derivedClass_addRelationship();
-  std::cout << "Done with derived class relationship test." << std::endl;
+  std::cout << ansi::YELLOW << "Done with derived class relationship test." << ansi::RESET << std::endl;
   exitStatus |= test_movingCopyingParentChildClasses();
-  std::cout << "Done with move copy test." << std::endl;
+  std::cout << ansi::YELLOW << "Done with move copy test." << ansi::RESET << std::endl;
 
   // ****** CLEAN UP ****** //
 
@@ -168,26 +173,48 @@ int test_parentAddress_class(){
   return exitStatus;
 }
 
+/**
+ * @brief Test construction and basic functions of the childAddress Class.
+ */
 int test_childAddress_class(){
   // Initialize exit status
   int exitStatus = EXIT_SUCCESS;
   
   // Default Construction
-  // childAddress<DerivedChild> c4; //! Error
+  // childAddress<DerivedChild> c4; //! Error: Deleted
 
-  // Test Param Constructor
+  // Test Param Constructor (single pointer)
   childAddress<DerivedChild> chiAddr(nullptr);
+  // Test vector size
+  exitStatus |= testStrings(std::to_string(chiAddr.vectorSize()), "0");
+
+  // Test ostream operator on empty vector
+  std::ostringstream os;
+  os << chiAddr;
+  exitStatus |= testStrings(os.str(), "[]");
+
+  // Test Destructor of empty address
+  {
+    childAddress<DerivedChild> destruc(nullptr);
+  }
 
   // Copy Construction
-  // childAddress<DerivedChild> c5(chiAddr); //! Error
+  // childAddress<DerivedChild> c5(chiAddr); //! Error: Deleted
 
   // Move Construction
-  // childAddress<DerivedChild> c6(std::move(chiAddr)); //! Error
+  // childAddress<DerivedChild> c6(std::move(chiAddr)); //! Error: Deleted
 
-  // Test Param Constructor
+  // Test Param Constructor (double pointer)
   DerivedChild childObject;
   childObject.name = "Child1";
   childAddress<DerivedChild> chiAddr2(nullptr, &childObject);
+  exitStatus |= testStrings(std::to_string(chiAddr2.vectorSize()), "1");
+  std::ostringstream os2;
+  os2 << chiAddr2;
+  std::ostringstream expectedResult;
+  expectedResult << "[" << &childObject << "]";
+  exitStatus |= testStrings(os2.str(),
+                            expectedResult.str());
 
   // Test Dereference
   exitStatus |= testStrings(chiAddr2.dereference(0).name, childObject.name);
@@ -195,26 +222,48 @@ int test_childAddress_class(){
   // Test Child Addition
   DerivedChild Child2;
   Child2.name = "Child2";
-  // chiAddr2.notifyAddition(&Child2);
+  chiAddr2.addChild(&Child2, nullptr);
+  exitStatus |= testStrings(std::to_string(chiAddr2.vectorSize()), "2");
   exitStatus |= testStrings(chiAddr2.dereference(0).name + chiAddr2.dereference(1).name,
                             childObject.name + Child2.name);
-
-  // Test Move Notification
-  DerivedChild Child3;
-  Child3.name = "Child3";
-  // chiAddr2.notifyMove(&childObject, &Child3);
-  exitStatus |= testStrings(chiAddr2.dereference(0).name + chiAddr2.dereference(1).name,
-                            Child3.name + Child2.name);
+  std::ostringstream os3;
+  os3 << chiAddr2;
+  std::ostringstream expectedResult3;
+  expectedResult3 << "[" << &childObject << ", " << &Child2 << "]";
+  exitStatus |= testStrings(os3.str(),
+                            expectedResult3.str());
 
   // Test Copy Assignement Operator
   childAddress<DerivedChild> chiAddr3(nullptr);
-  // chiAddr3 = chiAddr2; //! Error
+  // chiAddr3 = chiAddr2; //! Error: Deleted
 
   // Test Move Assignement Operator
   chiAddr3 = std::move(chiAddr2);
+  exitStatus |= testStrings(std::to_string(chiAddr2.vectorSize()), "0");
+  exitStatus |= testStrings(std::to_string(chiAddr3.vectorSize()), "2");
+  exitStatus |= testStrings(chiAddr3.dereference(0).name + chiAddr3.dereference(1).name,
+                            childObject.name + Child2.name);
+
+  // Test Replace Child
+  DerivedChild Child3;
+  Child3.name = "Child3";
+  chiAddr3.replaceChild(&childObject, &Child3, nullptr);
+  exitStatus |= testStrings(std::to_string(chiAddr3.vectorSize()), "2");
   exitStatus |= testStrings(chiAddr3.dereference(0).name + chiAddr3.dereference(1).name,
                             Child3.name + Child2.name);
-  
+
+  // Test function to search for children
+  exitStatus |= testStrings(std::to_string(chiAddr3.isContainsChild(&childObject)), "0");
+  exitStatus |= testStrings(std::to_string(chiAddr3.isContainsChild(&Child2)), "1");
+  exitStatus |= testStrings(std::to_string(chiAddr3.isContainsChild(&Child3)), "1");
+
+  // Test Remove Child function
+  chiAddr3.removeChild(&Child3);
+  exitStatus |= testStrings(std::to_string(chiAddr3.vectorSize()), "1");
+  exitStatus |= testStrings(std::to_string(chiAddr3.isContainsChild(&childObject)), "0");
+  exitStatus |= testStrings(std::to_string(chiAddr3.isContainsChild(&Child2)), "1");
+  exitStatus |= testStrings(std::to_string(chiAddr3.isContainsChild(&Child3)), "0");
+
   return exitStatus;
 }
 
