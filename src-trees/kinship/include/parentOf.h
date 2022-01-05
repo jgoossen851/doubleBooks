@@ -29,7 +29,15 @@ class parentOf : public Parent {
   /// Destructor function
   ~parentOf() = default;
   /// Move Assignement Operator
-  parentOf& operator=(parentOf&& other) = default;
+  parentOf& operator=(parentOf&& other) noexcept {
+    mChildAddr_ = std::move(other.mChildAddr_);
+    return *this;
+  }
+  /// Move Constructor
+  parentOf(parentOf&& other)
+      : mChildAddr_(this, nullptr) {
+    mChildAddr_ = std::move(other.mChildAddr_);
+  }
 
   void addChild(Child* pNewChild) override;
 
@@ -41,6 +49,13 @@ class parentOf : public Parent {
 
   T* getChildPtr(const uint iChild);
 
+  /**
+   * @brief Gets the number of children in the vector of pointers for the parent object
+   * 
+   * If the vector only contains a nullptr (i.e., an invalid child object), this function
+   * will return 1, as the vector length is 1. However, this should not be counted on
+   * as the functionallity may change to reflect that the parent object has no valid children.
+   */
   uint getNumChildren(void) const;
 
 };

@@ -70,7 +70,7 @@ class childAddress {
   childAddress(childAddress&& other) = delete;
 
   /// Move Assignement Operator
-  childAddress& operator=(childAddress&& other);
+  childAddress& operator=(childAddress&& other) noexcept;
 
 
   // Parameterized Constructors
@@ -80,7 +80,8 @@ class childAddress {
    * @param pTop Pointer of the object containing the childAddress object
    */
   childAddress(void *pTop)
-      : pTop_(pTop) {};
+      : pTop_(pTop)
+      , vpChildren_(std::vector<T*>()) {};
 
   /**
    * @brief Construct a new childAddress object with specified pointer and initialized child object
@@ -97,26 +98,21 @@ class childAddress {
   /// Indexed dereference operator
   T& dereference(unsigned int ind);
   
-  /// Dereference to base class
-  Child& base_deref(unsigned int ind);
-
   /**
-   * @brief Function to notifiy the managed resource that a child object has moved
+   * @brief Function to add a new pointer to the vector of managed resources
    * 
-   * @param pOrig Pointer to the original child object
-   * @param pNew  Pointer to the new child object
+   * @param pNewChild  Pointer to the new child object
+   * @param pParent    Pointer to the child's parent (typically called with 'this')
    */
-  void notifyMove(T *pOrig, T *pNew); //!< @todo Check if this function is still necessary
-
-  /**
-   * @brief Function to notifiy the managed resource that a child object has been added
-   * 
-   * @param pNew  Pointer to the new child object
-   */
-  void notifyAddition(T *pNew); //!< @todo Check if this function is still necessary
-
   void addChild(T* pNewChild, Parent* pParent);
 
+  /**
+   * @brief Function to replace an element in the vector of managed resources
+   * 
+   * @param pOldChild  Pointer to the original child object
+   * @param pNewChild  Pointer to the new child object
+   * @param pParent    Pointer to the child's parent (typically called with 'this')
+   */
   void replaceChild(T* pOldChild, T* pNewChild, Parent* pParent);
 
   void removeChild(T* pOldChild);

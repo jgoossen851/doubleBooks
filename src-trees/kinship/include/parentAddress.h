@@ -10,6 +10,7 @@
 
 #include "kinship.h"
 
+#include <cassert>
 #include <ostream>
 
 // Forward declare template friend functions
@@ -62,7 +63,7 @@ class parentAddress {
   parentAddress(parentAddress&& other) = delete;
 
   /// Move Assignement Operator
-  parentAddress& operator=(parentAddress&& other);
+  parentAddress& operator=(parentAddress&& other) noexcept;
 
 
   // Parameterized Constructors
@@ -72,7 +73,8 @@ class parentAddress {
    * @param pTop Pointer of the object containing the parentAddress object
    */
   parentAddress(void *pTop)
-      : pTop_(pTop) {};
+      : pTop_(pTop)
+      , pParent_(nullptr) {};
 
   /**
    * @brief Construct a new parentAddress object with specified pointer and initialized parent object
@@ -86,24 +88,29 @@ class parentAddress {
 
 
   /// Overload dereference operator
-  T& operator*() const { return *pParent_; }
+  T& operator*() const { 
+    assert(pParent_ != nullptr && "The child object has no parent pointer saved."); 
+    return *pParent_; }
 
   /// Overload structure dereference operator
-  T* operator->() const { return pParent_; }
-
-  /// Dereference to base class
-  Parent& base_deref() { return *this; } //!< @todo Check if this function is still necessary
+  T* operator->() const { assert(pParent_ != nullptr); return pParent_; }
 
   /**
-   * @brief Function to notifiy the managed resource that the parent object has moved
+   * @brief Set the address of a parent object if the parent object does not already exist.
+   *
+   * If the parent object is already set, use replaceParent() instead.
+   * The function checks that the parent is a nullptr or that the parent has already been set
+   * to the specified address.
    * 
-   * @param pOrig Pointer to the original parent object
-   * @param pNew  Pointer to the new parent object
+   * @param pNewParent  Address of the new parent to set.
    */
-  void notifyMove(T *pOrig, T *pNew); //!< @todo Check if this function is still necessary
-
   void setParent(T* pNewParent); //!< @todo Use functionallity inside replaceParent
 
+  /**
+   * @brief Replace the address of an existing parent object
+   * 
+   * @param pNewParent  Pointer to the new parent object
+   */
   void replaceParent(T* pNewParent);
 
   void removeParent();
