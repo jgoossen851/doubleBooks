@@ -23,8 +23,6 @@ enum InheritBool{
 };
 
 class AccountEntry : public parentOf<AccountEntry>, public childOf<AccountEntry> {
-  // AccountEntry                *pParent_; //!< @todo Change to Smart pointers?
-  // std::vector<AccountEntry*>  vpChildren_;
   unsigned int                sortOrder_;
   std::string                 name_;
   InheritBool                 isBudgeted_;
@@ -38,61 +36,17 @@ class AccountEntry : public parentOf<AccountEntry>, public childOf<AccountEntry>
   AccountEntry(unsigned int  sortOrder,
               std::string   name,
               InheritBool   isBudgeted,
-              InheritBool   isDebitIncrease//,
-              // AccountEntry  *pParent = nullptr
+              InheritBool   isDebitIncrease
               );
 
-  /// Copy Constructor
+  /// Copy Constructor [deleted]
   AccountEntry(const AccountEntry& rhs) = delete;
 
-  // /// Move Constructor
-  // AccountEntry(AccountEntry&& rvalue)
-  //     : pParent_(rvalue.pParent_)
-  //     , sortOrder_(rvalue.sortOrder_)
-  //     , name_(rvalue.name_)
-  //     , isBudgeted_(rvalue.isBudgeted_)
-  //     , isDebitIncrease_(rvalue.isDebitIncrease_) {
-
-  //   // Let children know I've moved. This also updates this->vpChildren
-  //   for (auto itr = vpChildren_.begin(); itr < vpChildren_.end(); itr++) {
-  //     (*itr)->setParentEntry(this);
-  //   }
-
-  //   // Clear rvalue resources
-  //   rvalue.pParent_ = nullptr;
-  //   rvalue.isBudgeted_ = UNDEFINED;
-  //   rvalue.isDebitIncrease_ = UNDEFINED;
-  // }
+  /// Move Constructor
+  AccountEntry(AccountEntry&& rhs) = default;
 
   /// Move Assignment Operator
   AccountEntry& operator=(AccountEntry&& other) = default;
-
-  // /// Move Assignment Operator
-  // AccountEntry& operator=(AccountEntry&& rvalue) {
-
-  //   if (this != &rvalue) { // Prevent self-assignment
-
-  //     // Do shallow copy (I'm assuming Move Constructor will be called to set consts.)
-  //     pParent_ = rvalue.pParent_;
-  //     sortOrder_ = rvalue.sortOrder_;
-  //     name_ = rvalue.name_;
-  //     isBudgeted_ = rvalue.isBudgeted_;
-  //     isDebitIncrease_ = rvalue.isDebitIncrease_;
-
-  //     // Let children know I've moved. This also updates this->vpChildren
-  //     for (auto itr = vpChildren_.begin(); itr < vpChildren_.end(); itr++) {
-  //       (*itr)->setParentEntry(this);
-  //     }
-
-  //     // Clear rvalue resources
-  //     rvalue.pParent_ = nullptr;
-  //     rvalue.isBudgeted_ = UNDEFINED;
-  //     rvalue.isDebitIncrease_ = UNDEFINED;
-
-  //   }
-
-  //   return *this;
-  // }
 
   /// Copy Assignment Operator [deleted]
   AccountEntry& operator=(const AccountEntry&) = delete;
@@ -104,10 +58,6 @@ class AccountEntry : public parentOf<AccountEntry>, public childOf<AccountEntry>
   InheritBool getIsDebitIncrease(void) const;
   void setIsBudgeted(const InheritBool isBudgeted);
   void setIsDebitIncrease(const InheritBool isDebitIncrease);
-  // void setParentEntry(AccountEntry *pParent);
-
- private:
-  // void addChildEntry(AccountEntry *pChild);
 
 };
 

@@ -48,5 +48,6 @@ void childOf<T>::removeParent() {
 
 template<typename T>
 T* childOf<T>::getParentPtr() const {
+  if ( ! mParentAddr_.isValid()) { return nullptr; }
   return &(*mParentAddr_);
 }
