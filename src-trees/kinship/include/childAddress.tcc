@@ -69,21 +69,23 @@ template<typename T>
 void childAddress<T>::replaceChild(T* pOldChild, T* pNewChild, Parent* pParent) {
   uint ind = findChildInd(pOldChild);
   if (vpChildren_.at(ind) != nullptr) {
-    assert(ind != vpChildren_.size());
+    assert(ind != vpChildren_.size() && "Child pointer not found inside parent class");
   }
-  // Remove parent from old child
-  vpChildren_.at(ind)->removeParent();
   vpChildren_.at(ind) = pNewChild;
   // Set parent of new child
   if (vpChildren_.at(ind) != nullptr) {
     vpChildren_.at(ind)->setParent(pParent);
+  }
+  // Remove parent from old child (after removed from vector to avoid vector resize)
+  if (pOldChild != nullptr) {
+    pOldChild->removeParent();
   }
 }
 
 template<typename T>
 void childAddress<T>::removeChild(T* pOldChild) {
   uint ind = findChildInd(pOldChild);
-  assert(ind != vpChildren_.size());
+  assert(ind != vpChildren_.size() && "Child pointer not found inside parent class");
   // Replace the child to delete with the last child and delete last child
   vpChildren_.at(ind) = vpChildren_.back();
   vpChildren_.pop_back();

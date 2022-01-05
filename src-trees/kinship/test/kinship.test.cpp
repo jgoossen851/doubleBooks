@@ -20,10 +20,11 @@
 
 #define VERBOSE_DEBUG 0
 
-int test_parentAddress_class();
-int test_childAddress_class();
-int test_derivedClass_Construction();
-int test_derivedClass_addRelationship();
+int testDerivedClassConstruction_childOf_parentOf();
+int testClass_parentAddress();
+int testClass_childAddress();
+int testClass_parentOf();
+int testClass_childOf();
 int test_movingCopyingParentChildClasses();
 
 int failTest( std::string testName,
@@ -70,14 +71,16 @@ int main() {
   // Initialize exit status
   int exitStatus = EXIT_SUCCESS;
 
-  exitStatus |= test_parentAddress_class();
-  std::cout << ansi::YELLOW << "Done with parentAddress test." << ansi::RESET << std::endl;
-  exitStatus |= test_childAddress_class();
-  std::cout << ansi::YELLOW << "Done with childAddress test." << ansi::RESET << std::endl;
-  exitStatus |= test_derivedClass_Construction();
+  exitStatus |= testDerivedClassConstruction_childOf_parentOf();
   std::cout << ansi::YELLOW << "Done with derived class construction test." << ansi::RESET << std::endl;
-  exitStatus |= test_derivedClass_addRelationship();
-  std::cout << ansi::YELLOW << "Done with derived class relationship test." << ansi::RESET << std::endl;
+  exitStatus |= testClass_parentAddress();
+  std::cout << ansi::YELLOW << "Done with parentAddress test." << ansi::RESET << std::endl;
+  exitStatus |= testClass_childAddress();
+  std::cout << ansi::YELLOW << "Done with childAddress test." << ansi::RESET << std::endl;
+  exitStatus |= testClass_parentOf();
+  std::cout << ansi::YELLOW << "Done with parentOf test." << ansi::RESET << std::endl;
+  exitStatus |= testClass_childOf();
+  std::cout << ansi::YELLOW << "Done with childOf test." << ansi::RESET << std::endl;
   exitStatus |= test_movingCopyingParentChildClasses();
   std::cout << ansi::YELLOW << "Done with move copy test." << ansi::RESET << std::endl;
 
@@ -94,9 +97,31 @@ int main() {
 }
 
 /**
+ * @brief Test Construction of derived classes
+ */
+int testDerivedClassConstruction_childOf_parentOf(){
+  // Initialize exit status
+  int exitStatus = EXIT_SUCCESS;
+  
+  // Construct original parent and child objects
+  DerivedParent ParentObj;
+  DerivedChild ChildObj1;
+  exitStatus |= testStrings(ParentObj.name,
+                            "Parent Name");
+  exitStatus |= testStrings(ChildObj1.name,
+                            "Child Name");
+  exitStatus |= testStrings(ParentObj.getParentClassString(),
+                            "Parent Class");
+  exitStatus |= testStrings(ChildObj1.getChildClassString(),
+                            "Child Class");
+
+  return exitStatus;
+}
+
+/**
  * @brief Test construction and basic functions of the parentAddress Class.
  */
-int test_parentAddress_class(){
+int testClass_parentAddress(){
   // Initialize exit status
   int exitStatus = EXIT_SUCCESS;
 
@@ -176,7 +201,7 @@ int test_parentAddress_class(){
 /**
  * @brief Test construction and basic functions of the childAddress Class.
  */
-int test_childAddress_class(){
+int testClass_childAddress(){
   // Initialize exit status
   int exitStatus = EXIT_SUCCESS;
   
@@ -251,32 +276,105 @@ int test_childAddress_class(){
   exitStatus |= testStrings(std::to_string(chiAddr3.vectorSize()), "2");
   exitStatus |= testStrings(chiAddr3.dereference(0).name + chiAddr3.dereference(1).name,
                             Child3.name + Child2.name);
+  // From End
+  DerivedChild Child4;
+  Child4.name = "Child4";
+  chiAddr3.replaceChild(&Child2, &Child4, nullptr);
+  exitStatus |= testStrings(std::to_string(chiAddr3.vectorSize()), "2");
+  exitStatus |= testStrings(chiAddr3.dereference(0).name + chiAddr3.dereference(1).name,
+                            Child3.name + Child4.name);
 
   // Test function to search for children
   exitStatus |= testStrings(std::to_string(chiAddr3.isContainsChild(&childObject)), "0");
-  exitStatus |= testStrings(std::to_string(chiAddr3.isContainsChild(&Child2)), "1");
+  exitStatus |= testStrings(std::to_string(chiAddr3.isContainsChild(&Child2)), "0");
   exitStatus |= testStrings(std::to_string(chiAddr3.isContainsChild(&Child3)), "1");
+  exitStatus |= testStrings(std::to_string(chiAddr3.isContainsChild(&Child4)), "1");
 
   // Test Remove Child function
   chiAddr3.removeChild(&Child3);
   exitStatus |= testStrings(std::to_string(chiAddr3.vectorSize()), "1");
   exitStatus |= testStrings(std::to_string(chiAddr3.isContainsChild(&childObject)), "0");
-  exitStatus |= testStrings(std::to_string(chiAddr3.isContainsChild(&Child2)), "1");
+  exitStatus |= testStrings(std::to_string(chiAddr3.isContainsChild(&Child2)), "0");
   exitStatus |= testStrings(std::to_string(chiAddr3.isContainsChild(&Child3)), "0");
+  exitStatus |= testStrings(std::to_string(chiAddr3.isContainsChild(&Child4)), "1");
 
   return exitStatus;
 }
 
-int test_derivedClass_Construction(){
+int testClass_parentOf(){
   // Initialize exit status
   int exitStatus = EXIT_SUCCESS;
-  
+
+  // Construct original parent and child objects
   DerivedParent ParentObj;
   DerivedChild ChildObj1;
-  exitStatus |= testStrings(ParentObj.getParentClassString(),
-                            "Parent Class");
-  exitStatus |= testStrings(ChildObj1.getChildClassString(),
-                            "Child Class");
+  DerivedChild ChildObj2;
+  ChildObj2.name = "Child2";
+
+  // Add a relationship between objects
+  ParentObj.addChild(&ChildObj1);
+  exitStatus |= testStrings(std::to_string(ParentObj.getNumChildren()), "1");
+  ParentObj.addChild(&ChildObj2);
+  exitStatus |= testStrings(std::to_string(ParentObj.getNumChildren()), "2");
+
+  // Test searching for children
+  exitStatus |= testStrings(std::to_string(ParentObj.isContainsChild(&ChildObj1)), "1");
+  exitStatus |= testStrings(std::to_string(ParentObj.isContainsChild(&ChildObj2)), "1");
+  DerivedChild ChildObj3;
+  exitStatus |= testStrings(std::to_string(ParentObj.isContainsChild(&ChildObj3)), "0");
+
+  // Test dereferencing child object
+  exitStatus |= testStrings(ParentObj.getChildPtr(0)->name + ParentObj.getChildPtr(1)->name,
+                            "Child Name" "Child2");
+
+  // Test Move Assignment
+  DerivedParent Parent2;
+  Parent2 = std::move(ParentObj);
+  exitStatus |= testStrings(std::to_string(Parent2.getNumChildren()), "2");
+  exitStatus |= testStrings(Parent2.getChildPtr(0)->name + Parent2.getChildPtr(1)->name,
+                            "Child Name" "Child2");
+  exitStatus |= testStrings(std::to_string(ParentObj.isContainsChild(&ChildObj1)), "0");
+  exitStatus |= testStrings(std::to_string(ParentObj.isContainsChild(&ChildObj2)), "0");
+  exitStatus |= testStrings(std::to_string(Parent2.isContainsChild(&ChildObj1)), "1");
+  exitStatus |= testStrings(std::to_string(Parent2.isContainsChild(&ChildObj2)), "1");
+  
+  // Test Move Constructor
+  DerivedParent Parent3(std::move(Parent2));
+  exitStatus |= testStrings(std::to_string(Parent3.getNumChildren()), "2");
+  exitStatus |= testStrings(Parent3.getChildPtr(0)->name + Parent3.getChildPtr(1)->name,
+                            "Child Name" "Child2");
+  exitStatus |= testStrings(std::to_string(Parent2.isContainsChild(&ChildObj1)), "0");
+  exitStatus |= testStrings(std::to_string(Parent2.isContainsChild(&ChildObj2)), "0");
+  exitStatus |= testStrings(std::to_string(Parent3.isContainsChild(&ChildObj1)), "1");
+  exitStatus |= testStrings(std::to_string(Parent3.isContainsChild(&ChildObj2)), "1");
+  
+  // Test Replacing Child
+  ChildObj3.name = "Child3";
+  Parent3.replaceChild(&ChildObj2, &ChildObj3);
+  exitStatus |= testStrings(std::to_string(Parent3.getNumChildren()), "2");
+  exitStatus |= testStrings(Parent3.getChildPtr(0)->name + Parent3.getChildPtr(1)->name,
+                            "Child Name" "Child3");
+  exitStatus |= testStrings(std::to_string(Parent3.isContainsChild(&ChildObj1)), "1");
+  exitStatus |= testStrings(std::to_string(Parent3.isContainsChild(&ChildObj2)), "0");
+  exitStatus |= testStrings(std::to_string(Parent3.isContainsChild(&ChildObj3)), "1");
+  
+  // Test removing child
+  Parent3.removeChild(&ChildObj3);
+  exitStatus |= testStrings(std::to_string(Parent3.getNumChildren()), "1");
+  exitStatus |= testStrings(std::to_string(Parent3.isContainsChild(&ChildObj1)), "1");
+  Parent3.removeChild(&ChildObj1);
+  exitStatus |= testStrings(std::to_string(Parent3.getNumChildren()), "0");
+
+  return exitStatus;
+}
+
+int testClass_childOf(){
+  // Initialize exit status
+  int exitStatus = EXIT_SUCCESS;
+
+  // Construct original parent and child objects
+  DerivedParent ParentObj;
+  DerivedChild ChildObj1;
   DerivedChild ChildObj2;
   ChildObj2.name = "Child2";
 
@@ -287,32 +385,13 @@ int test_derivedClass_Construction(){
   // Test Child to Parent Access
   exitStatus |= testStrings(ChildObj1.getParentPtr()->name,
                             "Parent Name");
-  // Test Parent to Child Access
-  exitStatus |= testStrings(ParentObj.getChildPtr(0)->name + ParentObj.getChildPtr(1)->name,
-                            "Child Name" "Child2");
-  
-  return exitStatus;
-}
-
-int test_derivedClass_addRelationship(){
-  // Initialize exit status
-  int exitStatus = EXIT_SUCCESS;
-  
-  DerivedParent ParentObj;
-  DerivedChild ChildObj1;
-  DerivedChild ChildObj2;
-  ChildObj2.name = "Child2";
-
-  // Add a relationship between objects
-  ParentObj.addChild(&ChildObj1);
-  ParentObj.addChild(&ChildObj2);
 
   // Test Child to Parent Access
   exitStatus |= testStrings(ChildObj1.getParentPtr()->name,
                             "Parent Name");
-  // Test Parent to Child Access
-  exitStatus |= testStrings(ParentObj.getChildPtr(0)->name + ParentObj.getChildPtr(1)->name,
-                            "Child Name" "Child2");
+  // // Test Parent to Child Access
+  // exitStatus |= testStrings(ParentObj.getChildPtr(0)->name + ParentObj.getChildPtr(1)->name,
+  //                           "Child Name" "Child2");
 
   return exitStatus;
 }

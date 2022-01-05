@@ -49,6 +49,13 @@ class parentOf : public Parent {
 
   T* getChildPtr(const uint iChild);
 
+  /**
+   * @brief Gets the number of children in the vector of pointers for the parent object
+   * 
+   * If the vector only contains a nullptr (i.e., an invalid child object), this function
+   * will return 1, as the vector length is 1. However, this should not be counted on
+   * as the functionallity may change to reflect that the parent object has no valid children.
+   */
   uint getNumChildren(void) const;
 
 };
