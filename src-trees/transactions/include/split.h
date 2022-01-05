@@ -18,13 +18,13 @@ class Split : public Entry {
   unsigned int id_;
   Transaction *pParent_ = nullptr;
   Currency amount_;
-  const AccountList *pAcctList_;
+  AccountList *pAcctList_;
   Account debitAccount_;
   Account creditAccount_;
 
  public:
 
-  Split(const AccountList *pAcctList)
+  Split(AccountList *pAcctList)
       : pAcctList_(pAcctList),
         debitAccount_(pAcctList_),
         creditAccount_(pAcctList_)

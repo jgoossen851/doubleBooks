@@ -43,10 +43,10 @@ class AccountEntry : public parentOf<AccountEntry>, public childOf<AccountEntry>
   AccountEntry(const AccountEntry& rhs) = delete;
 
   /// Move Constructor
-  AccountEntry(AccountEntry&& rhs) = default;
+  AccountEntry(AccountEntry&& rhs) noexcept = default;
 
   /// Move Assignment Operator
-  AccountEntry& operator=(AccountEntry&& other) = default;
+  AccountEntry& operator=(AccountEntry&& other) noexcept = default;
 
   /// Copy Assignment Operator [deleted]
   AccountEntry& operator=(const AccountEntry&) = delete;
@@ -61,15 +61,23 @@ class AccountEntry : public parentOf<AccountEntry>, public childOf<AccountEntry>
 
 };
 
+// Forward declare AccountList
+class AccountList;
+// Declare base class for child accounts
+class ChildAccount : public childOf<AccountList> {};
 
-class AccountList {
+class AccountList : public parentOf<ChildAccount> {
   std::vector<AccountEntry> vAcctEntries_;
 
  public:
-  // Default Constructor Function
+  /// Default Constructor Function
   AccountList();
-  // Parameterized Constructor Function
+  /// Parameterized Constructor Function
   AccountList(const char *accountsCsv);
+  /// Move Constructor
+  AccountList(AccountList&& rhs) noexcept = default;
+  /// Move Assignment Operator
+  AccountList& operator=(AccountList&& other) noexcept = default;
 
   void load(const char *accountsCsv);
 

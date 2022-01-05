@@ -34,7 +34,7 @@ class parentOf : public Parent {
     return *this;
   }
   /// Move Constructor
-  parentOf(parentOf&& other)
+  parentOf(parentOf&& other) noexcept
       : mChildAddr_(this, nullptr) {
     mChildAddr_ = std::move(other.mChildAddr_);
   }

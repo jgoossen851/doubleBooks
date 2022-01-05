@@ -17,7 +17,7 @@
 #include <string>
 
 class Register {
-  const AccountList               accountList_;
+  AccountList                     accountList_;
   const uint                      numColumns_;
   const std::vector<std::string>  vHeader_;
   const std::vector<uint>         vColumnWidth_; //!< in characters
