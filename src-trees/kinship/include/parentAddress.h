@@ -88,7 +88,9 @@ class parentAddress {
 
 
   /// Overload dereference operator
-  T& operator*() const { assert(pParent_ != nullptr); return *pParent_; }
+  T& operator*() const { 
+    assert(pParent_ != nullptr && "The child object has no parent pointer saved."); 
+    return *pParent_; }
 
   /// Overload structure dereference operator
   T* operator->() const { assert(pParent_ != nullptr); return pParent_; }

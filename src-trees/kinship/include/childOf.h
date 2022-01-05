@@ -48,6 +48,16 @@ class childOf : public Child {
 
   void setParent(Parent* pNewParent) override;
 
+  /**
+   * @brief Replaces the current child's parent with a new parent
+   *
+   * Also removes the child from the list of children managed by the
+   * original parent object and adds the child to the list managed
+   * by the new parent object.
+   * The other children of the old parent are unaffected.
+   * 
+   * @param pNewParent Pointer of the new parent object
+   */
   void replaceParent(Parent* pNewParent) override;
 
   void removeParent() override;

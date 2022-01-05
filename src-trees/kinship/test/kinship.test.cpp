@@ -380,18 +380,63 @@ int testClass_childOf(){
 
   // Add a relationship between objects
   ChildObj1.setParent(&ParentObj);
+  exitStatus |= testStrings(std::to_string(ParentObj.getNumChildren()), "1");
   ChildObj2.setParent(&ParentObj);
+  exitStatus |= testStrings(std::to_string(ParentObj.getNumChildren()), "2");
 
-  // Test Child to Parent Access
+  // Test dereferencing parent object
   exitStatus |= testStrings(ChildObj1.getParentPtr()->name,
                             "Parent Name");
-
-  // Test Child to Parent Access
-  exitStatus |= testStrings(ChildObj1.getParentPtr()->name,
+  exitStatus |= testStrings(ChildObj2.getParentPtr()->name,
                             "Parent Name");
-  // // Test Parent to Child Access
-  // exitStatus |= testStrings(ParentObj.getChildPtr(0)->name + ParentObj.getChildPtr(1)->name,
-  //                           "Child Name" "Child2");
+
+  // Test Copy Assignment Operator
+  DerivedChild Child3;
+  Child3 = ChildObj1;
+  exitStatus |= testStrings(std::to_string(ParentObj.getNumChildren()), "3");
+  exitStatus |= testStrings(std::to_string(ParentObj.isContainsChild(&ChildObj1)), "1");
+  exitStatus |= testStrings(std::to_string(ParentObj.isContainsChild(&ChildObj2)), "1");
+  exitStatus |= testStrings(std::to_string(ParentObj.isContainsChild(&Child3)), "1");
+  exitStatus |= testStrings(Child3.getParentPtr()->name,
+                            "Parent Name");
+
+  // Test Move Assignment Operator
+  DerivedChild Child4;
+  Child4 = std::move(ChildObj2);
+  exitStatus |= testStrings(std::to_string(ParentObj.getNumChildren()), "3");
+  exitStatus |= testStrings(std::to_string(ParentObj.isContainsChild(&ChildObj1)), "1");
+  exitStatus |= testStrings(std::to_string(ParentObj.isContainsChild(&ChildObj2)), "0");
+  exitStatus |= testStrings(std::to_string(ParentObj.isContainsChild(&Child3)), "1");
+  exitStatus |= testStrings(std::to_string(ParentObj.isContainsChild(&Child4)), "1");
+  exitStatus |= testStrings(Child4.getParentPtr()->name,
+                            "Parent Name");
+
+  // Test Move Constructor
+  DerivedChild Child5 = std::move(Child3);
+  exitStatus |= testStrings(std::to_string(ParentObj.getNumChildren()), "3");
+  exitStatus |= testStrings(std::to_string(ParentObj.isContainsChild(&ChildObj1)), "1");
+  exitStatus |= testStrings(std::to_string(ParentObj.isContainsChild(&ChildObj2)), "0");
+  exitStatus |= testStrings(std::to_string(ParentObj.isContainsChild(&Child3)), "0");
+  exitStatus |= testStrings(std::to_string(ParentObj.isContainsChild(&Child4)), "1");
+  exitStatus |= testStrings(std::to_string(ParentObj.isContainsChild(&Child5)), "1");
+  exitStatus |= testStrings(Child5.getParentPtr()->name, "Parent Name");
+
+  // Test Replacing Parent
+  DerivedParent Parent2;
+  Parent2.name = "Parent2";  
+  Child4.replaceParent(&Parent2);
+  exitStatus |= testStrings(std::to_string(ParentObj.getNumChildren()), "2");
+  exitStatus |= testStrings(std::to_string(ParentObj.isContainsChild(&ChildObj1)), "1");
+  exitStatus |= testStrings(std::to_string(ParentObj.isContainsChild(&Child5)), "1");
+  exitStatus |= testStrings(std::to_string(Parent2.getNumChildren()), "1");
+  exitStatus |= testStrings(std::to_string(Parent2.isContainsChild(&Child4)), "1");
+  exitStatus |= testStrings(Child4.getParentPtr()->name, "Parent2");
+  
+  // Test Removing Parent
+  Child5.removeParent();
+  exitStatus |= testStrings(std::to_string(ParentObj.getNumChildren()), "1");
+  exitStatus |= testStrings(std::to_string(ParentObj.isContainsChild(&ChildObj1)), "1");
+  exitStatus |= testStrings(std::to_string(ParentObj.isContainsChild(&Child5)), "0");
 
   return exitStatus;
 }
