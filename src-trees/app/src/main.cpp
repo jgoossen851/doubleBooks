@@ -16,6 +16,7 @@
 #include <string>
 
 enum COMMANDS {
+  HELP,
   LOAD,
   PRINT_SPLITS,
   PRINT_TRANSACTIONS
@@ -37,6 +38,16 @@ Register loadData(const char * filename){
   return Register(transactionsList.load(), pathStr.c_str());
 }
 
+void usage(const std::map< std::string, COMMANDS > &dictionary){
+  std::cout << "Usage: " << std::endl;
+  std::cout << "  Press Ctrl+D to exit." << std::endl;
+  std::cout << "  Available Commands:";
+  for (auto itr = dictionary.begin(); itr != dictionary.end(); itr++) {
+    std::cout << " " << itr->first;
+  }
+  std::cout << std::endl;
+}
+
 int main(int argc, char* argv[]) {
 
   // Check that a single argument was given
@@ -48,9 +59,11 @@ int main(int argc, char* argv[]) {
   
   // Define user commands
   std::map< std::string, COMMANDS > dictionary;
+  dictionary["h"] = HELP;
   dictionary["l"] = LOAD;
   dictionary["s"] = PRINT_SPLITS;
   dictionary["t"] = PRINT_TRANSACTIONS;
+  usage(dictionary);
 
   // Initialize state variables
   Register accountRegister;
@@ -60,6 +73,9 @@ int main(int argc, char* argv[]) {
     auto itr = dictionary.find(input);
     if ( itr != end(dictionary)) {
       switch (itr->second) {
+        case HELP : // Print Usage
+          usage(dictionary);
+          break;
         case LOAD : // Reload data
           accountRegister = loadData(argv[1]);
           break;
