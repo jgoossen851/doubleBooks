@@ -25,7 +25,7 @@ int testClass_parentAddress();
 int testClass_childAddress();
 int testClass_parentOf();
 int testClass_childOf();
-int test_movingCopyingParentChildClasses();
+int testClassesAcrossScopes_parentOf_childOf();
 
 int failTest( std::string testName,
               std::string ansString,
@@ -81,8 +81,8 @@ int main() {
   std::cout << ansi::YELLOW << "Done with parentOf test." << ansi::RESET << std::endl;
   exitStatus |= testClass_childOf();
   std::cout << ansi::YELLOW << "Done with childOf test." << ansi::RESET << std::endl;
-  exitStatus |= test_movingCopyingParentChildClasses();
-  std::cout << ansi::YELLOW << "Done with move copy test." << ansi::RESET << std::endl;
+  exitStatus |= testClassesAcrossScopes_parentOf_childOf();
+  std::cout << ansi::YELLOW << "Done with test across scopes." << ansi::RESET << std::endl;
 
   // ****** CLEAN UP ****** //
 
@@ -441,93 +441,38 @@ int testClass_childOf(){
   return exitStatus;
 }
 
-int test_movingCopyingParentChildClasses(){
+int testClassesAcrossScopes_parentOf_childOf(){
   // Initialize exit status
   int exitStatus = EXIT_SUCCESS;
-  
+
+  // Define empty classes at base scope
   DerivedParent ParentObj;
   ParentObj.name = "Original Parent";
   DerivedChild ChildObj;
   ChildObj.name = "Original Child";
   ChildObj.setParent(&ParentObj);
-  {
-    DerivedChild SecondChild;
-    SecondChild.removeParent();
-    // Test Copy Assignment of Child
-    SecondChild = ChildObj;
-    exitStatus |= testStrings(SecondChild.getParentPtr()->name,
-                              "Original Parent");
-    exitStatus |= testStrings(ParentObj.getChildPtr(0)->name + ParentObj.getChildPtr(1)->name,
-                              "Original Child" "Original Child");
-
-    DerivedChild Child3;
-    // Test Move Assignment of Child
-    Child3 = std::move(ChildObj);
-    SecondChild.name = "Second Child";
-    exitStatus |= testStrings(Child3.getParentPtr()->name,
-                              "Original Parent");
-    exitStatus |= testStrings(ParentObj.getChildPtr(0)->name + ParentObj.getChildPtr(1)->name,
-                              "Original Child" "Second Child");
-    // Original Child should be in a valid, but default, state.
-    exitStatus |= testStrings(std::to_string(ParentObj.getNumChildren()), "2");
-
-    // Test Move Constructor
-    DerivedChild TempChild;
-    TempChild.name = "TempChild";
-    TempChild.setParent(&ParentObj);
-    DerivedChild Child4(std::move(Child3));
-
-
-    exitStatus |= testStrings(Child4.getParentPtr()->name,
-                              "Original Parent");
-    Child4.name = "This is Child4";
-    exitStatus |= testStrings(ParentObj.getChildPtr(0)->name + ParentObj.getChildPtr(1)->name,
-                              "This is Child4" "Second Child");
-    // Original Child should be in a valid, but default, state.
-    exitStatus |= testStrings(std::to_string(ParentObj.getNumChildren()), "2");
-  }
 
   {
-    DerivedParent NewParent;
-    NewParent.name = "New Parent";
-    DerivedChild NewChild;
-    NewChild.name = "New Child 1";
-    NewChild.setParent(&NewParent);
+    // Create temporary entities inside scope with values
+    DerivedParent tempParent;
+    tempParent.name = "Parent Class with Data";
+    DerivedChild tempChild;
+    tempChild.name = "Child Class with Data";
+    tempChild.setParent(&tempParent);
+    exitStatus |= testStrings(std::to_string(tempParent.getNumChildren()), "1");
+    exitStatus |= testStrings(tempParent.getChildPtr(0)->name, "Child Class with Data");
 
-    // Test Move Assignment of Parent
-    ParentObj = std::move(NewParent);
+    // Assign values to base-scope classes
+    ParentObj = std::move(tempParent);
+    ChildObj = std::move(tempChild);
 
-    exitStatus |= testStrings(ParentObj.name,
-                            "New Parent");
-    exitStatus |= testStrings(std::to_string(ParentObj.getNumChildren()), "1");
-    exitStatus |= testStrings(ParentObj.getChildPtr(0)->name,
-                              "New Child 1");
-    exitStatus |= testStrings(ParentObj.getChildPtr(0)->getParentPtr()->name,
-                              "New Parent");
+  // Destroy scoped entities
   }
-  exitStatus |= testStrings(ParentObj.name,
-                            "New Parent");
-  exitStatus |= testStrings(std::to_string(ParentObj.getNumChildren()), "0");
-  // exitStatus |= testStrings(ParentObj.getChildPtr(0)->name,
-  //                           "New Child 1"); //! Error
 
-  // Test Parent destructor
-  DerivedChild PersistentChild;
-  PersistentChild.name = "Persistent";
-  {
-    DerivedParent TempParent;
-    TempParent.name = "Temporary";
-    TempParent.addChild(&PersistentChild);
-
-    exitStatus |= testStrings(PersistentChild.name,
-                              "Persistent");
-    exitStatus |= testStrings(PersistentChild.getParentPtr()->name,
-                              "Temporary");
-  }
-  exitStatus |= testStrings(PersistentChild.name,
-                            "Persistent");
-  // exitStatus |= testStrings(PersistentChild.getParentPtr()->name,
-  //                           "Temporary"); //! Error
+  // Test access to modified classes
+  exitStatus |= testStrings(std::to_string(ParentObj.getNumChildren()), "1");
+  exitStatus |= testStrings(ParentObj.getChildPtr(0)->name, "Child Class with Data");
+  exitStatus |= testStrings(ChildObj.getParentPtr()->name, "Parent Class with Data");
 
   return exitStatus;
 }
