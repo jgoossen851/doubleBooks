@@ -17,7 +17,8 @@
 
 enum COMMANDS {
   LOAD,
-  PRINT
+  PRINT_SPLITS,
+  PRINT_TRANSACTIONS
 };
 
 Register loadData(const char * filename){
@@ -48,7 +49,8 @@ int main(int argc, char* argv[]) {
   // Define user commands
   std::map< std::string, COMMANDS > dictionary;
   dictionary["l"] = LOAD;
-  dictionary["p"] = PRINT;
+  dictionary["s"] = PRINT_SPLITS;
+  dictionary["t"] = PRINT_TRANSACTIONS;
 
   // Initialize state variables
   Register accountRegister;
@@ -61,8 +63,11 @@ int main(int argc, char* argv[]) {
         case LOAD : // Reload data
           accountRegister = loadData(argv[1]);
           break;
-        case PRINT : // Reprint output
+        case PRINT_SPLITS : // Reprint output (splits)
           accountRegister.printSplits();
+          break;
+        case PRINT_TRANSACTIONS : // Reprint output (transactions)
+          accountRegister.printTransactions();
           break;
         default :
           std::cout << "Command \"" << input << "\" Not Implemented" << std::endl; 
