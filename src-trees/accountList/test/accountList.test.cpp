@@ -42,7 +42,8 @@ int main() {
   // Initialize exit status
   int exitStatus = EXIT_SUCCESS;
 
-  AccountList accountList("../../../../res/data/Accounts.dbkcfg");
+  AccountList accountList("../../../../res/data/Accounts.dbkcfg"); //? Terminal
+  // AccountList accountList("./res/data/Accounts.dbkcfg"); //? Codium
 
   // Test several Account strings and properties
   exitStatus |= testStrings(accountList.at(3).str(5) + " B[" + std::to_string(accountList.at(3).getIsBudgeted()) 
@@ -61,7 +62,7 @@ int main() {
   // Test Move Assignment Operator
   AccountEntry newAcct;
   {
-    AccountEntry tempAcct(1, "TempAcct", TRUE, TRUE, nullptr);
+    AccountEntry tempAcct(1, "TempAcct", TRUE, TRUE);
     newAcct = std::move(tempAcct);
   }
   exitStatus |= testStrings(newAcct.str(), "TempAcct");

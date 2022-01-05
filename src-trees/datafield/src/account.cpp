@@ -15,17 +15,16 @@ bool Account::operator<(const Element &rhs) const {
 
 
 /// Parameterized constructor functions
-  Account::Account(const AccountList *pAcctList)
-      : pAcctList_(pAcctList)
-      {}
+  Account::Account(AccountList *pAcctList) {
+    setParent(pAcctList);
+  }
 
-  Account::Account(const AccountList *pAcctList, std::string str)
-      : pAcctList_(pAcctList)
-      {
+  Account::Account(AccountList *pAcctList, std::string str) {
+    setParent(pAcctList);
     setFromStr(str);
   }
 
 std::string Account::str(const unsigned int &max_characters) const {
-  return pAcctList_ == nullptr ? ansi::DIM + "Undefined" + ansi::NORMAL
-                                : pAcctList_->at(acctListInd_).str(max_characters);
+  return getParentPtr() == nullptr ? ansi::DIM + "Undefined" + ansi::NORMAL
+                                : getParentPtr()->at(acctListInd_).str(max_characters);
 }

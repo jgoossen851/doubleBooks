@@ -12,31 +12,26 @@
 #include "transaction.h"
 
 StringField Split::getName() const {
-  assert(pParent_ != nullptr);
-  return name_.str() == "" ? (pParent_->getName()) : name_;
+  assert(getParentPtr() != nullptr);
+  return name_.str() == "" ? (getParentPtr()->getName()) : name_;
 }
 
 StringField Split::getMemo() const {
-  assert(pParent_ != nullptr);
-  return memo_.str() == "" ? (pParent_->getMemo()) : memo_;
+  assert(getParentPtr() != nullptr);
+  return memo_.str() == "" ? (getParentPtr()->getMemo()) : memo_;
 }
 
 StringField Split::getPeriod() const {
-  assert(pParent_ != nullptr);
-  return period_.str() == "" ? (pParent_->getPeriod()) : period_;
+  assert(getParentPtr() != nullptr);
+  return period_.str() == "" ? (getParentPtr()->getPeriod()) : period_;
 }
 
 Date Split::getDate() const {
-  assert(pParent_ != nullptr);
-  return date_ == Date() ? (pParent_->getDate()) : date_;
+  assert(getParentPtr() != nullptr);
+  return date_ == Date() ? (getParentPtr()->getDate()) : date_;
 }
 
 StringField Split::getVendor() const {
-  assert(pParent_ != nullptr);
-  return vendor_.str() == "" ? (pParent_->getVendor()) : vendor_;
-}
-
-void Split::setParentTransaction(Transaction *testTransaction) {
-  pParent_ = testTransaction;
-  pParent_->addChildSplit(this);
+  assert(getParentPtr() != nullptr);
+  return vendor_.str() == "" ? (getParentPtr()->getVendor()) : vendor_;
 }

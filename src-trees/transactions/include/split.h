@@ -9,25 +9,23 @@
 #define SPLIT_H_
 
 #include "account.h"
+#include "childOf.h"
 #include "currency.h"
 #include "entry.h"
 
 class Transaction;
 
-class Split : public Entry {
+class Split : public Entry, public childOf<Transaction> {
   unsigned int id_;
-  Transaction *pParent_ = nullptr;
   Currency amount_;
-  const AccountList *pAcctList_;
   Account debitAccount_;
   Account creditAccount_;
 
  public:
 
-  Split(const AccountList *pAcctList)
-      : pAcctList_(pAcctList),
-        debitAccount_(pAcctList_),
-        creditAccount_(pAcctList_)
+  Split(AccountList *pAcctList)
+      : debitAccount_(pAcctList),
+        creditAccount_(pAcctList)
       {};
   
   StringField getName() const override;
@@ -66,8 +64,6 @@ class Split : public Entry {
   void setCreditAccount(std::string acctNum) {
     creditAccount_.setFromStr(acctNum);
   };
-
-  void setParentTransaction(Transaction *testTransaction);
 
 };
 

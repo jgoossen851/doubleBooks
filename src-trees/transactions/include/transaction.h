@@ -11,13 +11,13 @@
 #include <vector>
 
 #include "currency.h"
+#include "parentOf.h"
 #include "split.h"
 #include "entry.h"
 #include "account.h"
 
-class Transaction : public Entry {
+class Transaction : public Entry, public parentOf<Split> {
   unsigned int id_;
-  std::vector<Split*> vSplitAddr_;
 
  public:
   StringField getName() const override { return name_; };
@@ -41,10 +41,6 @@ class Transaction : public Entry {
   }
   Account getCreditAccount(void) const override;
   Account getDebitAccount(void) const override;
-
-  void addChildSplit(Split* child){
-    vSplitAddr_.push_back(child);
-  }
 
 };
 
