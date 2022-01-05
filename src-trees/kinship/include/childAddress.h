@@ -119,7 +119,15 @@ class childAddress {
 
   bool isContainsChild(const T* pChild) const;
 
-  unsigned int vectorSize(void) const { return vpChildren_.size(); }
+  /**
+   * @brief Returns the number of children addresses in the internal vector
+   *
+   * If the vector contains only one entry which is a nullptr, the function
+   * returns zero.
+   * 
+   * @return unsigned int  Number of valid children in the internal vector
+   */
+  unsigned int vectorSize(void) const;
 
   friend std::ostream& operator<< <> (std::ostream& o, const childAddress<T>& x);
 
