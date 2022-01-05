@@ -96,7 +96,7 @@ class childAddress {
   };
 
   /// Indexed dereference operator
-  T& dereference(unsigned int ind);
+  T& dereference(unsigned int ind) const;
   
   /**
    * @brief Function to add a new pointer to the vector of managed resources

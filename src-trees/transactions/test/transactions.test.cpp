@@ -63,7 +63,7 @@ int main() {
   testSplit.setDebitAccount("40");
   testSplit.setCreditAccount("20");
   testSplit.setMemo("This is the memo");
-  testSplit.setParentTransaction(&testTransaction);
+  testSplit.setParent(&testTransaction);
 
   // Test output
   // std::cout << "output" << std::endl;

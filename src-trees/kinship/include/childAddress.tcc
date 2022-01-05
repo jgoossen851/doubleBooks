@@ -44,7 +44,7 @@ childAddress<T>& childAddress<T>::operator=(childAddress&& other) noexcept {
 
 /// Indexed dereference operator
 template<typename T>
-T& childAddress<T>::dereference(uint ind) {
+T& childAddress<T>::dereference(uint ind) const {
   assert(ind < vpChildren_.size() && "Attempting to dereference an element beyond the current contents of the vector.");
   assert(vpChildren_.at(ind) != nullptr && "Attempting to dereference a nullptr.");
   return *vpChildren_.at(ind);

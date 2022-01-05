@@ -47,7 +47,7 @@ class parentOf : public Parent {
 
   bool isContainsChild(const Child* pChild) const override;
 
-  T* getChildPtr(const uint iChild);
+  T* getChildPtr(const uint iChild) const;
 
   /**
    * @brief Gets the number of children in the vector of pointers for the parent object

@@ -41,7 +41,7 @@ target_include_directories("${TARGET_NAME}"
 
 # Specify libraries or flags to use when linking a given target and/or its dependents
 target_link_libraries("${TARGET_NAME}"
-    PUBLIC Datafield Csv Ansi
+    PUBLIC Datafield Csv Ansi Kinship
 )
 
 # # Install the library

@@ -32,7 +32,7 @@ bool parentOf<T>::isContainsChild(const Child* pChild) const {
 }
 
 template<typename T>
-T* parentOf<T>::getChildPtr(const uint iChild) {
+T* parentOf<T>::getChildPtr(const uint iChild) const {
   return &(mChildAddr_.dereference(iChild));
 }
 

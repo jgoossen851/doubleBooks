@@ -75,7 +75,7 @@ Register::Register(StringDatabase data, const char *accountListFile)
       if (isSplit) {
         vSplit_.push_back(Split(&accountList_));
 
-        vSplit_.back().setParentTransaction(&vTransaction_.back());
+        vSplit_.back().setParent(&vTransaction_.back());
         vSplit_.back().setId(Strings::toInteger(stringItr->at(ID)));
         vSplit_.back().setAmount(Currency(stringItr->at(AMOUNT)));
         vSplit_.back().setDebitAccount(stringItr->at(DEBIT_ACCOUNT));
@@ -106,7 +106,7 @@ Register::Register(StringDatabase data, const char *accountListFile)
       auto parentTransactionInd = std::find(vTransactionIds.begin(), vTransactionIds.end(), parentId);
       assert(parentTransactionInd != vTransactionIds.end());
       int ParentIndex = std::distance(vTransactionIds.begin(), parentTransactionInd);
-      vSplit_.back().setParentTransaction(vTransactionPtrs.at(ParentIndex));
+      vSplit_.back().setParent(vTransactionPtrs.at(ParentIndex));
 
     }
   }

@@ -10,24 +10,24 @@
 
 Currency Transaction::getDebitSum() const { 
   Currency sum(0);
-  for (uint ii = 0; ii < vSplitAddr_.size(); ii++) {
-    sum += vSplitAddr_.at(ii)->getDebitSum();
+  for (uint ii = 0; ii < getNumChildren(); ii++) {
+    sum += getChildPtr(ii)->getDebitSum();
   }
   return sum;
 }
 
 Currency Transaction::getCreditSum() const { 
   Currency sum(0);
-  for (uint ii = 0; ii < vSplitAddr_.size(); ii++) {
-    sum += vSplitAddr_.at(ii)->getCreditSum();
+  for (uint ii = 0; ii < getNumChildren(); ii++) {
+    sum += getChildPtr(ii)->getCreditSum();
   }
   return sum;
 }
 
 Account Transaction::getCreditAccount(void) const {
-  return vSplitAddr_.size() == 1 ? vSplitAddr_.at(0)->getCreditAccount() : Account();
+  return getNumChildren() == 1 ? getChildPtr(0)->getCreditAccount() : Account();
 }
 
 Account Transaction::getDebitAccount(void) const {
-  return vSplitAddr_.size() == 1 ? vSplitAddr_.at(0)->getDebitAccount() : Account();
+  return getNumChildren() == 1 ? getChildPtr(0)->getDebitAccount() : Account();
 }
