@@ -18,14 +18,19 @@
 
 class Register {
   AccountList                     accountList_;
-  const uint                      numColumns_;
-  const std::vector<std::string>  vHeader_;
-  const std::vector<uint>         vColumnWidth_; //!< in characters
+  uint                            numColumns_;
+  std::vector<std::string>        vHeader_;
+  std::vector<uint>               vColumnWidth_; //!< in characters
   std::vector<Transaction>        vTransaction_;
   std::vector<Split>              vSplit_;
 
  public:
+  Register(){};
   Register(StringDatabase data, const char *accountListFile);
+  /// Move Constructor
+  Register(Register&& rhs) noexcept = default;
+  /// Move Assignment Operator
+  Register& operator=(Register&& other) noexcept = default;
   void printSplits(void) const;
   void printTransactions(void) const;
  private:

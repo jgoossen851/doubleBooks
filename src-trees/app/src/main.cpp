@@ -21,23 +21,32 @@ int main(int argc, char* argv[]) {
     std::cerr << argv[0] << " requires a single argument containing the file to parse." << std::endl;
     return 1;
   }
-
-  // Set up files
-  Csv transactionsList(argv[1]);
-  std::cout << "CSV opened." << std::endl;
-
-  // Get installed location of configuration file
-  char *env_home;
-  env_home = getenv("HOME");
-  std::string pathStr = env_home;
-  pathStr.append("/.local/share/doublebooks/Accounts.dbkcfg");
-
-  // Load database
-  Register reg(transactionsList.load(), pathStr.c_str());
-  std::cout << "Database loaded." << std::endl;
   
-  // Print Table
-  reg.printSplits();
+  // Initialize state variables
+  Register accountRegister;
+
+  // Reload data
+  {
+    // Set up files
+    Csv transactionsList(argv[1]);
+    std::cout << "CSV opened." << std::endl;
+
+    // Get installed location of configuration file
+    char *env_home;
+    env_home = getenv("HOME");
+    std::string pathStr = env_home;
+    pathStr.append("/.local/share/doublebooks/Accounts.dbkcfg");
+
+    // Load database
+    accountRegister = Register(transactionsList.load(), pathStr.c_str());
+    std::cout << "Database loaded." << std::endl;
+  }
+    
+  // Reprint output
+  {
+    // Print Table
+    accountRegister.printSplits();
+  }
 
   return 0;
 }
