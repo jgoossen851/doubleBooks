@@ -13,6 +13,7 @@
 #include "category.h"
 #include "account.h"
 #include "datafield.h"
+#include "prettyString.h"
 
 #include <iostream>
 
@@ -25,11 +26,16 @@ int failTest( std::string testName,
             << "] but was [" << resultString << "]" << std::endl;
   return EXIT_FAILURE;
 }
+int failTest( std::string testName,
+              PrettyString ansString,
+              PrettyString resultString) {
+  return failTest(testName, ansString.getStr(), resultString.getStr());
+}
 
 int testElementDisplay(std::string testName,
                        Element     *elementUnderTest,
                        std::string ansString ) {
-  if( ansString.compare(elementUnderTest->str(12)) != 0) {
+  if( ansString == elementUnderTest->str(12)) {
     return failTest(testName, ansString, elementUnderTest->str(12));
   }
   return EXIT_SUCCESS;

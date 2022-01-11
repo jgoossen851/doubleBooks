@@ -54,6 +54,8 @@ namespace ansi{
   template<typename T>
   std::string COLUMN(const T &code);
 
+  const std::string CURSOR_FORWARD(const int &num);
+
   /// @todo Figure out a way to scoll up the terminal to save the entire scrollback with CLEAR
   const std::string CLEAR     = ERASE + RESET_CURSOR;
   const std::string CLEAR_ALL   = CLEAR + DELETE_SCROLLBACK;

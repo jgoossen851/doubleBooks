@@ -9,6 +9,7 @@
 
 #include <string>
 
+#include "prettyString.h"
 #include "strings.h"
 
 // Stringfield implementation
@@ -20,8 +21,8 @@ StringField::StringField(std::string str){
   setFromStr(str);
 }
 
-std::string StringField::str(const unsigned int &max_characters) const {
-  return (str_.size() <= max_characters) ? str_ : str_.substr(0, max_characters - 1) + "\u2026";
+PrettyString StringField::str(const unsigned int &max_characters) const {
+  return PrettyString((str_.size() <= max_characters) ? str_ : str_.substr(0, max_characters - 1) + "\u2026", 0);
 }
 
 void StringField::setFromStr(std::string str) {
@@ -49,9 +50,9 @@ UintField::UintField(uint val){
   uint_ = val;
 }
 
-std::string UintField::str(const unsigned int &max_characters) const {
+PrettyString UintField::str(const unsigned int &max_characters) const {
   std::string idStr = std::to_string(uint_);
-  return (idStr.size() <= max_characters) ? idStr : std::string(max_characters, '*');
+  return PrettyString((idStr.size() <= max_characters) ? idStr : std::string(max_characters, '*'), 0);
 }
 
 void UintField::setFromStr(std::string str) {
@@ -75,9 +76,9 @@ BoolField::BoolField(std::string str){
   setFromStr(str);
 }
 
-std::string BoolField::str(const unsigned int &max_characters) const {
+PrettyString BoolField::str(const unsigned int &max_characters) const {
   std::string idStr = std::to_string(bool_);
-  return (idStr.size() <= max_characters) ? idStr : std::string(max_characters, '*');
+  return PrettyString((idStr.size() <= max_characters) ? idStr : std::string(max_characters, '*'), 0);
 }
 
 void BoolField::setFromStr(std::string str) {

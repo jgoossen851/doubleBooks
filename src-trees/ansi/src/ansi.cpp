@@ -54,4 +54,8 @@ namespace ansi{
     // return CSI_('m', code);
   // }
 
+  const std::string CURSOR_FORWARD(const int &num) {
+    return CSI_('C', num);
+  }
+
 }

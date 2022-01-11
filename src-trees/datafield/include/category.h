@@ -14,6 +14,7 @@
 #include <cassert>
 
 #include "element.h"
+#include "prettyString.h"
 
 class CategoryDescriptions {
  public:
@@ -51,8 +52,9 @@ class Category : public Element {
     setFromStr(str);
   }
   
-  std::string str(const unsigned int &max_characters = 12) const override {
-    return std::string(max_characters, '*'); // Placeholder
+  PrettyString str(const unsigned int &max_characters = 12) const override {
+    std::string placeholderStr(max_characters, '*');
+    return PrettyString(placeholderStr, 0); // Placeholder
   }
   void setFromStr(std::string str) override {
     id_ = str.size(); // Placeholder

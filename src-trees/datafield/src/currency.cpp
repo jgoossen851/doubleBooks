@@ -14,6 +14,7 @@
 #include <iostream>
 
 #include "ansi.h"
+#include "prettyString.h"
 #include "strings.h"
 
 Currency::Currency(NegativeFormat negativeFormat) 
@@ -32,7 +33,7 @@ Currency::Currency( std::string    str,
   setFromStr(str);
 }
 
-std::string Currency::str(const unsigned int &max_characters) const {
+PrettyString Currency::str(const unsigned int &max_characters) const {
   int usuable_chars = max_characters;
   if (cents_ < 0) {
     // Format negative number
@@ -65,8 +66,11 @@ std::string Currency::display_magnitude(const int &max_chars) const {
         : std::string(max_chars, '*');  
 }
 
-std::string Currency::format_negative_string(std::string positiveString) const {
-  std::string negativeString;
+PrettyString Currency::format_negative_string(std::string positiveString) const {
+  PrettyString negativeString;
+  // PrettyString ansiSaveAttributes(ansi::SAVE_ATTRIBUTES, 2);
+  // PrettyString ansiRed(ansi::RED, 5);
+  // PrettyString 
   
   switch (negativeFormat_) {
     case NEGATIVE_SIGN :
@@ -76,7 +80,7 @@ std::string Currency::format_negative_string(std::string positiveString) const {
       negativeString = "(" + positiveString + ")";
       break;
     case RED_COLOR :
-      negativeString = ansi::SAVE_ATTRIBUTES + ansi::RED + positiveString + ansi::RESTORE_ATTRIBUTES;
+      negativeString = PrettyString::format(ansi::SAVE_ATTRIBUTES + ansi::RED) + positiveString + PrettyString::format(ansi::RESTORE_ATTRIBUTES);
       break;
     default :
       negativeString = "-" + positiveString;
@@ -85,8 +89,8 @@ std::string Currency::format_negative_string(std::string positiveString) const {
   return negativeString;
 }
 
-std::string Currency::format_positive_string(std::string positiveString) const {
-  std::string returnString = positiveString;
+PrettyString Currency::format_positive_string(std::string positiveString) const {
+  PrettyString returnString = positiveString;
   if (negativeFormat_ == PARENTHESIS) { returnString += " "; }
   return returnString;
 }

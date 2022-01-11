@@ -6,6 +6,7 @@
  */
  
 #include "date.h"
+#include "prettyString.h"
 
 #include <cassert>
 #include <sstream>
@@ -20,9 +21,9 @@ Date::Date(std::string str){
   setFromStr(str);
 }
 
-std::string Date::str(const unsigned int &max_characters) const {
+PrettyString Date::str(const unsigned int &max_characters) const {
   std::string dateStr = isDateValid() ? getDateStr("%m/%d/%y") : "--/--/--";
-  return (dateStr.size() <= max_characters) ? dateStr : std::string(max_characters, '*');
+  return PrettyString((dateStr.size() <= max_characters) ? dateStr : std::string(max_characters, '*'), 0);
 }
 
 bool Date::isDateValid() const {

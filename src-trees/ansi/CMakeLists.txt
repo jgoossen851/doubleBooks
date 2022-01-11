@@ -10,12 +10,14 @@ cmake_minimum_required(VERSION 3.5.1)
 set(TARGET_NAME Ansi)
 
 set(SOURCE_FILES
-    src/ansi.cpp 
+    src/ansi.cpp
+    src/prettyString.cpp
 )
 
 set(INCLUDE_FILES
     include/ansi.h
     include/ansi.tcc
+    include/prettyString.h
 )
 
 # Create a new target with the source and header files as dependencies

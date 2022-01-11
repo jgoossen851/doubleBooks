@@ -9,6 +9,7 @@
 #define REGISTER_H_
 
 #include "csv.h"
+#include "prettyString.h"
 #include "transaction.h"
 #include "split.h"
 #include "entry.h"
@@ -37,7 +38,7 @@ class Register {
   /// @brief Function to print either vector of transactions or splits
   void printEntry(const Entry *entry) const;
   void printHeader() const;
-  void printElement(std::string str, uint width, uint space) const;
+  void printElement(PrettyString str, uint width, uint space) const;
 };
 
 #endif // REGISTER_H_

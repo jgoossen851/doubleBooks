@@ -11,6 +11,7 @@
 #include <string>
 
 #include "element.h"
+#include "prettyString.h"
 
 /// Allowable formats for negative currencies
 enum NegativeFormat{
@@ -35,7 +36,7 @@ class Currency : public Element {
     
   // Function Overrides
   /// Format the dollar amount as a string
-  std::string str(const unsigned int &max_characters = 10) const override;
+  PrettyString str(const unsigned int &max_characters = 10) const override;
   void setFromStr(std::string str) override;
   const void* value_ptr(void) const override;
   /// Comparison operator for two Currency objects
@@ -55,8 +56,8 @@ class Currency : public Element {
   
  private:  
   std::string display_magnitude(const int &max_characters) const;
-  std::string format_negative_string(std::string positiveString) const;
-  std::string format_positive_string(std::string positiveString) const;
+  PrettyString format_negative_string(std::string positiveString) const;
+  PrettyString format_positive_string(std::string positiveString) const;
 
 };
 
