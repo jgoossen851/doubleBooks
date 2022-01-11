@@ -102,6 +102,13 @@ bool childAddress<T>::isContainsChild(const T* pChild) const {
 }
 
 template<typename T>
+unsigned int childAddress<T>::vectorSize(void) const {
+  return (vpChildren_.size() == 1 && vpChildren_.at(0) == nullptr)
+    ? 0
+    : vpChildren_.size();
+}
+
+template<typename T>
 std::ostream& operator<< (std::ostream& o, const childAddress<T>& x) {
   o << "[";
   for (auto itr = x.vpChildren_.begin(); itr < x.vpChildren_.end(); itr++) {
