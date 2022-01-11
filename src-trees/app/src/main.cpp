@@ -11,19 +11,20 @@
 #include "register.h"
 
 #include <iostream>
-#include <cstdlib>
+#include <map>
+#include <functional>
+#include <string>
 
-int main(int argc, char* argv[]) {
+enum COMMANDS {
+  HELP,
+  LOAD,
+  PRINT_SPLITS,
+  PRINT_TRANSACTIONS
+};
 
-  // Check that a single argument was given
-  if (argc != 2) {
-    std::cout << argv[0] << " Version " << PROJECT_VERSION << std::endl;
-    std::cerr << argv[0] << " requires a single argument containing the file to parse." << std::endl;
-    return 1;
-  }
-
+Register loadData(const char * filename){
   // Set up files
-  Csv transactionsList(argv[1]);
+  Csv transactionsList(filename);
   std::cout << "CSV opened." << std::endl;
 
   // Get installed location of configuration file
@@ -33,11 +34,64 @@ int main(int argc, char* argv[]) {
   pathStr.append("/.local/share/doublebooks/Accounts.dbkcfg");
 
   // Load database
-  Register reg(transactionsList.load(), pathStr.c_str());
   std::cout << "Database loaded." << std::endl;
+  return Register(transactionsList.load(), pathStr.c_str());
+}
+
+void usage(const std::map< std::string, COMMANDS > &dictionary){
+  std::cout << "Usage: " << std::endl;
+  std::cout << "  Press Ctrl+D to exit." << std::endl;
+  std::cout << "  Available Commands:";
+  for (auto itr = dictionary.begin(); itr != dictionary.end(); itr++) {
+    std::cout << " " << itr->first;
+  }
+  std::cout << std::endl;
+}
+
+int main(int argc, char* argv[]) {
+
+  // Check that a single argument was given
+  if (argc != 2) {
+    std::cout << argv[0] << " Version " << PROJECT_VERSION << std::endl;
+    std::cerr << argv[0] << " requires a single argument containing the file to parse." << std::endl;
+    return 1;
+  }
   
-  // Print Table
-  reg.printSplits();
+  // Define user commands
+  std::map< std::string, COMMANDS > dictionary;
+  dictionary["h"] = HELP;
+  dictionary["l"] = LOAD;
+  dictionary["s"] = PRINT_SPLITS;
+  dictionary["t"] = PRINT_TRANSACTIONS;
+  usage(dictionary);
+
+  // Initialize state variables
+  Register accountRegister;
+
+  std::string input;
+  while(std::getline(std::cin, input)) { // quit the program with Ctrl+D (EOF) or Ctrl+C (SIGINT)
+    auto itr = dictionary.find(input);
+    if ( itr != end(dictionary)) {
+      switch (itr->second) {
+        case HELP : // Print Usage
+          usage(dictionary);
+          break;
+        case LOAD : // Reload data
+          accountRegister = loadData(argv[1]);
+          break;
+        case PRINT_SPLITS : // Reprint output (splits)
+          accountRegister.printSplits();
+          break;
+        case PRINT_TRANSACTIONS : // Reprint output (transactions)
+          accountRegister.printTransactions();
+          break;
+        default :
+          std::cout << "Command \"" << input << "\" Not Implemented" << std::endl; 
+      }
+    } else {
+      std::cout << "command \"" << input << "\" not known" << std::endl;
+    }
+  }
 
   return 0;
 }

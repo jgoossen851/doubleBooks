@@ -17,25 +17,27 @@
 
 
 
-class Account : public Element {
-  const AccountList *pAcctList_;
+class Account : public Element, public ChildAccount {
   unsigned int      acctListInd_ = 0;
 
  public:
   /// Default constructor function
-  Account()
-    : pAcctList_(nullptr)
-    {}
+  Account() {}
 
   /// Parameterized constructor functions
-  Account(const AccountList *pAcctList);
-  Account(const AccountList *pAcctList, std::string str);
+  Account(AccountList *pAcctList);
+  Account(AccountList *pAcctList, std::string str);
  
-  // Override inherited functions
-  std::string str(const unsigned int &max_characters = 12) const override;
+  /**
+   * @brief Displays account name as a string.
+   * 
+   * @param max_characters Max displayable characters in name
+   * @return PrettyString  String containing account name. Note: may be longer than displayable character length due to formatting characters.
+   */
+  PrettyString str(const unsigned int &max_characters = 12) const override;
   void setFromStr(std::string str) override {
     unsigned int index = Strings::toInteger(str);
-    acctListInd_ = index < pAcctList_->size() ? index : 0;
+    acctListInd_ = index < getParentPtr()->size() ? index : 0;
     return;
   }
   const void* value_ptr(void) const override {return nullptr;} // Placeholder

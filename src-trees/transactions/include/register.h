@@ -9,6 +9,7 @@
 #define REGISTER_H_
 
 #include "csv.h"
+#include "prettyString.h"
 #include "transaction.h"
 #include "split.h"
 #include "entry.h"
@@ -17,22 +18,27 @@
 #include <string>
 
 class Register {
-  const AccountList               accountList_;
-  const uint                      numColumns_;
-  const std::vector<std::string>  vHeader_;
-  const std::vector<uint>         vColumnWidth_; //!< in characters
+  AccountList                     accountList_;
+  uint                            numColumns_;
+  std::vector<std::string>        vHeader_;
+  std::vector<uint>               vColumnWidth_; //!< in characters
   std::vector<Transaction>        vTransaction_;
   std::vector<Split>              vSplit_;
 
  public:
+  Register(){};
   Register(StringDatabase data, const char *accountListFile);
+  /// Move Constructor
+  Register(Register&& rhs) noexcept = default;
+  /// Move Assignment Operator
+  Register& operator=(Register&& other) noexcept = default;
   void printSplits(void) const;
   void printTransactions(void) const;
  private:
   /// @brief Function to print either vector of transactions or splits
   void printEntry(const Entry *entry) const;
   void printHeader() const;
-  void printElement(std::string str, uint width, uint space) const;
+  void printElement(PrettyString str, uint width, uint space) const;
 };
 
 #endif // REGISTER_H_

@@ -8,6 +8,7 @@
 #include "account.h"
 
 #include "ansi.h"
+#include "prettyString.h"
 
 bool Account::operator<(const Element &rhs) const {
   return *(static_cast<const int*>(this->value_ptr())) < *(static_cast<const int*>(rhs.value_ptr()));
@@ -15,17 +16,22 @@ bool Account::operator<(const Element &rhs) const {
 
 
 /// Parameterized constructor functions
-  Account::Account(const AccountList *pAcctList)
-      : pAcctList_(pAcctList)
-      {}
+  Account::Account(AccountList *pAcctList) {
+    setParent(pAcctList);
+  }
 
-  Account::Account(const AccountList *pAcctList, std::string str)
-      : pAcctList_(pAcctList)
-      {
+  Account::Account(AccountList *pAcctList, std::string str) {
+    setParent(pAcctList);
     setFromStr(str);
   }
 
-std::string Account::str(const unsigned int &max_characters) const {
-  return pAcctList_ == nullptr ? ansi::DIM + "Undefined" + ansi::NORMAL
-                                : pAcctList_->at(acctListInd_).str(max_characters);
+PrettyString Account::str(const unsigned int &max_characters) const {
+  if (getParentPtr() == nullptr) {
+    PrettyString ansiDim(ansi::DIM, 4);
+    PrettyString ansiNormal(ansi::NORMAL, 5);
+    PrettyString undefString = ansiDim + "Undefined" + ansiNormal;
+    return undefString;
+  } else {
+    return PrettyString(getParentPtr()->at(acctListInd_).str(max_characters), 0);
+  }
 }

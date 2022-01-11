@@ -7,23 +7,26 @@
 cmake_minimum_required(VERSION 3.5.1)
 
 # Set the CMake target name and files for this subdirectory
-set(TARGET_NAME Transactions)
+set(TARGET_NAME Kinship)
 
 set(SOURCE_FILES
-    src/split.cpp
-    src/transaction.cpp
-    src/register.cpp
 )
 
 set(INCLUDE_FILES
-    include/split.h
-    include/transaction.h
-    include/register.h
-    include/entry.h
+    include/kinship.h
+    include/childAddress.h
+    include/childAddress.tcc
+    include/childOf.h
+    include/childOf.tcc
+    include/parentAddress.h
+    include/parentAddress.tcc
+    include/parentOf.h
+    include/parentOf.tcc
 )
 
 # Create a new target with the source and header files as dependencies
 add_library("${TARGET_NAME}" STATIC "${SOURCE_FILES}" "${INCLUDE_FILES}")
+set_target_properties("${TARGET_NAME}" PROPERTIES LINKER_LANGUAGE CXX)
 
 # The keywords PUBLIC, PRIVATE, and INTERFACE are used for both Include
 # Directories and Link Libraries.
@@ -41,7 +44,6 @@ target_include_directories("${TARGET_NAME}"
 
 # Specify libraries or flags to use when linking a given target and/or its dependents
 target_link_libraries("${TARGET_NAME}"
-    PUBLIC Datafield Csv Ansi Kinship
 )
 
 # # Install the library

@@ -13,6 +13,8 @@
 #include "category.h"
 #include "account.h"
 #include "datafield.h"
+#include "element.h"
+#include "prettyString.h"
 
 #include <iostream>
 
@@ -25,23 +27,28 @@ int failTest( std::string testName,
             << "] but was [" << resultString << "]" << std::endl;
   return EXIT_FAILURE;
 }
+int failTest( std::string  testName,
+              PrettyString ansString,
+              PrettyString resultString) {
+  return failTest(testName, ansString.getStr(), resultString.getStr());
+}
 
-int testElementDisplay(std::string testName,
-                       Element     *elementUnderTest,
-                       std::string ansString ) {
-  if( ansString.compare(elementUnderTest->str(12)) != 0) {
+int testElementDisplay(std::string  testName,
+                       Element      *elementUnderTest,
+                       PrettyString ansString ) {
+  if( ansString != elementUnderTest->str(12)) {
     return failTest(testName, ansString, elementUnderTest->str(12));
   }
   return EXIT_SUCCESS;
 }
 
-int testStrings(std::string testString,
-                std::string ansString ) {
-  if( ansString.compare(testString) != 0) {
-    return failTest("Compare", ansString, testString);
-  }
-  return EXIT_SUCCESS;
-}
+// int testStrings(std::string testString,
+//                 std::string ansString ) {
+//   if( ansString.compare(testString) != 0) {
+//     return failTest("Compare", ansString, testString);
+//   }
+//   return EXIT_SUCCESS;
+// }
 
 int main() {
 
@@ -89,7 +96,7 @@ int main() {
   exitStatus |= testElementDisplay("Currency", &currencyParen, "(     $5.67)");
   Currency currencyRed(RED_COLOR);
   currencyRed.setFromStr("-6.78");
-  exitStatus |= testElementDisplay("Currency", &currencyRed, ansi::SAVE_ATTRIBUTES + ansi::RED + "       $6.78" + ansi::RESTORE_ATTRIBUTES);
+  exitStatus |= testElementDisplay("Currency", &currencyRed, PrettyString::format(ansi::SAVE_ATTRIBUTES + ansi::RED) + "       $6.78" + PrettyString::format(ansi::RESTORE_ATTRIBUTES));
   
 
 

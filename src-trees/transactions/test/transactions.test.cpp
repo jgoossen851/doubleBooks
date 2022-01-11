@@ -10,6 +10,7 @@
 #include "csv.h"
 #include "currency.h"
 #include "datafield.h"
+#include "prettyString.h"
 #include "split.h"
 #include "transaction.h"
 #include "register.h"
@@ -41,6 +42,10 @@ int testStrings(std::string testString,
   }
   return EXIT_SUCCESS;
 }
+int testStrings(PrettyString testString,
+                PrettyString ansString) {
+  return testStrings(testString.getStr(), ansString.getStr());
+}
 
 int main() {
   // Initialize exit status
@@ -63,7 +68,7 @@ int main() {
   testSplit.setDebitAccount("40");
   testSplit.setCreditAccount("20");
   testSplit.setMemo("This is the memo");
-  testSplit.setParentTransaction(&testTransaction);
+  testSplit.setParent(&testTransaction);
 
   // Test output
   // std::cout << "output" << std::endl;
@@ -93,11 +98,11 @@ int main() {
 
   Register reg(data, "../../../../res/data/Accounts.dbkcfg");
 
-  std::cout << "SPLITS:" << std::endl;
-  reg.printSplits();
+  // std::cout << "SPLITS:" << std::endl;
+  // reg.printSplits();
 
-  std::cout << "TRANSACTIONS:" << std::endl;
-  reg.printTransactions();
+  // std::cout << "TRANSACTIONS:" << std::endl;
+  // reg.printTransactions();
 
 
   // Display Test Status

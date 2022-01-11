@@ -8,8 +8,12 @@
 #ifndef ACCOUNTLIST_H_
 #define ACCOUNTLIST_H_
 
+#include <cassert>
 #include <string>
 #include <vector>
+
+#include "parentOf.h"
+#include "childOf.h"
 
 enum InheritBool{
   FALSE = 0,  //!< False
@@ -18,12 +22,11 @@ enum InheritBool{
   UNDEFINED   //!< Value is not set
 };
 
-class AccountEntry {
-  AccountEntry        *pParent_;
-  const unsigned int  sortOrder_;
-  const std::string   name_;
-  InheritBool         isBudgeted_;
-  InheritBool         isDebitIncrease_;
+class AccountEntry : public parentOf<AccountEntry>, public childOf<AccountEntry> {
+  unsigned int                sortOrder_;
+  std::string                 name_;
+  InheritBool                 isBudgeted_;
+  InheritBool                 isDebitIncrease_;
 
  public:
   /// Default constructor function
@@ -33,33 +36,52 @@ class AccountEntry {
   AccountEntry(unsigned int  sortOrder,
               std::string   name,
               InheritBool   isBudgeted,
-              InheritBool   isDebitIncrease,
-              AccountEntry  *pParent = nullptr
+              InheritBool   isDebitIncrease
               );
+
+  /// Copy Constructor [deleted]
+  AccountEntry(const AccountEntry& rhs) = delete;
+
+  /// Move Constructor
+  AccountEntry(AccountEntry&& rhs) noexcept = default;
+
+  /// Move Assignment Operator
+  AccountEntry& operator=(AccountEntry&& other) noexcept = default;
+
+  /// Copy Assignment Operator [deleted]
+  AccountEntry& operator=(const AccountEntry&) = delete;
  
   std::string str(const unsigned int &max_characters = 12) const;
 
   // Getter and Setter Functions
-  InheritBool getIsBudgeted(void);
-  InheritBool getIsDebitIncrease(void);
-  void setParent(AccountEntry *pParent = nullptr);
+  InheritBool getIsBudgeted(void) const;
+  InheritBool getIsDebitIncrease(void) const;
   void setIsBudgeted(const InheritBool isBudgeted);
   void setIsDebitIncrease(const InheritBool isDebitIncrease);
+
 };
 
+// Forward declare AccountList
+class AccountList;
+// Declare base class for child accounts
+class ChildAccount : public childOf<AccountList> {};
 
-class AccountList {
+class AccountList : public parentOf<ChildAccount> {
   std::vector<AccountEntry> vAcctEntries_;
 
  public:
-  // Default Constructor Function
+  /// Default Constructor Function
   AccountList();
-  // Parameterized Constructor Function
+  /// Parameterized Constructor Function
   AccountList(const char *accountsCsv);
+  /// Move Constructor
+  AccountList(AccountList&& rhs) noexcept = default;
+  /// Move Assignment Operator
+  AccountList& operator=(AccountList&& other) noexcept = default;
 
   void load(const char *accountsCsv);
 
-  AccountEntry at(unsigned int ind = 0) const;
+  const AccountEntry& at(unsigned int ind = 0) const;
   unsigned int size(void) const;
 };
 

@@ -17,8 +17,7 @@
 
 /// Default constructor function
 AccountEntry::AccountEntry()
-    : pParent_(nullptr),
-      sortOrder_(0),
+    : sortOrder_(0),
       name_("Undefined"),
       isBudgeted_(UNDEFINED),
       isDebitIncrease_(UNDEFINED)
@@ -28,23 +27,21 @@ AccountEntry::AccountEntry()
 AccountEntry::AccountEntry( unsigned int  sortOrder,
                             std::string   name,
                             InheritBool   isBudgeted,
-                            InheritBool   isDebitIncrease,
-                            AccountEntry  *pParent
-                            )
-    : pParent_(pParent),
-      sortOrder_(sortOrder),
+                            InheritBool   isDebitIncrease)
+    : sortOrder_(sortOrder),
       name_(name),
       isBudgeted_(isBudgeted),
-      isDebitIncrease_(isDebitIncrease)
-    {}
+      isDebitIncrease_(isDebitIncrease) {
+  setParent(nullptr);
+}
  
 std::string AccountEntry::str(const unsigned int &max_characters) const {
   // Recursively find name:
   std::string fullname;
-  if (pParent_ == nullptr) {
+  if (getParentPtr() == nullptr) {
     fullname = name_;
   } else {
-    fullname = pParent_->str(max_characters);
+    fullname = getParentPtr()->str(max_characters);
     fullname.append(":");
     fullname.append(name_);
   }
@@ -55,16 +52,13 @@ std::string AccountEntry::str(const unsigned int &max_characters) const {
 }
 
 // Getter and Setter Functions
-InheritBool AccountEntry::getIsBudgeted(void) {
-  return isBudgeted_ == INHERITED ? pParent_->getIsBudgeted() : isBudgeted_;
+InheritBool AccountEntry::getIsBudgeted(void) const {
+  return isBudgeted_ == INHERITED ? getParentPtr()->getIsBudgeted() : isBudgeted_;
 }
-InheritBool AccountEntry::getIsDebitIncrease(void) {
-  return isDebitIncrease_ == INHERITED ? pParent_->getIsDebitIncrease() : isDebitIncrease_;
+InheritBool AccountEntry::getIsDebitIncrease(void) const {
+  return isDebitIncrease_ == INHERITED ? getParentPtr()->getIsDebitIncrease() : isDebitIncrease_;
 }
-void AccountEntry::setParent(AccountEntry *pParent) {
-  pParent_ = pParent;
-  return;
-}
+
 void AccountEntry::setIsBudgeted(const InheritBool isBudgeted) {
   isBudgeted_ = isBudgeted;
 }
@@ -137,7 +131,7 @@ void AccountList::load(const char *accountsCsv){
   }
 }
 
-AccountEntry AccountList::at(unsigned int ind) const {
+const AccountEntry& AccountList::at(unsigned int ind) const {
   return vAcctEntries_.at(ind);
 }
 
