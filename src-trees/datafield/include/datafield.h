@@ -22,7 +22,7 @@ class StringField : public Element {
   StringField(std::string str);
 
   /// Function Overrides from Element
-  std::string str(const unsigned int &max_characters = 3) const override;
+  PrettyString str(const unsigned int &max_characters = 3) const override;
   void setFromStr(std::string str) override;
   const void* value_ptr(void) const override;
   bool operator<(const Element &rhs) const override;
@@ -39,7 +39,7 @@ class UintField : public Element {
   UintField(uint val);
 
   /// Function Overrides from Element
-  std::string str(const unsigned int &max_characters = 3) const override;
+  PrettyString str(const unsigned int &max_characters = 3) const override;
   void setFromStr(std::string str) override;
   const void* value_ptr(void) const override;
   bool operator<(const Element &rhs) const override;
@@ -55,7 +55,7 @@ class BoolField : public Element {
   BoolField(std::string str);
 
   /// Function Overrides from Element
-  std::string str(const unsigned int &max_characters = 3) const override;
+  PrettyString str(const unsigned int &max_characters = 3) const override;
   void setFromStr(std::string str) override;
   const void* value_ptr(void) const override;
   bool operator<(const Element &rhs) const override;

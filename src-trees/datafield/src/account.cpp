@@ -8,6 +8,7 @@
 #include "account.h"
 
 #include "ansi.h"
+#include "prettyString.h"
 
 bool Account::operator<(const Element &rhs) const {
   return *(static_cast<const int*>(this->value_ptr())) < *(static_cast<const int*>(rhs.value_ptr()));
@@ -24,7 +25,13 @@ bool Account::operator<(const Element &rhs) const {
     setFromStr(str);
   }
 
-std::string Account::str(const unsigned int &max_characters) const {
-  return getParentPtr() == nullptr ? ansi::DIM + "Undefined" + ansi::NORMAL
-                                : getParentPtr()->at(acctListInd_).str(max_characters);
+PrettyString Account::str(const unsigned int &max_characters) const {
+  if (getParentPtr() == nullptr) {
+    PrettyString ansiDim(ansi::DIM, 4);
+    PrettyString ansiNormal(ansi::NORMAL, 5);
+    PrettyString undefString = ansiDim + "Undefined" + ansiNormal;
+    return undefString;
+  } else {
+    return PrettyString(getParentPtr()->at(acctListInd_).str(max_characters), 0);
+  }
 }

@@ -28,8 +28,13 @@ class Account : public Element, public ChildAccount {
   Account(AccountList *pAcctList);
   Account(AccountList *pAcctList, std::string str);
  
-  // Override inherited functions
-  std::string str(const unsigned int &max_characters = 12) const override;
+  /**
+   * @brief Displays account name as a string.
+   * 
+   * @param max_characters Max displayable characters in name
+   * @return PrettyString  String containing account name. Note: may be longer than displayable character length due to formatting characters.
+   */
+  PrettyString str(const unsigned int &max_characters = 12) const override;
   void setFromStr(std::string str) override {
     unsigned int index = Strings::toInteger(str);
     acctListInd_ = index < getParentPtr()->size() ? index : 0;

@@ -10,6 +10,7 @@
 #include "csv.h"
 #include "currency.h"
 #include "datafield.h"
+#include "prettyString.h"
 #include "split.h"
 #include "transaction.h"
 #include "register.h"
@@ -40,6 +41,10 @@ int testStrings(std::string testString,
     return failTest("Compare", ansString, testString);
   }
   return EXIT_SUCCESS;
+}
+int testStrings(PrettyString testString,
+                PrettyString ansString) {
+  return testStrings(testString.getStr(), ansString.getStr());
 }
 
 int main() {

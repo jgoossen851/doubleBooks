@@ -181,7 +181,8 @@ void Register::printHeader() const {
   std::cout << ansi::RESET << std::endl;
 }
 
-void Register::printElement(std::string str, uint width, uint space) const {
-  printf("%-*.*s", width, width, str.c_str());
-  printf("%*s", space, "");
+void Register::printElement(PrettyString str, uint width, uint space) const {
+  std::cout << ansi::SAVE_CURSOR;
+  std::cout << str;
+  std::cout << ansi::RESTORE_CURSOR << ansi::CURSOR_FORWARD(width+space);
 }
