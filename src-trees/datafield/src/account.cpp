@@ -31,16 +31,7 @@ PrettyString Account::str(const unsigned int &max_characters) const {
     PrettyString ansiNormal(ansi::NORMAL, 5);
     PrettyString undefString = ansiDim + "Undefined" + ansiNormal;
     return undefString;
-
-    // PrettyString undefString(ansi::DIM + "Undefined" + ansi::NORMAL, 
-    // std::string undefString = "Undefined";
-    // undefString = undefString.substr(0, max_characters);
-    // return ansi::DIM + undefString + ansi::NORMAL;
   } else {
     return PrettyString(getParentPtr()->at(acctListInd_).str(max_characters), 0);
   }
-  // std::string undefString = "Undefined";
-  // undefString = undefString.substr(0, max_characters);
-  // return getParentPtr() == nullptr ? ansi::DIM + undefString + ansi::NORMAL
-  //                               : getParentPtr()->at(acctListInd_).str(max_characters);
 }

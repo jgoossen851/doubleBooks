@@ -11,7 +11,6 @@
 #include "datafield.h"
 
 #include <cassert>
-#include <iomanip>
 #include <iostream>
 #include <ostream>
 #include <algorithm>
@@ -183,13 +182,7 @@ void Register::printHeader() const {
 }
 
 void Register::printElement(PrettyString str, uint width, uint space) const {
-  // printf("%-*.*s", width, width, str.c_str());
-  // printf("%*s", space, "");
-  // std::cout << ansi::SAVE_CURSOR;
-  // std::cout << str;
-  // std::cout << ansi::RESTORE_CURSOR << ansi::CURSOR_FORWARD(width+space);
-
-  // std::cout << std::setw(width);
+  std::cout << ansi::SAVE_CURSOR;
   std::cout << str;
-  // std::cout << "  ";
+  std::cout << ansi::RESTORE_CURSOR << ansi::CURSOR_FORWARD(width+space);
 }

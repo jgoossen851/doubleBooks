@@ -7,13 +7,12 @@
  
 #include "prettyString.h"
 
-/// @todo This does not compare format codes. This should be changed or documented.
 bool operator== (const PrettyString &rhs, const PrettyString &lhs) {
-  return rhs.str_ == lhs.str_;
+  return rhs.numUnprintableChars_ == lhs.numUnprintableChars_ && rhs.str_ == lhs.str_;
 }
 
 bool operator!= (const PrettyString &rhs, const PrettyString &lhs) {
-  return !(rhs.str_ == lhs.str_);
+  return !(rhs == lhs);
 }
 
 /// Function to Append to Pretty String
@@ -25,7 +24,6 @@ PrettyString& operator+= (PrettyString& lhs, const PrettyString& rhs) {
 
 /// Function to concatinate two PrettyStrings
 const PrettyString operator+(const PrettyString &lhs, const PrettyString &rhs) {
-  // return PrettyString(lhs) += rhs;
   PrettyString result = lhs;
   return result += rhs;
 }

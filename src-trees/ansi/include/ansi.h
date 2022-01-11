@@ -51,9 +51,11 @@ namespace ansi{
   const std::string RESTORE_CURSOR   = CSI_('u');
   const std::string CLEAR_LINE = CSI_('K', 2);
   const std::string RESET_LINE = CSI_('G', 0);
+
+  // FUNCTION-LIKE CONTROL SEQUENCES
+  /// @todo Add remaining function-like control sequenses for cursor movement.
   template<typename T>
   std::string COLUMN(const T &code);
-
   const std::string CURSOR_FORWARD(const int &num);
 
   /// @todo Figure out a way to scoll up the terminal to save the entire scrollback with CLEAR

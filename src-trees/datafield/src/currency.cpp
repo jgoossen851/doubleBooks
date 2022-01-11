@@ -68,9 +68,6 @@ std::string Currency::display_magnitude(const int &max_chars) const {
 
 PrettyString Currency::format_negative_string(std::string positiveString) const {
   PrettyString negativeString;
-  // PrettyString ansiSaveAttributes(ansi::SAVE_ATTRIBUTES, 2);
-  // PrettyString ansiRed(ansi::RED, 5);
-  // PrettyString 
   
   switch (negativeFormat_) {
     case NEGATIVE_SIGN :

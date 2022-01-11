@@ -32,7 +32,7 @@ class Account : public Element, public ChildAccount {
    * @brief Displays account name as a string.
    * 
    * @param max_characters Max displayable characters in name
-   * @return std::string String containing account name. Note: may be longer than displayable character length due to formatting characters.
+   * @return PrettyString  String containing account name. Note: may be longer than displayable character length due to formatting characters.
    */
   PrettyString str(const unsigned int &max_characters = 12) const override;
   void setFromStr(std::string str) override {

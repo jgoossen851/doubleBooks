@@ -44,124 +44,22 @@ class PrettyString {
     return str_;
   }
 
-  // Equality test opeator
+  // Define operator overloading as friend functions outside of scope to allow promotion of argument types
+  // See #7: https://isocpp.org/wiki/faq/operator-overloading#op-ov-rules
   friend bool operator== (const PrettyString &rhs, const PrettyString &lhs);
   friend bool operator!= (const PrettyString &rhs, const PrettyString &lhs);
   friend PrettyString& operator+= (PrettyString &lhs, const PrettyString &rhs);
   friend const PrettyString operator+(const PrettyString &lhs, const PrettyString &rhs);
-
-  // /// @todo Move outside class. See #7: https://isocpp.org/wiki/faq/operator-overloading#op-ov-rules
-  // // Function to Append to Pretty String
-  // PrettyString& operator+= (const PrettyString& str) {
-  //   str_ += str.str_;
-  //   numUnprintableChars_ += str.numUnprintableChars_;
-  //   return *this;
-  // }
-
-  // /// Function to concatinate two PrettyStrings
-  // PrettyString operator+(const PrettyString &rhs) {
-  //   return PrettyString(this->str_ + rhs.str_, this->numUnprintableChars_ + rhs.numUnprintableChars_);
-  // }
-  // /// Function to concatinate PrettyString with string
-  // PrettyString operator+(const std::string &rhs) {
-  //   return PrettyString(this->str_ + rhs, this->numUnprintableChars_);
-  // }
-  // /// Function to concatinate PrettyString with char array
-  // PrettyString operator+(const char *rhs) {
-  //   std::string rhsStr(rhs);
-  //   return PrettyString(this->str_ + rhsStr, this->numUnprintableChars_);
-  // }
-  // /// Function to concatinate PrettyString with char array
-  // PrettyString operator+(const char rhs) {
-  //   std::string rhsStr(1, rhs);
-  //   return PrettyString(this->str_ + rhsStr, this->numUnprintableChars_);
-  // }
-  // /// Function to concatinate string with PrettyString
-  // friend PrettyString operator+ (const std::string &lhs, const PrettyString &rhs) {
-  //   return PrettyString(lhs + rhs.str_, rhs.numUnprintableChars_);
-  // }
-  // /// Function to concatinate char array with PrettyString
-  // friend PrettyString operator+ (const char *lhs, const PrettyString &rhs) {
-  //   std::string lhsStr(lhs);
-  //   return PrettyString(lhsStr + rhs.str_, rhs.numUnprintableChars_);
-  // }
-  // /// Function to concatinate char with PrettyString
-  // friend PrettyString operator+ (char lhs, const PrettyString &rhs) {
-  //   std::string lhsStr(1, lhs);
-  //   return PrettyString(lhsStr + rhs.str_, rhs.numUnprintableChars_);
-  // }
-  
 
   /// Function to format as stream
   friend std::ostream& operator<< (std::ostream& o, const PrettyString& x){
     return o << x.str_;
   }
 
-  // friend int std::string::compare (const PrettyString& lhs) {
-  //   return rhs.compare(lhs.str_);
-  // }
-
   /// Function to format a string as entirely formatting characters
   static PrettyString format(const std::string &str) {
     return PrettyString(str, str.length());
   }
 };
-
-
-
-
-
-
-// // /// Function to Append to Pretty String
-// // PrettyString& operator+= (PrettyString& lhs, const PrettyString& rhs) {
-// //   lhs.str_ += rhs.str_;
-// //   lhs.numUnprintableChars_ += rhs.numUnprintableChars_;
-// //   return lhs;
-// // }
-
-// // /// Function to concatinate two PrettyStrings
-// // const PrettyString operator+(const PrettyString &lhs, const PrettyString &rhs) {
-// //   // return PrettyString(lhs) += rhs;
-// //   PrettyString result = lhs;
-// //   return result += rhs;
-// // }
-
-// /// Function to concatinate two PrettyStrings
-// PrettyString operator+(const PrettyString &rhs) {
-//   return PrettyString(this->str_ + rhs.str_, this->numUnprintableChars_ + rhs.numUnprintableChars_);
-// }
-// /// Function to concatinate PrettyString with string
-// PrettyString operator+(const std::string &rhs) {
-//   return PrettyString(this->str_ + rhs, this->numUnprintableChars_);
-// }
-// /// Function to concatinate PrettyString with char array
-// PrettyString operator+(const char *rhs) {
-//   std::string rhsStr(rhs);
-//   return PrettyString(this->str_ + rhsStr, this->numUnprintableChars_);
-// }
-// /// Function to concatinate PrettyString with char array
-// PrettyString operator+(const char rhs) {
-//   std::string rhsStr(1, rhs);
-//   return PrettyString(this->str_ + rhsStr, this->numUnprintableChars_);
-// }
-// /// Function to concatinate string with PrettyString
-// friend PrettyString operator+ (const std::string &lhs, const PrettyString &rhs) {
-//   return PrettyString(lhs + rhs.str_, rhs.numUnprintableChars_);
-// }
-// /// Function to concatinate char array with PrettyString
-// friend PrettyString operator+ (const char *lhs, const PrettyString &rhs) {
-//   std::string lhsStr(lhs);
-//   return PrettyString(lhsStr + rhs.str_, rhs.numUnprintableChars_);
-// }
-// /// Function to concatinate char with PrettyString
-// friend PrettyString operator+ (char lhs, const PrettyString &rhs) {
-//   std::string lhsStr(1, lhs);
-//   return PrettyString(lhsStr + rhs.str_, rhs.numUnprintableChars_);
-// }
-
-
-
-
-
 
 #endif // PRETTYSTRING_H_
